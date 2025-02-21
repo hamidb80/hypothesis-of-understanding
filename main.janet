@@ -13,6 +13,9 @@ tiny mind-tree creator.
 (defn file/exists (path) 
   (not (nil? (os/stat path))))
 
+(defn join-map (lst f)
+  (string/join (map f lst)))
+
 (defn rand/int (a b)
        (+ a (math/floor (* (- b a) (math/random)))))
 
@@ -43,48 +46,45 @@ tiny mind-tree creator.
 
 # ------------------
 
+(defn mind-map/preprocess (data)
+  data)
+
 (defn mind-map/create-impl (data ids)
   (def acc @[])
   (var id  (keyword "n-" (rand/int 1 64000000)))
   (var cur nil)
 
-  (defn reset-cur ()
-    (set cur @{
+  (defn init-node () @{
       :properties @[] 
       :children   @[]
-    }))
-
-  (defn empty-cur ()
-    (= 2 (length cur)))
-
-  (reset-cur)
+  })
 
   (each d data
     (match (type d)
       :tuple   (put         cur :children    (mind-map/create-impl d ids))
       :struct  (array/push (cur :properties) d)
       :string  (do
-                  (if (not (empty-cur)) (array/push acc cur))
-                  (reset-cur)
+                  (if (not (nil? cur)) (array/push acc cur))
+                  (set cur (init-node))
                   (put cur :label d))
       :keyword (set id d)
     ))
   
-  (if (nil? (get ids id))
-            (put ids id cur)
+  (if (nil? (get ids id)) 
+            (put ids id cur) # assign id
             (error (string "duplicated id :" id)))
-  (if (not (empty? cur)) (array/push acc cur))
+  
+  (if (not (nil? cur)) (array/push acc cur)) # last iteration
+
   acc
 )
 
 (defn mind-map/create (data)
   (def ids @{})
-  { :root (mind-map/create-impl data ids)
-    :ids  ids }
-)
-
-(defn join-map (lst f)
-  (string/join (map f lst)))
+  (mind-map/preprocess { 
+    :root (mind-map/create-impl data ids)
+    :ids  ids
+  }))
 
 (defn mind-map/html-impl (mm out-dir use-cache)
   (join-map mm
@@ -409,9 +409,6 @@ tiny mind-tree creator.
 ]))
 
 # ---------------------- go
-
-
-(pp mm)
 
 (let [build-dir  (1 (dyn *args*))
       index-page (string build-dir "index.html")]
