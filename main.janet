@@ -48,35 +48,49 @@ tiny mind-tree creator.
 
 # ------------------
 
+(defn int-val (d) (if (number? d) d 0))
+
+(defn put+ (tab key) 
+  (put tab key (+ 1 (int-val (tab key)))))
+
 (defn mind-map/preprocess (data)
+  (eachp [id node] (data :ids)
+    (each p (node :properties)
+      (match (p :kind)
+             :important     (put  (node :meta) :important true)
+             :pdf-reference (put+ (node :meta) :pdf-reference)
+             )))
   data)
 
-(defn mind-map/create-impl (data ids)
+(defn mind-map/create-impl (sub-nodes ids)
   (def acc @[])
-  (var id  (keyword "n-" (rand/int 1 64000000)))
   (var cur nil)
 
-  (defn init-node () @{
+  (defn init-node () 
+    (var id nil)
+    @{
+      :id         (keyword "n-" (rand/int 1 64000000))
       :properties @[] 
       :children   @[]
-  })
+      :meta       @{}})
 
-  (each d data
+  (defn done (node) 
+    (if node (do
+      (put        ids (cur :id) cur)
+      (array/push acc cur))))
+
+  (each d sub-nodes
     (match (type d)
-      :keyword (set id d)
-      :tuple   (put         cur :children    (mind-map/create-impl d ids))
+      :keyword (put         cur :id          d)
       :struct  (array/push (cur :properties) d)
+      :tuple   (put         cur :children    (mind-map/create-impl d ids))
       :string  (do
-                  (if (not (nil? cur)) (array/push acc cur))
+                  (done cur)
                   (set cur (init-node))
-                  (put cur :label d))
-    ))
+                  (put cur :label d))))
   
-  (if (nil? (get ids id)) 
-            (put ids id cur) # assign id
-            (error (string "duplicated id :" id)))
-  
-  (array/push acc cur) # last iteration
+  (pp (length ids))
+  (done cur)
   acc
 )
 
@@ -90,16 +104,23 @@ tiny mind-tree creator.
           :ids  ids
         }))))
 
+(defn badge-html (tag value) 
+  (string `<span class="badge bg-light ms-1 px-1">` tag value `</span>`))
+
 (defn mind-map/html-impl (mm out-dir use-cache)
   (join-map mm
     (fn (u) (string
       "<details>
-        <summary>" (u :label) "</summary>"
-        "<div style=\"padding-left: 20px; padding-bottom: 4px\">"
-          "<ul style=\"
+        <summary>" 
+          (u :label)
+          (if ((u :meta) :important)     (badge-html "🌟" "") "")
+          (if ((u :meta) :pdf-reference) (badge-html "📕" ((u :meta) :pdf-reference))  "")
+        "</summary>"
+        `<div style="padding-left: 20px; padding-bottom: 4px">`
+          `<ul style="
             padding-left:16px; 
-            padding-bottom: " (if (or (empty? (u :children)) (empty? (u :properties))) 0 6) "px;
-          \">"
+            padding-bottom: `(if (or (empty? (u :children)) (empty? (u :properties))) 0 6) ` px;"`
+          `\>`
           
           (join-map (u :properties) 
                      (fn (p) (match (p :kind)
@@ -110,8 +131,7 @@ tiny mind-tree creator.
                                                    (string "<li>" "<a target='_blank' href='" "file:///" file-path "#page=" page-num "'>" "page " page-num "</a>" "<br/>" `<img style="max-width: 400px;" src="./` img-path `"/>` "</li>"))
                                     :latex         (string "<li><code>" (p :data) "</li></code>")
                                     :web-url       (string `<li><a target='_blank' href="` ((p :data) :url) `">` ((p :data) :text) `</a></li>`)
-                                    :important     "<li>🌟 important</li>"
-                                                   (error (string "the attr :" (p :kind) " not implemented")))))
+                                                   "")))
           "</ul>"
           
           (mind-map/html-impl (u :children) out-dir use-cache)
@@ -122,8 +142,22 @@ tiny mind-tree creator.
 
 (defn mind-map/html (mm out-dir use-cache) 
   (string
-    "<style>*{padding:0;margin:0;}</style>"
-    (mind-map/html-impl (mm :root) out-dir use-cache)))
+    `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css">
+    </head>
+    <body>
+    `
+    (mind-map/html-impl (mm :root) out-dir use-cache)
+    `  
+    </body>
+    </html>
+    `))
 
 
 # --------------
@@ -182,7 +216,7 @@ tiny mind-tree creator.
     ]
   ]
 
-  "Data Encryption Standard (DES)" [
+  "Data Encryption Standard (DES)" (important) [
     "Confusion and Diffusion" (bk 72)
     
   ]
