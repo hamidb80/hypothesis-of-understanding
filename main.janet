@@ -34,9 +34,11 @@ tiny mind-tree creator.
   (prop :web-url {:url url 
                   :text (if (nil? text) url text)}))
 
-(defn pdf-page-ref (path) 
+(defn pdf-page-ref (path page-offset) 
   (fn (page)
-    (prop :pdf-reference {:file path :page page})))
+    (prop :pdf-reference {
+          :file  path 
+          :page  page })))
 
 (defn extract-page (pdf-file-path page-num out-path use-cache)
   (if (and use-cache (file/exists out-path))
@@ -61,30 +63,32 @@ tiny mind-tree creator.
 
   (each d data
     (match (type d)
+      :keyword (set id d)
       :tuple   (put         cur :children    (mind-map/create-impl d ids))
       :struct  (array/push (cur :properties) d)
       :string  (do
                   (if (not (nil? cur)) (array/push acc cur))
                   (set cur (init-node))
                   (put cur :label d))
-      :keyword (set id d)
     ))
   
   (if (nil? (get ids id)) 
             (put ids id cur) # assign id
             (error (string "duplicated id :" id)))
   
-  (if (not (nil? cur)) (array/push acc cur)) # last iteration
-
+  (array/push acc cur) # last iteration
   acc
 )
 
-(defn mind-map/create (data)
-  (def ids @{})
-  (mind-map/preprocess { 
-    :root (mind-map/create-impl data ids)
-    :ids  ids
-  }))
+(defn mind-map/create (mind-tree)
+  (if (empty? mind-tree)
+      (error "the mind-tree is empty")
+      (do   
+        (def ids @{})
+        (mind-map/preprocess { 
+          :root (mind-map/create-impl mind-tree ids)
+          :ids  ids
+        }))))
 
 (defn mind-map/html-impl (mm out-dir use-cache)
   (join-map mm
@@ -99,7 +103,11 @@ tiny mind-tree creator.
           
           (join-map (u :properties) 
                      (fn (p) (match (p :kind)
-                                    :pdf-reference (let [page-num ((p :data) :page) file-path ((p :data) :file) img-path (string ((p :data) :page) ".png") e (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache)] (string "<li>" "<a target='_blank' href='" "file:///" file-path "#page=" page-num "'>" "page " page-num "</a>" "<br/>" `<img style="max-width: 400px;" src="./` img-path `"/>` "</li>"))
+                                    :pdf-reference (let [ page-num      ((p :data) :page) 
+                                                          file-path     ((p :data) :file) 
+                                                          img-path      (string ((p :data) :page) ".png") 
+                                                          e             (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache) ] 
+                                                   (string "<li>" "<a target='_blank' href='" "file:///" file-path "#page=" page-num "'>" "page " page-num "</a>" "<br/>" `<img style="max-width: 400px;" src="./` img-path `"/>` "</li>"))
                                     :latex         (string "<li><code>" (p :data) "</li></code>")
                                     :web-url       (string `<li><a target='_blank' href="` ((p :data) :url) `">` ((p :data) :text) `</a></li>`)
                                     :important     "<li>🌟 important</li>"
@@ -120,295 +128,69 @@ tiny mind-tree creator.
 
 # --------------
 
-(def bk-path "E:/konkur/Subjects/Network/cnet-8th.pdf")
-(def bk (pdf-page-ref bk-path))
+(def bk-path "C:/Users/HamidB80/Desktop/sec-net.pdf")
+(def bk (pdf-page-ref bk-path 16))
 
 (def mm (mind-map/create [
-  "Intro" [
-    "Delays" [
-      "Transmission" (latex "size of packet / transmission rate")
-      "Propagation"  (latex "distance / speed of propagation")
-      "Queue"   
-      "Processing"
+  "Introduction :: Cryptology" [
+    "Crypto-graphy  :: hiding " (bk 19) [
+      "Symmetric Cipher"
+      "Asymmetric Cipher"
+      "Protocols"
+    ]
+    "Crypt-analysis :: breaking" (bk 26)
+
+    "simple Ciphers" [
+      "Substitution" (bk 22)
+      "Shift"        (bk 34)
+      "Affine"       (bk 35)  
     ]
 
+    "Kerckhoffs’ Principle" (bk 27)
   ]
 
-  "Application Layer" [
+  "Stream VS Block Ciphers" (bk 45)
 
-    "Distribution" [
-       "Client-Server"  [
-         "formula" (bk 170)
-       ]
-       "Point to Point" [
-        "formula" (bk 171)
-       ]
-       "figure"      (bk 172)
-    ]
-
-    "BitTorrent" (bk 173) (bk 174)
+  "Stream Ciphers" [
+    "Synchronous and Asynchronous" (bk 45)
     
-    "CDN" [
-      "Strategies" (bk 178) [
-        "Enter deep :: rent room of computers inside ISP :: costly but efficient"
-        "bring home :: build your cluster :: cheap but lower quality"
-      ]
-    ] 
-
-    "DNS" (bk 180) [
-      "Services" (bk 156) [
-        "Host Aliasing"
-        "Mail Server Aliasing"
-        "Load Distribution"
-      ]
-
-      "Challenges" (bk 158) [
-        "single point of failure (if it fails, all internet fails)"
-        "Traffic volume"
-        "Distant"
-        "Maintenance (big database)"
-      ]
-
-      "Hierarchy" (bk 159)
-
-      "Query" [
-        "Recursive" (bk 163)
-        "Iterative"
-      ]
-      "Record Types" (bk 164)
-      "Message Format" (bk 165)
+    "random number generator" [
+      "true"          (bk 50)
+      "pseudo"        (bk 50)
+      "secure pseudo" (bk 51)
     ]
 
-    "Cache" [
-      "Formula" (bk 144)
+    "One Time Pad" (bk 51)
+
+    "Computational Security" (bk 53)
+
+    "Linear Feedback Shift Registers" [
+      "desc" (bk 58)
+      "feedback coefficient vector" (bk 59)
+      "Attack" (bk 61)
     ]
-
-    "STMP" (bk 154)
-
-    "HTTP" [
-      "Structure" (bk 136)
-
-      "DASH" (bk 176)
-
-      "versions" (bk 314) [
-        "v1.0"
-        "v1.1"
-        "v2" [
-          "Framing" (bk 146)
-        ]
-        "v3" [
-          "Quic"
-        ]
-      ]
-    ]
-
-    "Socket Programming" [
-      "UDP Server" 
-      "UDP Client" (bk 188)
-
-      "TCP Server" (bk 193)
-      "TCP Client" 
-    ]
-  ]
-
-  "Transport Layer" [
-    "services" (bk 121) [
-      "Reliable data transfer"
-      "Throuput"
-      "Timing"
-      "Security"
-    ]
-
-    "Selective Repeat"
-    "Go Back N"
-
-
-    "UDP" [
-      "Segment" (bk 230)
-    ]
-    "TCP" [
-      "Segment" (bk 263)
-      "MSS MTU" (bk 261)
-
-      "3-way handshake" (bk 282) [
-        "SYNACK flood attack" (bk 281)
-      ]
-
-      "Closing" (bk 283)
-
-      "monitoring" [
-        "SampleRTT"
-        "EstimatedRTT"
-        "DevRTT" (bk 268)
-      ]
-
-      "Performace with Buffer" (bk 291)
-
-      "Congestion Control" [
-        "FSM" (bk 300) [
-          "Slow Start" (bk 296)
-          "Congestion Aviodance" (bk 296)
-          "Fast Recovery" (bk 297)
-          "Fast Retransmit" (bk 277)
-        ]
-        "AIMD" (bk 303) [
-          "additive-increase, multiplicative-decrease"
-          "Fairness"
-        ]
-        "Explicit Notification" (bk 307)
-
-        "TCP Reno vs Tahoe" (bk 302)
-      ]
-    ]
-  ]
-  
-  "Network Layer" [
-    "Compare" (bk 386)
-
-    "Data Plane" [
-      "Router Architecture" (bk 349) (bk 350) [
-        "Bus"
-        "RAM"
-        "Interconnected"
-      ]
-      "Input Processing" (bk 346)
-      "Ouput Processing" (bk 351)
-      
-      "suitable Buffering" (bk 355) [
-        "other" (latex "B = RTT.C")
-        "TCP"   (latex "B = RTT.C/√N")
-
-        "paramters" [
-          "B: Buffering"
-          "RTT: Round Time Trip of connection"
-          "N: number of TCP connections"
-          "C: link capacity"
-        ]
-        "Buffer Bloat" (bk 356)
-        
-        "HOL Blocking" (bk 353)
-      ]
-    ]
-  
-    "DHCP" [
-      "interaction" (bk 375)
-      "plug-and-play" (bk 373)
-
-      "Stages" (bk 374) [
-        "Discovery"
-        "Offer"
-        "Request"
-        "Ack"
-      ]
-    ]
-
-    "NAT" (bk 377)
-
-    "Forwarding" [
-      "Destination Based"
-
-      "Generalized" [
-        "OpenFlow" [
-          "Match + Action" (bk 389) [
-            "Forwarding"
-            "Load Balancing"
-            "Firewalling"
-          ]
-        ]
-      ]
-    ]
-
-    "Control Plane" [
-      "Routing Algorithms" [
-        "Distance Vector" [
-          "Operation" (bk 423)
-
-          "examples" [
-            "BGP"
-            "RIP"
-          ]
-          
-          "Count to Infinity" (bk 426) [
-            "Poisen Reverse"
-          ]
-        ]
-
-        "Link State" [
-          "OSPF" (bk 428)
-          "Oscillations with congestion-sensitive routing" (bk 419)
-        ]
-
-        "Comparison" (bk 426) [
-          "convergence message complexity:: O(V.E)" (bk 427)
-        ]
-      ]
-
-      "SDN" (bk 450)
-
-      "BGP" [
-        "policy based"
-        "types" [
-          "eBGP"
-          "iBGP"
-        ]
-      ]
-    ]
-
-    "IP" [
-      "v4" [
-        "Classless Interdomain Routing CIDR" (bk 368)
-        "Lognest Prefix Match"
-      ]
     
-      "v6" [
-        "Segment"   (bk 381)
-        "Tunneling" (bk 384)
-        "Does not have segmentation like in v4"
-      ]
-    ]
+    "Trivium" [
+      "def" (bk 61)
+      "schema" (bk 62)
 
-    "ICMP" (bk 455)  [
-      "TraceRoute" (bk 456) 
+      "phases" [
+        "init"
+        "warm up"
+        "Encription"  
+      ]
     ]
   ]
-  
-  "Link Layer" [
-    "services" (bk 484) [
-      "Framing"
-      "Link Access"
-      "Reliable Delivery"
-    ]
 
-    "ALLOHA" [
-      "Slotted" [
-        "formula" (bk 500) (latex "N.p.(1-p)^(N-1)")
-      ]
-      "Pure" [
-        "formula" (bk 500) (latex "N.p.(1-p)^2(N-1)")
-      ]
-    ]
-
-    "VLAN" [
-      "Trunking" (bk 532)
-    ]
-
-    "CSMA/CD" (bk 503) (bk 504) [
-      "Efficiency" (latex "(1 + 5d_prop/d_trans)^-1") (bk 506)
-    ]
-
-    "MPLS" (important) (bk 534) (bk 535)
+  "Data Encryption Standard (DES)" [
+    "Confusion and Diffusion" (bk 72)
     
-    "ARP" (bk 514) [
-      "Address Resolution Protocol"
-    ]
-  ]
-
-  "Summary" :sum [
-    "life of a web request" (important) (web "file:///E:/konkur/Subjects/Network/videos/retrospective%20a%20day%20in%20the%20life%20of%20a%20web%20request.mp4" "https://youtube.com/watch?v=I6twhxwycyM")
   ]
 ]))
 
 # ---------------------- go
+
+# (pp mm)
 
 (let [build-dir  (1 (dyn *args*))
       index-page (string build-dir "index.html")]
