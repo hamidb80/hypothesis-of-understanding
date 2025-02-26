@@ -34,10 +34,11 @@ tiny mind-tree creator.
   (prop :web-url {:url url 
                   :text (if (nil? text) url text)}))
 
-(defn pdf-page-ref (path) 
+(defn pdf-page-ref (path name) 
   (fn (page)
     (prop :pdf-reference {
-          :file  path 
+          :file  path
+          :name  name
           :page  page })))
 
 (defn extract-page (pdf-file-path page-num out-path use-cache)
@@ -59,6 +60,7 @@ tiny mind-tree creator.
       (match (p :kind)
              :important     (put  (node :meta) :important true)
              :pdf-reference (put+ (node :meta) :pdf-reference)
+             :web-url       (put+ (node :meta) :web-url)
              )))
   data)
 
@@ -103,6 +105,14 @@ tiny mind-tree creator.
           :ids  ids
         }))))
 
+
+(defn html/card (content) (string 
+  `<div class="card border-gray mb-3">
+    <div class="card-body text-dark">`
+      content   
+   `</div>
+  </div>`))
+
 (defn html/badge (tag value) 
   (string `<button class="btn btn-sm btn-light ms-1 px-1">` tag " " value `</button>`))
 
@@ -110,17 +120,19 @@ tiny mind-tree creator.
   (join-map (u :properties) 
             (fn (p) (match (p :kind)
                           :pdf-reference (let [ page-num      ((p :data) :page) 
-                                                file-path     ((p :data) :file) 
+                                                file-path     ((p :data) :file)
+                                                book-name     ((p :data) :name)
                                                 img-path      (string ((p :data) :page) ".png") 
                                                 e             (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache) ] 
-                                          (string `<details>`
-                                                  `<summary>`
-                                                    `<a target="_blank" href="file:///` file-path `#page=` page-num `">page ` page-num `</a><br/>` 
-                                                  `</summary>`
-                                                  `<img style="max-width: 400px;" src="./` img-path `"/>`
-                                                  `</details>`))
-                          :latex         (string "<li><code>" (p :data) "</li></code>")
-                          :web-url       (string `<li><a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a></li>`)
+                                          (html/card (string 
+                                                  `<a target="_blank" href="file:///` file-path `#page=` page-num `">page ` page-num `</a>` 
+                                                  `<span> from ` book-name `</span>`
+                                                  `<br/>`
+                                                  `<center>
+                                                    <img style="max-width: 400px;" src="./` img-path `"/>
+                                                   </center>` )))
+                          :latex         (html/card (string `<code>` (p :data) `</code>`))
+                          :web-url       (html/card (string `<a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a>`))
                                         "")))
 )
 
@@ -137,6 +149,7 @@ tiny mind-tree creator.
               (if (empty? c) ""            (html/badge "»" (length c))))
             (if ((u :meta) :important)     (html/badge "🌟" "") "")
             (if ((u :meta) :pdf-reference) (html/badge "📕" ((u :meta) :pdf-reference))  "")
+            (if ((u :meta) :web-url)       (html/badge "🌐"  ((u :meta) :web-url))  "")
           `</div>`
         `</summary>`
         `<div class="border-start border-gray my-1 ps-4">`
@@ -186,15 +199,18 @@ tiny mind-tree creator.
       }
 
       function toggleSidebar(open) {
-        let el = document.getElementById("sidebar")
+        let el = document.getElementById("contentbar")
 
         if (!open) {
           hideAllContent()
         }
 
+        clsx(document.body, {
+          "overflow-none": open
+        })
         clsx(el, {
-          "bottom-0": !open,
-          
+          "d-none"  :  !open,
+
           "vh-100"  :  open,
           "top-0"   :  open,
         })
@@ -222,14 +238,17 @@ tiny mind-tree creator.
       (mind-map/html-impl (mm :root) out-dir use-cache)
     `</div>
     
-    <aside class="w-100 position-fixed bottom-0 bg-white" id="sidebar">
+    <div class="pb-5"></div>
+    <div class="pb-5"></div>
+
+    <aside class="w-100 position-fixed d-none bg-light overflow-y-scroll" id="contentbar">
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <span> content </span>
-          <button class="btn btn-sm btn-outline-danger" onclick="toggleSidebar(false)"> close </button>
+          <button class="btn btn-sm btn-outline-danger" onclick="toggleSidebar(false)"> × </button>
         </div>
       </nav>
-      <div class="container">`
+      <div class="container py-3">`
         (join-map (values (mm :ids))
                   (fn [n] (string 
                       `<div id="content-` (n :id)  `" class="content d-none">`
@@ -244,8 +263,9 @@ tiny mind-tree creator.
 
 # --------------
 
-(def bk-path "C:/Users/home/Desktop/sec.pdf")
-(def bk (pdf-page-ref bk-path))
+(def bk (pdf-page-ref 
+          "C:/Users/HamidB80/Desktop/sec-net.pdf" 
+          "Understanding Cryptography by Christof Paar & Jan Pelzl"))
 
 (def mm (mind-map/create [
   "Introduction :: Cryptology" [
@@ -287,9 +307,7 @@ tiny mind-tree creator.
     ]
     
     "Trivium" [
-      "def" (bk 61)
-      "schema" (bk 62)
-
+      "def" (bk 61) (bk 62)
       "phases" [
         "init"
         "warm up"
@@ -298,11 +316,11 @@ tiny mind-tree creator.
     ]
   ]
 
-  "DES" (web "https://www.youtube.com/watch?v=kPBJIhpcZgE") [
+  "DES" [
     "Confusion and Diffusion" (bk 72)
   ]
 
-  "AES" (web "https://www.youtube.com/watch?v=C4ATDMIz5wc") [
+  "AES" (web "https://www.youtube.com/watch?v=C4ATDMIz5wc" "AES: How to Design Secure Encryption by Spanning Tree") [
     
   ]
 ]))
