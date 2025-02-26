@@ -104,37 +104,42 @@ tiny mind-tree creator.
         }))))
 
 (defn html/badge (tag value) 
-  (string `<span class="badge bg-light ms-1 px-1">` tag " " value `</span>`))
+  (string `<button class="btn btn-sm btn-light ms-1 px-1">` tag " " value `</button>`))
 
-(defn html/heading (node) (string 
-  (node :label)
-  (let [c (node :children)]
-    (if (empty? c) ""            (html/badge "⧂" (length c))))
-  (if ((node :meta) :important)     (html/badge "🌟" "") "")
-  (if ((node :meta) :pdf-reference) (html/badge "📕" ((node :meta) :pdf-reference))  "")))
+(defn html/props (u out-dir use-cache)
+  (join-map (u :properties) 
+            (fn (p) (match (p :kind)
+                          :pdf-reference (let [ page-num      ((p :data) :page) 
+                                                file-path     ((p :data) :file) 
+                                                img-path      (string ((p :data) :page) ".png") 
+                                                e             (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache) ] 
+                                          (string `<details>`
+                                                  `<summary>`
+                                                    `<a target="_blank" href="file:///` file-path `#page=` page-num `">page ` page-num `</a><br/>` 
+                                                  `</summary>`
+                                                  `<img style="max-width: 400px;" src="./` img-path `"/>`
+                                                  `</details>`))
+                          :latex         (string "<li><code>" (p :data) "</li></code>")
+                          :web-url       (string `<li><a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a></li>`)
+                                        "")))
+)
 
 (defn mind-map/html-impl (mm out-dir use-cache)
   (join-map mm
     (fn (u) (string
       `<details class="mind-tree-node" id="` (u :id) `">
-        <summary>` (html/heading u) `</summary>`
+        <summary>`
+          `<span "clickable">`
+            (u :label)
+          `</span>`
+          `<div class="d-inline-block features" onclick="contentFor(event,'` (u :id) `')">`
+            (let [c (u :children)]
+              (if (empty? c) ""            (html/badge "»" (length c))))
+            (if ((u :meta) :important)     (html/badge "🌟" "") "")
+            (if ((u :meta) :pdf-reference) (html/badge "📕" ((u :meta) :pdf-reference))  "")
+          `</div>`
+        `</summary>`
         `<div class="border-start border-gray my-1 ps-4">`
-          (join-map (u :properties) 
-                    (fn (p) (match (p :kind)
-                                  :pdf-reference (let [ page-num      ((p :data) :page) 
-                                                        file-path     ((p :data) :file) 
-                                                        img-path      (string ((p :data) :page) ".png") 
-                                                        e             (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache) ] 
-                                                  (string `<details>`
-                                                          `<summary>`
-                                                            `<a target="_blank" href="file:///` file-path `#page=` page-num `">page ` page-num `</a><br/>` 
-                                                          `</summary>`
-                                                          `<img style="max-width: 400px;" src="./` img-path `"/>`
-                                                          `</details>`))
-                                  :latex         (string "<li><code>" (p :data) "</li></code>")
-                                  :web-url       (string `<li><a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a></li>`)
-                                                "")))
-
           (mind-map/html-impl (u :children) out-dir use-cache)
         `</div>`
       `</details>`))
@@ -149,7 +154,7 @@ tiny mind-tree creator.
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>` title `</title>
-      <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
     <body>
 
@@ -161,7 +166,45 @@ tiny mind-tree creator.
 
     <script>
       function toggleNodes(opened) {
-        [...document.querySelectorAll(".mind-tree-node")].forEach(a => a.open = opened)
+        [...document.querySelectorAll(".mind-tree-node")]
+           .forEach(el => el.open = opened)
+      }
+
+      function hideAllContent() {
+        [...document.querySelectorAll(".content")]
+            .forEach(el => el.classList.add("d-none"))
+      }
+
+      function clsx(el, classConditionMap) {
+        for (let cls in classConditionMap) {
+          let cond = classConditionMap[cls]
+          if (cond)
+            el.classList.add(cls)
+          else
+            el.classList.remove(cls)
+        }
+      }
+
+      function toggleSidebar(open) {
+        let el = document.getElementById("sidebar")
+
+        if (!open) {
+          hideAllContent()
+        }
+
+        clsx(el, {
+          "bottom-0": !open,
+          
+          "vh-100"  :  open,
+          "top-0"   :  open,
+        })
+      }
+
+      function contentFor(event, id) {
+        event.preventDefault()
+        let el = document.getElementById("content-" + id)
+        el.classList.remove("d-none")
+        toggleSidebar(true)
       }
     </script>
 
@@ -175,11 +218,26 @@ tiny mind-tree creator.
         <button class="btn btn-sm btn-outline-primary" onclick="toggleNodes(false)">
           collapse all
         </button>
-      </div>  
-    `
-    (mind-map/html-impl (mm :root) out-dir use-cache)
-    `  
-    </div>
+      </div>`
+      (mind-map/html-impl (mm :root) out-dir use-cache)
+    `</div>
+    
+    <aside class="w-100 position-fixed bottom-0 bg-white" id="sidebar">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <span> content </span>
+          <button class="btn btn-sm btn-outline-danger" onclick="toggleSidebar(false)"> close </button>
+        </div>
+      </nav>
+      <div class="container">`
+        (join-map (values (mm :ids))
+                  (fn [n] (string 
+                      `<div id="content-` (n :id)  `" class="content d-none">`
+                        (html/props n out-dir use-cache)
+                      `</div>`)))
+
+     `</div>`
+   `</aside>
     </body>
     </html>`))
 
