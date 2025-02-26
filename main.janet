@@ -138,11 +138,11 @@ tiny mind-tree creator.
                                                 `</div>`)
 
                                              (string 
-                                                `<center>
-                                                  <img style="max-width: 400px;" src="./` img-path `"/>
+                                                `<center class="w-100">
+                                                  <img style="max-width: 100%;" src="./` img-path `"/>
                                                 </center>` )))
-                          :latex         (html/card "dark" "" (string `<code>` (p :data) `</code>`))
-                          :web-url       (html/card "info" "" (string `<a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a>`))
+                          :latex         (html/card "dark"    "" (string `<code>` (p :data) `</code>`))
+                          :web-url       (html/card "primary" "" (string `<a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a>`))
                                         "")))
 )
 
