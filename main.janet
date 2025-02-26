@@ -113,8 +113,10 @@ tiny mind-tree creator.
    `</div>
   </div>`))
 
-(defn html/badge (tag value) 
-  (string `<button class="btn btn-sm btn-light ms-1 px-1">` tag " " value `</button>`))
+(defn html/badge (tag value click-event) (string 
+    `<button class="btn btn-sm btn-light ms-1 px-1" onclick="` click-event `">` 
+      tag " " value 
+    `</button>`))
 
 (defn html/props (u out-dir use-cache)
   (join-map (u :properties) 
@@ -140,16 +142,16 @@ tiny mind-tree creator.
   (join-map mm
     (fn (u) (string
       `<details class="mind-tree-node" id="` (u :id) `">
-        <summary>`
+        <summary class="mt-1">`
           `<span "clickable">`
             (u :label)
           `</span>`
-          `<div class="d-inline-block features" onclick="contentFor(event,'` (u :id) `')">`
-            (let [c (u :children)]
-              (if (empty? c) ""            (html/badge "»" (length c))))
-            (if ((u :meta) :important)     (html/badge "🌟" "") "")
-            (if ((u :meta) :pdf-reference) (html/badge "📕" ((u :meta) :pdf-reference))  "")
-            (if ((u :meta) :web-url)       (html/badge "🌐"  ((u :meta) :web-url))  "")
+          `<div class="d-inline-block features">`
+            (if (not (empty?  (u :children)))           (html/badge "«"  ""                     "toggleNodes(this.parentElement.parentElement.parentElement, false)") "")
+            (if (not (empty?  (u :children)))           (html/badge "»"  (length (u :children)) "toggleNodes(this.parentElement.parentElement.parentElement, true)") "")
+            (if              ((u :meta) :important)     (html/badge "🌟" ""         "") "")
+            (if              ((u :meta) :pdf-reference) (html/badge "📕" ((u :meta) :pdf-reference) (string `contentFor(event,'` (u :id) `')`))  "")
+            (if              ((u :meta) :web-url)       (html/badge "🌐"  ((u :meta) :web-url      ) (string `contentFor(event,'` (u :id) `')`))  "")
           `</div>`
         `</summary>`
         `<div class="border-start border-gray my-1 ps-4">`
@@ -178,14 +180,13 @@ tiny mind-tree creator.
     </nav>
 
     <script>
-      function toggleNodes(opened) {
-        [...document.querySelectorAll(".mind-tree-node")]
-           .forEach(el => el.open = opened)
-      }
+      function toggleNodes(el, opened) {
+        if (el.classList.contains("mind-tree-node")){
+          el.open = opened
+        }
 
-      function hideAllContent() {
-        [...document.querySelectorAll(".content")]
-            .forEach(el => el.classList.add("d-none"))
+        [...el.querySelectorAll(".mind-tree-node")]
+           .forEach(el => el.open = opened)
       }
 
       function clsx(el, classConditionMap) {
@@ -197,6 +198,12 @@ tiny mind-tree creator.
             el.classList.remove(cls)
         }
       }
+
+      function hideAllContent() {
+        [...document.querySelectorAll(".content")]
+            .forEach(el => el.classList.add("d-none"))
+      }
+
 
       function toggleSidebar(open) {
         let el = document.getElementById("contentbar")
@@ -227,11 +234,11 @@ tiny mind-tree creator.
     <div class="container my-4">
     
       <div class="my-2">  
-        <button class="btn btn-sm btn-outline-primary" onclick="toggleNodes(true)">
+        <button class="btn btn-sm btn-outline-primary" onclick="toggleNodes(document.body, true)">
           expand all
         </button>
 
-        <button class="btn btn-sm btn-outline-primary" onclick="toggleNodes(false)">
+        <button class="btn btn-sm btn-outline-primary" onclick="toggleNodes(document.body, false)">
           collapse all
         </button>
       </div>`
@@ -296,7 +303,7 @@ tiny mind-tree creator.
       "secure pseudo" (bk 51)
     ]
 
-    "One Time Pad" (bk 51)
+    "One Time Pad" (bk 52)
 
     "Computational Security" (bk 53)
 
