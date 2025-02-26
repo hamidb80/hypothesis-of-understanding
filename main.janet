@@ -34,7 +34,7 @@ tiny mind-tree creator.
   (prop :web-url {:url url 
                   :text (if (nil? text) url text)}))
 
-(defn pdf-page-ref (path page-offset) 
+(defn pdf-page-ref (path) 
   (fn (page)
     (prop :pdf-reference {
           :file  path 
@@ -89,7 +89,6 @@ tiny mind-tree creator.
                   (set cur (init-node))
                   (put cur :label d))))
   
-  (pp (length ids))
   (done cur)
   acc
 )
@@ -104,43 +103,44 @@ tiny mind-tree creator.
           :ids  ids
         }))))
 
-(defn badge-html (tag value) 
-  (string `<span class="badge bg-light ms-1 px-1">` tag value `</span>`))
+(defn html/badge (tag value) 
+  (string `<span class="badge bg-light ms-1 px-1">` tag " " value `</span>`))
+
+(defn html/heading (node) (string 
+  (node :label)
+  (let [c (node :children)]
+    (if (empty? c) ""            (html/badge "⧂" (length c))))
+  (if ((node :meta) :important)     (html/badge "🌟" "") "")
+  (if ((node :meta) :pdf-reference) (html/badge "📕" ((node :meta) :pdf-reference))  "")))
 
 (defn mind-map/html-impl (mm out-dir use-cache)
   (join-map mm
     (fn (u) (string
-      "<details>
-        <summary>" 
-          (u :label)
-          (if ((u :meta) :important)     (badge-html "🌟" "") "")
-          (if ((u :meta) :pdf-reference) (badge-html "📕" ((u :meta) :pdf-reference))  "")
-        "</summary>"
-        `<div style="padding-left: 20px; padding-bottom: 4px">`
-          `<ul style="
-            padding-left:16px; 
-            padding-bottom: `(if (or (empty? (u :children)) (empty? (u :properties))) 0 6) ` px;"`
-          `\>`
-          
+      `<details class="mind-tree-node" id="` (u :id) `">
+        <summary>` (html/heading u) `</summary>`
+        `<div class="border-start border-gray my-1 ps-4">`
           (join-map (u :properties) 
-                     (fn (p) (match (p :kind)
-                                    :pdf-reference (let [ page-num      ((p :data) :page) 
-                                                          file-path     ((p :data) :file) 
-                                                          img-path      (string ((p :data) :page) ".png") 
-                                                          e             (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache) ] 
-                                                   (string "<li>" "<a target='_blank' href='" "file:///" file-path "#page=" page-num "'>" "page " page-num "</a>" "<br/>" `<img style="max-width: 400px;" src="./` img-path `"/>` "</li>"))
-                                    :latex         (string "<li><code>" (p :data) "</li></code>")
-                                    :web-url       (string `<li><a target='_blank' href="` ((p :data) :url) `">` ((p :data) :text) `</a></li>`)
-                                                   "")))
-          "</ul>"
-          
+                    (fn (p) (match (p :kind)
+                                  :pdf-reference (let [ page-num      ((p :data) :page) 
+                                                        file-path     ((p :data) :file) 
+                                                        img-path      (string ((p :data) :page) ".png") 
+                                                        e             (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache) ] 
+                                                  (string `<details>`
+                                                          `<summary>`
+                                                            `<a target="_blank" href="file:///` file-path `#page=` page-num `">page ` page-num `</a><br/>` 
+                                                          `</summary>`
+                                                          `<img style="max-width: 400px;" src="./` img-path `"/>`
+                                                          `</details>`))
+                                  :latex         (string "<li><code>" (p :data) "</li></code>")
+                                  :web-url       (string `<li><a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a></li>`)
+                                                "")))
+
           (mind-map/html-impl (u :children) out-dir use-cache)
-        "</div>"
-      "</details>"
-    ))
+        `</div>`
+      `</details>`))
 ))
 
-(defn mind-map/html (mm out-dir use-cache) 
+(defn mind-map/html (mm title out-dir use-cache) 
   (string
     `
     <!DOCTYPE html>
@@ -148,22 +148,46 @@ tiny mind-tree creator.
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Document</title>
+      <title>` title `</title>
       <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css">
     </head>
     <body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">` title `</a>
+      </div>
+    </nav>
+
+    <script>
+      function toggleNodes(opened) {
+        [...document.querySelectorAll(".mind-tree-node")].forEach(a => a.open = opened)
+      }
+    </script>
+
+    <div class="container my-4">
+    
+      <div class="my-2">  
+        <button class="btn btn-sm btn-outline-primary" onclick="toggleNodes(true)">
+          expand all
+        </button>
+
+        <button class="btn btn-sm btn-outline-primary" onclick="toggleNodes(false)">
+          collapse all
+        </button>
+      </div>  
     `
     (mind-map/html-impl (mm :root) out-dir use-cache)
     `  
+    </div>
     </body>
-    </html>
-    `))
+    </html>`))
 
 
 # --------------
 
-(def bk-path "C:/Users/HamidB80/Desktop/sec-net.pdf")
-(def bk (pdf-page-ref bk-path 16))
+(def bk-path "C:/Users/home/Desktop/sec.pdf")
+(def bk (pdf-page-ref bk-path))
 
 (def mm (mind-map/create [
   "Introduction :: Cryptology" [
@@ -211,13 +235,16 @@ tiny mind-tree creator.
       "phases" [
         "init"
         "warm up"
-        "Encription"  
+        "Encryption"  
       ]
     ]
   ]
 
-  "Data Encryption Standard (DES)" (important) [
+  "DES" (web "https://www.youtube.com/watch?v=kPBJIhpcZgE") [
     "Confusion and Diffusion" (bk 72)
+  ]
+
+  "AES" (web "https://www.youtube.com/watch?v=C4ATDMIz5wc") [
     
   ]
 ]))
@@ -229,5 +256,5 @@ tiny mind-tree creator.
 (let [build-dir  (1 (dyn *args*))
       index-page (string build-dir "index.html")]
 
-  (file/put index-page (mind-map/html mm build-dir true))
+  (file/put index-page (mind-map/html mm "network security 📝" build-dir true))
   (print "success: " index-page))
