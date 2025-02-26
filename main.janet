@@ -106,9 +106,11 @@ tiny mind-tree creator.
         }))))
 
 
-(defn html/card (content) (string 
-  `<div class="card border-gray mb-3">
-    <div class="card-body text-dark">`
+(defn html/card (color header content) (string 
+  # add header customized for each kind
+  `<div class="card border-` color ` mb-3">`
+    header
+   `<div class="card-body text-dark">`
       content   
    `</div>
   </div>`))
@@ -126,15 +128,21 @@ tiny mind-tree creator.
                                                 book-name     ((p :data) :name)
                                                 img-path      (string ((p :data) :page) ".png") 
                                                 e             (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache) ] 
-                                          (html/card (string 
+                                          (html/card "danger" 
+                                             (string
+                                                `<div class="card-header">`
+                                                  `📕 `
                                                   `<a target="_blank" href="file:///` file-path `#page=` page-num `">page ` page-num `</a>` 
                                                   `<span> from ` book-name `</span>`
                                                   `<br/>`
-                                                  `<center>
-                                                    <img style="max-width: 400px;" src="./` img-path `"/>
-                                                   </center>` )))
-                          :latex         (html/card (string `<code>` (p :data) `</code>`))
-                          :web-url       (html/card (string `<a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a>`))
+                                                `</div>`)
+
+                                             (string 
+                                                `<center>
+                                                  <img style="max-width: 400px;" src="./` img-path `"/>
+                                                </center>` )))
+                          :latex         (html/card "dark" "" (string `<code>` (p :data) `</code>`))
+                          :web-url       (html/card "info" "" (string `<a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a>`))
                                         "")))
 )
 
