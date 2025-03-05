@@ -64,7 +64,7 @@ tiny mind-tree creator.
              )))
   data)
 
-(defn mind-map/create-impl (sub-nodes ids)
+(defn mind-map/create-impl (sub-nodes parent-id ids)
   (def acc @[])
   (var cur nil)
 
@@ -72,6 +72,7 @@ tiny mind-tree creator.
     (var id nil)
     @{
       :id         (keyword "n-" (rand/int 1 64000000))
+      :parent     parent-id
       :properties @[] 
       :children   @[]
       :meta       @{}})
@@ -85,7 +86,7 @@ tiny mind-tree creator.
     (match (type d)
       :keyword (put         cur :id          d)
       :struct  (array/push (cur :properties) d)
-      :tuple   (put         cur :children    (mind-map/create-impl d ids))
+      :tuple   (put         cur :children    (mind-map/create-impl d (cur :id) ids))
       :string  (do
                   (done cur)
                   (set cur (init-node))
@@ -101,7 +102,7 @@ tiny mind-tree creator.
       (do   
         (def ids @{})
         (mind-map/preprocess { 
-          :root (mind-map/create-impl mind-tree ids)
+          :root (mind-map/create-impl mind-tree nil ids)
           :ids  ids
         }))))
 
@@ -146,12 +147,36 @@ tiny mind-tree creator.
                                         "")))
 )
 
-(defn mind-map/html-impl (mm out-dir use-cache)
+(defn JS (data)
+  
+  (defn table-like (t) (string 
+      `{` 
+      (join-map (keys t) (fn (k) (string (JS k) `: ` (JS (t k)) `,`))) 
+      `}`))
+
+  (defn array-like (t) (string `[` 
+      (join-map data (fn (v) (string (JS v) `,`))) 
+    `]`))
+
+  (match (type data)
+    :table  (table-like data)
+    :struct (table-like data)
+    :array  (array-like data)
+    :tuple  (array-like data)
+
+    :keyword (string `"` data `"`)
+    :string  (string `"` data `"`)
+    :number  (string     data)
+    :boolean (string     data)
+    :nil     "null"
+    ))
+
+(defn mind-map/html-impl (mm out-dir use-cache level)
   (join-map mm
     (fn (u) (string
       `<details class="mind-tree-node" id="` (u :id) `">
-        <summary class="mt-1">`
-          `<span "clickable">`
+        <summary class="mt-1 branch-label">
+           <span class="clickable" onclick="toggleFocusNode('` (u :id) `')">`
             (u :label)
           `</span>`
           `<div class="d-inline-block features">`
@@ -160,12 +185,12 @@ tiny mind-tree creator.
             (if              ((u :meta) :important)     (html/badge "🌟" ""         "") "")
             (if              ((u :meta) :pdf-reference) (html/badge "📕" ((u :meta) :pdf-reference) (string `contentFor(event,'` (u :id) `')`))  "")
             (if              ((u :meta) :web-url)       (html/badge "🌐"  ((u :meta) :web-url      ) (string `contentFor(event,'` (u :id) `')`))  "")
-          `</div>`
-        `</summary>`
-        `<div class="border-start border-gray my-1 ps-4">`
-          (mind-map/html-impl (u :children) out-dir use-cache)
-        `</div>`
-      `</details>`))
+          `</div>
+         </summary>
+         <div class="border-start border-gray my-1 ps-4">`
+          (mind-map/html-impl (u :children) out-dir use-cache (+ 1 level))
+        `</div>
+       </details>`))
 ))
 
 (defn mind-map/html (mm title out-dir use-cache) 
@@ -237,22 +262,32 @@ tiny mind-tree creator.
         el.classList.remove("d-none")
         toggleSidebar(true)
       }
+
+      const blurClass = "opacity-25"
+      const contentTree = `(JS (mm :ids))`
+
+      function toggleBlurNodes(root, blur) {
+        let el = root ? document.querySelector('#' + root) : document;
+
+        [...el.querySelectorAll('.branch-label')]
+          .forEach(el => clsx(el, {[blurClass]: blur}))
+      }
+
+      function toggleFocusNode(id) {
+        let pel = document.querySelector('#' + id)
+        toggleBlurNodes(null, true);
+
+        if (pel.open) 
+          toggleBlurNodes(contentTree[id].parent, false)
+        else
+          toggleBlurNodes(id, false)
+      }
+
     </script>
 
-    <div class="container my-4">
-    
-      <div class="my-2">  
-        <button class="btn btn-sm btn-outline-primary" onclick="toggleNodes(document.body, true)">
-          expand all
-        </button>
-
-        <button class="btn btn-sm btn-outline-primary" onclick="toggleNodes(document.body, false)">
-          collapse all
-        </button>
-      </div>`
-      (mind-map/html-impl (mm :root) out-dir use-cache)
+    <div class="container my-4">`
+      (mind-map/html-impl (mm :root) out-dir use-cache 0)
     `</div>
-    
     <div class="pb-5"></div>
     <div class="pb-5"></div>
 
