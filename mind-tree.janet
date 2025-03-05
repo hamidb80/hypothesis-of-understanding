@@ -270,8 +270,8 @@ tiny mind-tree creator.
                         (html/props n out-dir use-cache)
                       `</div>`)))
 
-     `</div>`
-   `</aside>
+     `</div>
+    </aside>
     </body>
     </html>`))
 
@@ -285,7 +285,7 @@ tiny mind-tree creator.
 (def mm (mind-map/create [
   "Introduction :: Cryptology" [
     "Crypto-graphy  :: hiding " (bk 19) [
-      "Symmetric Cipher"
+      "Symmetric  Cipher"
       "Asymmetric Cipher"
       "Protocols"
     ]
