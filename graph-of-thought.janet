@@ -307,7 +307,8 @@
         <div class="my-3">
           <div class="card">
             <div class="card-body">
-              <p class="content p-0 m-0"></p>
+              <div class="content">
+              </div>
             </div>
           </div>
         </div>
@@ -357,9 +358,7 @@
           if (e.kind == 'node') {
             qa(nodeClass(e.id)).forEach(show)
           }
-          else {
-            q('.content').innerText = e.content
-          }
+          q('.content').innerHTML = e.content
         }
       }
       function goPrev(){
@@ -387,12 +386,13 @@
     
     </html>`))
 
-(defn n [id class anscestors contents] # node
+(defn n [id class anscestors content] # node
   # :problem :recall :reason :calculate
-  {:kind  :node 
-   :id    id
-   :class class 
-   :ans   anscestors})
+  {:kind     :node 
+   :id       id
+   :class    class 
+   :ans      anscestors
+   :content  content})
 
 (defn m [content] # question or hint
   {:kind    :message 
@@ -412,19 +412,19 @@
 
 (def p1 (GoT/init [
   (m  (c :hello))
-  (n :root :problem [] [(c :hello)])
+  (n :root :problem [] (c :hello))
   (m  (c :h1))
-  (n :t1 :recall [:root] [(c :hello)])
+  (n :t1 :recall [:root] (c :hello))
   (m  (c :h2))
-  (n :t22 :calculate [:root] [(c :hello)])
+  (n :t22 :calculate [:root] (c :hello))
   (m  (c :h3))
-  (n :t2 :reason [:t1 :t22] [(c :hello)])
+  (n :t2 :reason [:t1 :t22] (c :hello))
   (m  (c :h4))
-  (n :t23 :recall [:root] [(c :hello)])
+  (n :t23 :recall [:root] (c :hello))
   (m  (c :h5))
-  (n :t4 :reason [:t23] [(c :hello)])
+  (n :t4 :reason [:t23] (c :hello))
   (m  (c :h6))
-  (n :t5 :goal [:t4 :t2] [(c :hello)])
+  (n :t5 :goal [:t4 :t2] (c :hello))
   (m  (c :welldone))
 ]))
 
