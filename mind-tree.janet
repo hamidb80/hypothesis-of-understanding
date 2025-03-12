@@ -148,7 +148,6 @@ tiny mind-tree creator.
 )
 
 (defn JS (data)
-  
   (defn table-like (t) (string 
       `{` 
       (join-map (keys t) (fn (k) (string (JS k) `: ` (JS (t k)) `,`))) 
