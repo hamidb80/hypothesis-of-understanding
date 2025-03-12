@@ -296,7 +296,7 @@
     <body>
       <main class="container">
         <div class="my-4">
-          <button class="btn btn-primary" onclick="init()"> INIT </button>
+          <button class="btn btn-primary" onclick="init()">   init/reset </button>
           <button class="btn btn-primary" onclick="goPrev()"> prev </button>
           <button class="btn btn-primary" onclick="goNext()"> next </button>
         </div>
@@ -305,7 +305,11 @@
         </center>
 
         <div class="my-3">
-          <p class="content"></p>
+          <div class="card">
+            <div class="card-body">
+              <p class="content p-0 m-0"></p>
+            </div>
+          </div>
         </div>
 
       </main>
