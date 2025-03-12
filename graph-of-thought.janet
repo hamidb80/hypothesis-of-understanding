@@ -295,13 +295,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Name </title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body>
       <main class="container">
         <div class="my-4">
-          <button class="btn btn-primary" onclick="init()">   init/reset </button>
-          <button class="btn btn-primary" onclick="goPrev()"> prev </button>
-          <button class="btn btn-primary" onclick="goNext()"> next </button>
+          <button class="btn btn-primary" onclick="init()">   
+            init/reset 
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+          <button class="btn btn-primary" onclick="goPrev()"> 
+            prev 
+            <i class="bi bi-arrow-left"></i>
+          </button>
+          <button class="btn btn-primary" onclick="goNext()"> 
+            next 
+            <i class="bi bi-arrow-right"></i>
+          </button>
         </div>
         <center>
           <div class="d-inline-block bg-light border rounded">
@@ -309,21 +319,20 @@
           </div>
         </center>
 
-        <div class="my-3">
-          <div class="card">
-            <div class="card-body">`
-
-            (join-map (pairs content-db) (fn [kv] 
-              (string 
-                `<div class="content ` (content-class (first kv)) `">`
-                  (last kv)
-                `</div>`
-                )))
-
-           `</div>
-          </div>
+        <div class="card-footer fs-6">
+          Thought 
+          <i class="bi bi-chat-left-text"></i>
         </div>
 
+        <div class="my-3">`
+          (join-map (pairs content-db) (fn [kv] 
+            (string 
+              `<div class="card content ` (content-class (first kv)) `">
+                 <div class="card-body">`
+                    (last kv)
+                 `</div>
+               </div>`)))
+        `</div>
       </main>
 
     </body>
