@@ -298,6 +298,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body>
+    
       <main class="container">
         <div class="my-4">
           <button class="btn btn-primary" onclick="init()">   
@@ -313,6 +314,11 @@
             <i class="bi bi-arrow-right"></i>
           </button>
         </div>
+
+        <div class="card-footer fs-6">
+          <i class="bi bi-share"></i>
+          Graph of Thoughts
+        </div>
         <center>
           <div class="d-inline-block bg-light border rounded">
           ` svg `
@@ -320,8 +326,8 @@
         </center>
 
         <div class="card-footer fs-6">
-          Thought 
           <i class="bi bi-chat-left-text"></i>
+          Messages
         </div>
 
         <div class="my-3">`
