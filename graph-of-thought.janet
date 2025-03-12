@@ -20,19 +20,19 @@
 
 # ---------- vector arithmatic
 # (defn zip (a b) (map tuple a b))
-(defn v+    (v1 v2) 
+(defn v+ (v1 v2) 
   (map + v1 v2))
 
-(defn v-    (v1 v2) 
+(defn v- (v1 v2) 
   (map - v1 v2))
 
 (defn v* (scalar v) 
   (map (fn (x) (* x scalar)) v))
 
-(defn v-mag     (v) 
+(defn v-mag (v) 
   (math/sqrt (reduce + 0 (map * v v))))
 
-(defn v-norm    (a) 
+(defn v-norm (a) 
   (v* (/ 1 (v-mag a)) a))
 
 # ---------- JSON
@@ -161,6 +161,9 @@
 (defn node-class (id)
   (string "node-" id))
 
+(defn content-class (id)
+  (string "content-" id))
+
 (defn positioned-item (n r c rng rw) 
   {:node n :row r :col c :row-range rng :row-width rw})
 
@@ -283,7 +286,7 @@
          :height (length grid) 
          :width  (length (grid 0))}))
 
-(defn GoT/to-html (got svg)
+(defn GoT/to-html (got svg content-db)
   (string `
     <!DOCTYPE html>
     <html lang="en">
@@ -301,15 +304,23 @@
           <button class="btn btn-primary" onclick="goNext()"> next </button>
         </div>
         <center>
-        ` svg `
+          <div class="d-inline-block bg-light border rounded">
+          ` svg `
+          </div>
         </center>
 
         <div class="my-3">
           <div class="card">
-            <div class="card-body">
-              <div class="content">
-              </div>
-            </div>
+            <div class="card-body">`
+
+            (join-map (pairs content-db) (fn [kv] 
+              (string 
+                `<div class="content ` (content-class (first kv)) `">`
+                  (last kv)
+                `</div>`
+                )))
+
+           `</div>
           </div>
         </div>
 
@@ -331,18 +342,25 @@
         return document.querySelector(sel)
       }
 
+      
+      function clearDisplay(el){
+        el.classList.add("d-none")
+      }
+      
       function hide(el){
-        el.style.visibility="hidden"
+        el.classList.add("invisible")
       }
       
       function show(el){
-        el.style.visibility= "visible"
+        el.classList.remove("invisible")
+        el.classList.remove("d-none")
       }
 
       function init(){
         cursor = -1
         qa(".node").forEach(hide)
         qa(".edge").forEach(hide)
+        qa(".content").forEach(clearDisplay)
       }
 
       // -----------------------
@@ -350,17 +368,25 @@
       function nodeClass(id){
         return '.node-' + id
       }
+      
+      function contentClass(id){
+        return '.content-' + id
+      }
 
       function goNext(){
+        // hide previous
+        qa(contentClass(events[cursor]?.content)).forEach(clearDisplay)
+
         cursor ++
         let e = events[cursor]
         if (e){
           if (e.kind == 'node') {
             qa(nodeClass(e.id)).forEach(show)
           }
-          q('.content').innerHTML = e.content
+          show(q(contentClass(e.content)))
         }
       }
+
       function goPrev(){
         qa(nodeClass(e.id)).forEach(hide)
         cursor --
@@ -379,9 +405,6 @@
         opacity: 0.5;
       }
 
-      svg {
-        border: 1px solid black;
-      }
     </style>
     
     </html>`))
@@ -399,33 +422,33 @@
    :content content})
 
 # ---------- test
-(def c {
+(def content-db {
   :hello    "hi"
-  :h1    "h1"
-  :h2    "h2"
-  :h3    "h3"
-  :h4    "h4"
-  :h5    "h5"
-  :h6    "h6"
+  :h1       "h1"
+  :h2       "h2"
+  :h3       "h3"
+  :h4       "h4"
+  :h5       "h5"
+  :h6       "h6"
   :welldone "well done"
 })
 
 (def p1 (GoT/init [
-  (m  (c :hello))
-  (n :root :problem [] (c :hello))
-  (m  (c :h1))
-  (n :t1 :recall [:root] (c :hello))
-  (m  (c :h2))
-  (n :t22 :calculate [:root] (c :hello))
-  (m  (c :h3))
-  (n :t2 :reason [:t1 :t22] (c :hello))
-  (m  (c :h4))
-  (n :t23 :recall [:root] (c :hello))
-  (m  (c :h5))
-  (n :t4 :reason [:t23] (c :hello))
-  (m  (c :h6))
-  (n :t5 :goal [:t4 :t2] (c :hello))
-  (m  (c :welldone))
+  (m  :hello)
+  (n :root :problem [] :hello)
+  (m :h1)
+  (n :t1 :recall [:root] :hello)
+  (m :h2)
+  (n :t22 :calculate [:root] :hello)
+  (m :h3)
+  (n :t2 :reason [:t1 :t22] :hello)
+  (m :h4)
+  (n :t23 :recall [:root] :hello)
+  (m :h5)
+  (n :t4 :reason [:t23] :hello)
+  (m :h6)
+  (n :t5 :goal [:t4 :t2] :hello)
+  (m :welldone)
 ]))
 
 (pp p1)
@@ -434,7 +457,7 @@
   (GoT/to-svg p1 {:radius   16
                   :spacex  100
                   :spacey   80
-                  :padx     50
+                  :padx    100
                   :pady     50
                   :stroke    4
                   :node-pad  6
@@ -446,4 +469,4 @@
                               :calculate "#E85C0D"
                               :reason    "#5CB338" }}))
 
-(file/put "./play.html" (GoT/to-html p1 svg-p1))
+(file/put "./play.html" (GoT/to-html p1 svg-p1 content-db))
