@@ -291,18 +291,25 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Name </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
     <body>
-      <div>
-        <button onclick="init()"> INIT </button>
-        <button onclick="goPrev()"> prev </button>
-        <button onclick="goNext()"> next </button>
-      </div>
-     ` svg `
+      <main class="container">
+        <div class="my-4">
+          <button class="btn btn-primary" onclick="init()"> INIT </button>
+          <button class="btn btn-primary" onclick="goPrev()"> prev </button>
+          <button class="btn btn-primary" onclick="goNext()"> next </button>
+        </div>
+        <center>
+        ` svg `
+        </center>
 
-     <div>
-       <p class="content"></p>
-     </div>
+        <div class="my-3">
+          <p class="content"></p>
+        </div>
+
+      </main>
+
     </body>
 
     <script>
@@ -376,7 +383,7 @@
     
     </html>`))
 
-(defn n [id class anscestors] # node
+(defn n [id class anscestors contents] # node
   # :problem :recall :reason :calculate
   {:kind  :node 
    :id    id
@@ -388,22 +395,33 @@
    :content content})
 
 # ---------- test
+(def c {
+  :hello    "hi"
+  :h1    "h1"
+  :h2    "h2"
+  :h3    "h3"
+  :h4    "h4"
+  :h5    "h5"
+  :h6    "h6"
+  :welldone "well done"
+})
+
 (def p1 (GoT/init [
-  (m  "1.")
-  (n :root :problem [])
-  (m  "2.")
-  (n :t1 :recall [:root])
-  (m  "3.")
-  (n :t22 :calculate [:root])
-  (m  "4.")
-  (n :t2 :reason [:t1 :t22])
-  (m  "5.")
-  (n :t23 :recall [:root])
-  (m  "6.")
-  (n :t4 :reason [:t23])
-  (m  "8.")
-  (n :t5 :goal [:t4 :t2])
-  (m  "well done!")
+  (m  (c :hello))
+  (n :root :problem [] [(c :hello)])
+  (m  (c :h1))
+  (n :t1 :recall [:root] [(c :hello)])
+  (m  (c :h2))
+  (n :t22 :calculate [:root] [(c :hello)])
+  (m  (c :h3))
+  (n :t2 :reason [:t1 :t22] [(c :hello)])
+  (m  (c :h4))
+  (n :t23 :recall [:root] [(c :hello)])
+  (m  (c :h5))
+  (n :t4 :reason [:t23] [(c :hello)])
+  (m  (c :h6))
+  (n :t5 :goal [:t4 :t2] [(c :hello)])
+  (m  (c :welldone))
 ]))
 
 (pp p1)

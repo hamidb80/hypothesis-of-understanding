@@ -17,7 +17,7 @@ tiny mind-tree creator.
   (string/join (map f lst)))
 
 (defn rand/int (a b)
-       (+ a (math/floor (* (- b a) (math/random)))))
+  (+ a (math/floor (* (- b a) (math/random)))))
 
 # props
 
