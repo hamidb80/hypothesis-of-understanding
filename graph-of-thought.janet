@@ -286,7 +286,7 @@
          :height (length grid) 
          :width  (length (grid 0))}))
 
-(defn GoT/to-html (got svg content-db)
+(defn GoT/to-html (got svg message-db)
   (string `
     <!DOCTYPE html>
     <html lang="en">
@@ -301,7 +301,7 @@
     
       <main class="container mt-4">
         <div class="fs-6">
-          <i class="bi bi-share"></i>
+          <i class="bi bi-share-fill"></i>
           Graph of Thoughts
         </div>
         <center>
@@ -327,14 +327,14 @@
 
 
         <div class="fs-6">
-          <i class="bi bi-chat-left-text"></i>
-          Messages
+          <i class="bi bi-person-walking"></i>
+          Steps
         </div>
 
         <div class="my-3">`
-          (join-map (pairs content-db) (fn [kv] 
-            (let [key (first kv)
-                  val (last  kv)]
+          (join-map (got :events) (fn [e] 
+            (let [key (e     :content)
+                  val (message-db key)]
               (string 
               `<div class="mb-3 card content ` (content-class key) `">`
 
@@ -466,7 +466,7 @@
    :after   after})
 
 # ---------- test
-(def content-db {
+(def message-db {
   :hello    (c "what do you think?" "hi" "huh?")
   :h1       (c nil "h1" nil)
   :h2       (c nil "h2" nil)
@@ -513,4 +513,4 @@
                               :calculate "#E85C0D"
                               :reason    "#5CB338" }}))
 
-(file/put "./play.html" (GoT/to-html p1 svg-p1 content-db))
+(file/put "./play.html" (GoT/to-html p1 svg-p1 message-db))
