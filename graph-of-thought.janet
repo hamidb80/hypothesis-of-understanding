@@ -299,23 +299,8 @@
     </head>
     <body>
     
-      <main class="container">
-        <div class="my-4">
-          <button class="btn btn-primary" onclick="init()">   
-            init/reset 
-            <i class="bi bi-arrow-clockwise"></i>
-          </button>
-          <button class="btn btn-primary" onclick="goPrev()"> 
-            prev 
-            <i class="bi bi-arrow-left"></i>
-          </button>
-          <button class="btn btn-primary" onclick="goNext()"> 
-            next 
-            <i class="bi bi-arrow-right"></i>
-          </button>
-        </div>
-
-        <div class="card-footer fs-6">
+      <main class="container mt-4">
+        <div class="fs-6">
           <i class="bi bi-share"></i>
           Graph of Thoughts
         </div>
@@ -325,7 +310,23 @@
           </div>
         </center>
 
-        <div class="card-footer fs-6">
+        <div class="my-3 d-flex justify-content-center">
+          <button class="mx-1 btn btn-primary" onclick="init()">   
+            init/reset 
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+          <button class="mx-1 btn btn-primary" onclick="goPrev()"> 
+            prev 
+            <i class="bi bi-arrow-left"></i>
+          </button>
+          <button class="mx-1 btn btn-primary" onclick="goNext()"> 
+            next 
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+
+
+        <div class="fs-6">
           <i class="bi bi-chat-left-text"></i>
           Messages
         </div>
