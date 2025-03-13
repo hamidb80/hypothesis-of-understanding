@@ -195,7 +195,7 @@
       (each item (GoT/to-svg-impl got)
         (let [pos (GoT/svg-calc-pos item got cfg ctx)]
           (put locs   (item :node) pos)
-          (array/push acc (svg/circle (first pos) (last pos) (cfg :radius) ((cfg :color-map) (((got :nodes) (item :node)) :class)) {:class (string "node " (node-class (item :node)))}))))
+          (array/push acc (svg/circle (first pos) (last pos) (cfg :radius) ((cfg :color-map) (((got :nodes) (item :node)) :class)) {:class (string/join ["node" (string "node-class-" (((got :nodes) (item :node)) :class)) (node-class (item :node))] " ")}))))
       
       (each e (got :edges)
         (let [from (first e)
@@ -251,19 +251,21 @@
                         col)) 
                     parents))
  
-  (def center (/ (if (even? width) width (inc width)) 2))
+  (def center (min (dec width) (/ (if (even? width) width (inc width)) 2)))
   (def avg-parents-col (if (empty? parents) center (avg parents-col)))
 
   (var i (math/floor avg-parents-col))
-  (var j (math/ceil avg-parents-col))
+  (var j (math/ceil  avg-parents-col))
 
   (while true 
-    (cond
-      (nil? (get-cell grid selected-row i)) (break (put-cell grid selected-row i node))
-      (nil? (get-cell grid selected-row j)) (break (put-cell grid selected-row j node))
-            (do 
-              (set i (max 0           (dec i)))
-              (set j (min (dec width) (inc j)))))))
+    (let [left  (max 0           i)
+          right (min (dec width) j)]
+      (cond
+        (nil? (get-cell grid selected-row left )) (break (put-cell grid selected-row left  node))
+        (nil? (get-cell grid selected-row right)) (break (put-cell grid selected-row right node))
+              (do 
+                (-- i)
+                (++ j))))))
 
 (defn GoT/fill-grid (events levels)
   (let [rows  (rev-table   levels)
@@ -300,10 +302,15 @@
     <body>
     
       <main class="container mt-4">
+        <img src="./image.png" class="w-100"/>
+
+        <hr/>
+
         <div class="fs-6">
           <i class="bi bi-share-fill"></i>
           Graph of Thoughts
         </div>
+
         <center>
           <div class="d-inline-block bg-light border rounded">
           ` svg `
@@ -347,7 +354,7 @@
                        `</small>
                       </div>`)))
 
-                 `<div class="card-body">`
+                 `<div class="card-body" dir="auto">`
                     (val :body)
                  `</div>`
 
@@ -459,7 +466,7 @@
   {:kind    :message 
    :content content})
 
-(defn c [before body after]
+(defn c [before after body]
   {:kind    :content
    :before  before
    :body    body
@@ -467,38 +474,85 @@
 
 # ---------- test
 (def message-db {
-  :hello    (c "what do you think?" "hi" "huh?")
-  :h1       (c nil "h1" nil)
-  :h2       (c nil "h2" nil)
-  :h3       (c nil "h3" nil)
-  :h4       (c nil "h4" nil)
-  :h5       (c nil "h5" nil)
-  :h6       (c nil "h6" nil)
-  :welldone (c nil "well done" nil)
+  :welldone (c nil nil "به جواب رسیدیم")
+  :hi       (c nil nil "hi")
+  
+  :focus (c nil nil `
+    خب از سوال معلومه که در مورد 
+    جبر رابطه ای هست
+  `)
+
+  :init (c nil nil `
+    گزینه 1 رو بررسی میکنیم  
+  `)
+
+  :div-operator (c nil nil `
+      یادته تقسیم چیکار میکرد؟
+    ` )
+  :project-operator (c nil nil `
+      پروجکت
+    ` )
+  :sigma-operator (c nil nil `
+      سیگما
+    ` )
+
+  :join-operator (c nil nil `
+      جوین
+    ` )
+
+  :op-1 (c nil `پس چیزی نیست که ما میخوایم` `
+      این گزینه بهمون همه کتاب هایی رو میده که توسط همه افراد بالای 18 سال به امانت گرفته شدن
+    `)
+  :op-2 (c nil `پس چیزی نیست که ما میخوایم` `
+      این گزینه بهمون همه کتاب های آقای احمدی ای رو میده که توسط حداقل یک آدم 18 ساله وکوچکتر به امانت گرفته شده
+    `)
+  :op-3 (c nil `پس چیزی نیست که ما میخوایم` `
+          مثل بالایی    `)
+  :op-4 (c nil `این درسته` `
+      این گزینه بهمون همه کتاب های آقای احمدی رو میده که توسط هیچ 18 به بالا امانت گرفته نشده.
+    `)
 })
 
-(def p1 (GoT/init [
-  (m  :hello)
-  (n :root :problem [] :hello)
-  (m :h1)
-  (n :t1 :recall [:root] :hello)
-  (m :h2)
-  (n :t22 :calculate [:root] :hello)
-  (m :h3)
-  (n :t2 :reason [:t1 :t22] :hello)
-  (m :h4)
-  (n :t23 :recall [:root] :hello)
-  (m :h5)
-  (n :t4 :reason [:t23] :hello)
-  (m :h6)
-  (n :t5 :goal [:t4 :t2] :hello)
-  (m :welldone)
+(def got1 (GoT/init [
+  # (m  :init)
+  # (n :root :problem [] :init)
+  # (m :hi)
+  # (n :t1 :recall [:root] :init)
+  # (m :hi)
+  # (n :t22 :calculate [:root] :init)
+  # (m :hi)
+  # (n :t2 :reason [:t1 :t22] :init)
+  # (m :hi)
+  # (n :t23 :recall [:root] :init)
+  # (m :hi)
+  # (n :t4 :reason [:t23] :init)
+  # (m :hi)
+  # (n :t5 :goal [:t4 :t2] :init)
+  # (m :welldone)
+
+  (m :focus)
+  (n :root       :problem []      :init)
+  
+  (n :sigma      :recall  [:root] :sigma-operator)
+  (n :project    :recall  [:root] :project-operator)
+  (n :div        :recall  [:root] :div-operator)
+
+  (n :op-1-final :reason  [:div :project :sigma] :op-1)
+
+  (n :join        :recall  [:root] :join-operator)
+
+  (n :op-2-final :reason  [:join :project :sigma] :op-2)
+  (n :op-3-final :reason  [:join :project :sigma] :op-3)
+  (n :op-4-final :reason  [:join :project :sigma] :op-4)
+  
+  (n :goal :goal  [:op-4-final] :op-4)
+
 ]))
 
-(pp p1)
+(pp got1)
 
-(def svg-p1 
-  (GoT/to-svg p1 {:radius   16
+(def svg-got1 
+  (GoT/to-svg got1 {:radius   16
                   :spacex  100
                   :spacey   80
                   :padx    100
@@ -513,4 +567,4 @@
                               :calculate "#E85C0D"
                               :reason    "#5CB338" }}))
 
-(file/put "./play.html" (GoT/to-html p1 svg-p1 message-db))
+(file/put "./play.html" (GoT/to-html got1 svg-got1 message-db))
