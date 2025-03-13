@@ -332,12 +332,34 @@
 
         <div class="my-3">`
           (join-map (pairs content-db) (fn [kv] 
-            (string 
-              `<div class="card content ` (content-class (first kv)) `">
-                 <div class="card-body">`
-                    (last kv)
-                 `</div>
-               </div>`)))
+            (let [key (first kv)
+                  val (last  kv)]
+              (string 
+              `<div class="mb-3 card content ` (content-class key) `">`
+
+                (let [summ (val :before)]
+                  (if summ 
+                    (string 
+                      `<div class="card-header">
+                        <small class="text-muted">`
+                          summ
+                       `</small>
+                      </div>`)))
+
+                 `<div class="card-body">`
+                    (val :body)
+                 `</div>`
+
+                (let [summ (val :after)]
+                  (if summ 
+                    (string 
+                      `<div class="card-footer">
+                        <small class="text-muted">`
+                          summ
+                       `</small>
+                      </div>`)))
+
+               `</div>`))))
         `</div>
       </main>
 
@@ -436,16 +458,22 @@
   {:kind    :message 
    :content content})
 
+(defn c [before body after]
+  {:kind    :content
+   :before  before
+   :body    body
+   :after   after})
+
 # ---------- test
 (def content-db {
-  :hello    "hi"
-  :h1       "h1"
-  :h2       "h2"
-  :h3       "h3"
-  :h4       "h4"
-  :h5       "h5"
-  :h6       "h6"
-  :welldone "well done"
+  :hello    (c "what do you think?" "hi" "huh?")
+  :h1       (c nil "h1" nil)
+  :h2       (c nil "h2" nil)
+  :h3       (c nil "h3" nil)
+  :h4       (c nil "h4" nil)
+  :h5       (c nil "h5" nil)
+  :h6       (c nil "h6" nil)
+  :welldone (c nil "well done" nil)
 })
 
 (def p1 (GoT/init [
