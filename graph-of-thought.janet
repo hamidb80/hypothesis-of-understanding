@@ -157,6 +157,11 @@
 (defn put-cell [grid y x val]
   (put (grid y) x val))
 
+# ---------- HTML elements
+(defn h/latex (eq)
+  (string `<div class="latex">`
+            eq
+          `</div>`))
 # ---------- domain
 (defn node-class (id)
   (string "node-" id))
@@ -209,7 +214,7 @@
               t    (v- tail diff)]
           (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) {:from-node-id from :to-node-id to :class (string "edge " (node-class to))}))))
     
-      (reverse acc))))
+      acc)))
 
 (defn rev-table [tab]
   (def acc @{})
@@ -308,17 +313,23 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Name </title>
+        
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.css">
+        <link href=" https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css " rel="stylesheet">
+
+        <script src="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.js"></script>
+        <script src=" https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js "></script>
     </head>
     <body>
     
-      <main class="container mt-4">
+      <main class="container my-4">
         <img src="./image.png" class="w-100"/>
 
         <hr/>
 
-        <div class="fs-6">
+        <div class="fs-6 my-3">
           <i class="bi bi-share-fill"></i>
           Graph of Thoughts
         </div>
@@ -357,7 +368,7 @@
               (string 
               `<div class="mb-3 card content ` (content-class key) `">`
 
-                (let [summ (val :before)]
+                (let [summ (val :summary)]
                   (if summ 
                     (string 
                       `<div class="card-header">
@@ -369,15 +380,6 @@
                  `<div class="card-body" dir="auto">`
                     (val :body)
                  `</div>`
-
-                (let [summ (val :after)]
-                  (if summ 
-                    (string 
-                      `<div class="card-footer">
-                        <small class="text-muted">`
-                          summ
-                       `</small>
-                      </div>`)))
 
                `</div>`))))
         `</div>
@@ -480,6 +482,10 @@
       function goPrev(){
       }
 
+      up.compiler('.latex', el => {
+        katex.render(el.innerText, el, { displayMode: true })
+      })
+
     </script>
 
     <style>
@@ -493,7 +499,7 @@
     </style>
     
     </html>`))
-
+# ---------- ???
 (defn n [id class parents content] # node
   # :problem :recall :reason :calculate
   {:kind     :node 
@@ -506,70 +512,51 @@
   {:kind    :message 
    :content content})
 
-(defn c [before after body]
+(defn c [summary body]
   {:kind    :content
-   :before  before
-   :body    body
-   :after   after})
+   :summary summary
+   :body    body})
 
 # ---------- test
 (def message-db {
-  :welldone (c nil nil "به جواب رسیدیم")
-  :hi       (c nil nil "hi")
+  :welldone (c nil "به جواب رسیدیم")
   
-  :focus (c nil nil `
+  :focus (c nil `
     خب از سوال معلومه که در مورد 
     جبر رابطه ای هست
   `)
 
-  :init (c nil nil `
+  :init (c nil `
     گزینه 1 رو بررسی میکنیم  
   `)
 
-  :div-operator (c nil nil `
+  :div-operator (c nil `
       یادته تقسیم چیکار میکرد؟
     ` )
-  :project-operator (c nil nil `
-      پروجکت
-    ` )
-  :sigma-operator (c nil nil `
+  :project-operator (c nil (h/latex `\prod_{}^{}`))
+  :sigma-operator (c nil `
       سیگما
     ` )
 
-  :join-operator (c nil nil `
+  :join-operator (c nil `
       جوین
     ` )
 
-  :op-1 (c nil `پس چیزی نیست که ما میخوایم` `
+  :op-1 (c nil `
       این گزینه بهمون همه کتاب هایی رو میده که توسط همه افراد بالای 18 سال به امانت گرفته شدن
+      پس چیزی نیست که ما میخوایم
     `)
-  :op-2 (c nil `پس چیزی نیست که ما میخوایم` `
+  :op-2 (c nil `
       این گزینه بهمون همه کتاب های آقای احمدی ای رو میده که توسط حداقل یک آدم 18 ساله وکوچکتر به امانت گرفته شده
+      پس چیزی نیست که ما میخوایم
     `)
-  :op-3 (c nil `پس چیزی نیست که ما میخوایم` `
-          مثل بالایی    `)
-  :op-4 (c nil `این درسته` `
+  :op-3 (c nil `پس چیزی نیست که ما میخوایم`)
+  :op-4 (c nil `
       این گزینه بهمون همه کتاب های آقای احمدی رو میده که توسط هیچ 18 به بالا امانت گرفته نشده.
     `)
 })
 
 (def got1 (GoT/init [
-  # (m  :init)
-  # (n :root :problem [] :init)
-  # (m :hi)
-  # (n :t1 :recall [:root] :init)
-  # (m :hi)
-  # (n :t22 :calculate [:root] :init)
-  # (m :hi)
-  # (n :t2 :reason [:t1 :t22] :init)
-  # (m :hi)
-  # (n :t23 :recall [:root] :init)
-  # (m :hi)
-  # (n :t4 :reason [:t23] :init)
-  # (m :hi)
-  # (n :t5 :goal [:t4 :t2] :init)
-  # (m :welldone)
-
   (m :focus)
   (n :root       :problem []      :init)
   
@@ -586,7 +573,6 @@
   (n :op-4-final :reason  [:join :project :sigma] :op-4)
   
   (n :goal :goal  [:op-4-final] :op-4)
-
 ]))
 
 # (pp got1)
