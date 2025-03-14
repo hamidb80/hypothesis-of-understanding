@@ -195,7 +195,7 @@
       (each item (GoT/to-svg-impl got)
         (let [pos (GoT/svg-calc-pos item got cfg ctx)]
           (put locs   (item :node) pos)
-          (array/push acc (svg/circle (first pos) (last pos) (cfg :radius) ((cfg :color-map) (((got :nodes) (item :node)) :class)) {:class (string/join ["node" (string "node-class-" (((got :nodes) (item :node)) :class)) (node-class (item :node))] " ")}))))
+          (array/push acc (svg/circle (first pos) (last pos) (cfg :radius) ((cfg :color-map) (((got :nodes) (item :node)) :class)) {:node-id (item :node) :class (string/join ["node" (string "node-class-" (((got :nodes) (item :node)) :class)) (node-class (item :node))] " ")}))))
       
       (each e (got :edges)
         (let [from (first e)
@@ -207,7 +207,7 @@
               diff (v* (+ (cfg :node-pad) (cfg :radius)) nv)
               h    (v+ head diff)
               t    (v- tail diff)]
-          (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) {:class (string "edge " (node-class to))}))))
+          (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) {:from-node-id from :to-node-id to :class (string "edge " (node-class to))}))))
     
       (reverse acc))))
 
@@ -225,14 +225,14 @@
   (each e events 
     (match (e :kind)
            :message nil
-           :node     (put levels (e :id) (+ 1 (reduce max 0 (map levels (e :ans)))))))
+           :node     (put levels (e :id) (+ 1 (reduce max 0 (map levels (e :parents)))))))
   levels)
 
 (defn GoT/extract-edges [events]
   (let [acc @[]]
        (each e events
           (match (e :kind)
-            :node (each a (e :ans)
+            :node (each a (e :parents)
                     (array/push acc [a (e :id)]))))
        acc))
 
@@ -273,20 +273,32 @@
         grid  (GoT/init-grid rows)]
     (each e events
       (match (e :kind)
-        :node (GoT/place-node grid shape levels (e :id) (dec (levels (e :id))) (e :ans) )))
+        :node (GoT/place-node grid shape levels (e :id) (dec (levels (e :id))) (e :parents) )))
     grid))
 
+(defn GoT/all-anscestors (topological-sorted-node-ids nodes-tab)
+  (let [acc @{}]
+    (each node topological-sorted-node-ids
+      (let [ac @{}]
+        (each a ((nodes-tab node) :parents)
+          (put ac a 1)
+          (each aa (acc a)
+            (put ac aa 1)))
+      (put acc node (keys ac))))
+    acc))
 
 (defn GoT/init [events] 
-  (let [levels   (GoT/build-levels events)
-        grid     (GoT/fill-grid    events levels)]
-        {:events events
-         :levels levels
-         :grid   grid
-         :nodes  (to-table events (fn [e] (if (= :node (e :kind)) (e :id))))
-         :edges  (GoT/extract-edges events)
-         :height (length grid) 
-         :width  (length (grid 0))}))
+  (let [levels            (GoT/build-levels events)
+        grid              (GoT/fill-grid    events levels)
+        nodes             (to-table events (fn [e] (if (= :node (e :kind)) (e :id))))]
+        {:events          events
+         :levels          levels
+         :grid            grid
+         :nodes           nodes
+         :anscestors      (GoT/all-anscestors (filter identity (flatten grid)) nodes)
+         :edges           (GoT/extract-edges events)
+         :height          (length grid) 
+         :width           (length (grid 0))}))
 
 (defn GoT/to-html (got svg message-db)
   (string `
@@ -374,7 +386,8 @@
     </body>
 
     <script>
-      const events  = `(to-js (got :events))`
+      const events     = `(to-js (got :events))`
+      const anscestors = `(to-js (got :anscestors))`
       let cursor
 
       // ------------------ states
@@ -386,6 +399,13 @@
       function q(sel){
         return document.querySelector(sel)
       }
+
+      function clsx(el, cond, cls){
+        if (cond)
+          el.classList.add(cls)
+        else
+          el.classList.remove(cls)
+      } 
 
       
       function clearDisplay(el){
@@ -400,6 +420,31 @@
         el.classList.remove("invisible")
         el.classList.remove("d-none")
       }
+
+      function prepare(){
+        qa(".node").forEach(el => {
+          let id  = el.getAttribute("node-id")
+          let ans = anscestors[id]
+
+          el.onmouseenter = () => {
+            qa(".node").forEach(e => {
+              let pid = e.getAttribute("node-id")
+              clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
+            })
+            qa(".edge").forEach(e => {
+              let pid = e.getAttribute("to-node-id")
+              clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
+            })
+
+          }
+          el.onmouseleave = () => {
+            qa(".node").forEach(e => e.classList.remove("opacity-25"))
+            qa(".edge").forEach(e => e.classList.remove("opacity-25"))
+          }
+        })
+      }
+
+      prepare()
 
       function init(){
         cursor = -1
@@ -433,9 +478,8 @@
       }
 
       function goPrev(){
-        qa(nodeClass(e.id)).forEach(hide)
-        cursor --
       }
+
     </script>
 
     <style>
@@ -446,20 +490,16 @@
         cursor: pointer;
       }
 
-      .node:hover {
-        opacity: 0.5;
-      }
-
     </style>
     
     </html>`))
 
-(defn n [id class anscestors content] # node
+(defn n [id class parents content] # node
   # :problem :recall :reason :calculate
   {:kind     :node 
    :id       id
    :class    class 
-   :ans      anscestors
+   :parents  parents
    :content  content})
 
 (defn m [content] # question or hint
@@ -549,7 +589,7 @@
 
 ]))
 
-(pp got1)
+# (pp got1)
 
 (def svg-got1 
   (GoT/to-svg got1 {:radius   16
