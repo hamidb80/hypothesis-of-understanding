@@ -143,6 +143,15 @@
 (defn avg (lst)
   (/ (reduce + 0 lst) (length lst)))
 
+(defn rev-table [tab]
+  (def acc @{})
+  (eachp (k v) tab
+    (let [lst (acc v)]
+         (if (nil? lst)
+              (put acc v @[k])
+              (array/push lst k))))
+  acc)
+
 # ---------- matrix 
 (defn matrix-size (rows)
   [ (length rows) 
@@ -215,15 +224,6 @@
           (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) {:from-node-id from :to-node-id to :class (string "edge " (node-class to))}))))
     
       acc)))
-
-(defn rev-table [tab]
-  (def acc @{})
-  (eachp (k v) tab
-    (let [lst (acc v)]
-         (if (nil? lst)
-              (put acc v @[k])
-              (array/push lst k))))
-  acc)
 
 (defn GoT/build-levels [events]
   (def  levels @{})
@@ -324,12 +324,9 @@
     </head>
     <body>
     
-      <main class="container my-4">
-        <img src="./image.png" class="w-100"/>
-
-        <hr/>
-
-        <div class="fs-6 my-3">
+    <main class="row gx-2 m-3">
+      <aside class="col col-6 pt-2">
+        <div class="fs-6">
           <i class="bi bi-share-fill"></i>
           Graph of Thoughts
         </div>
@@ -354,12 +351,15 @@
             <i class="bi bi-arrow-right"></i>
           </button>
         </div>
+      </aside>
 
-
+      <aside class="col col-6 pt-2">
         <div class="fs-6">
           <i class="bi bi-person-walking"></i>
           Steps
         </div>
+
+        <img src="./image.png" class="w-100"/>
 
         <div class="my-3">`
           (join-map (got :events) (fn [e] 
@@ -383,7 +383,8 @@
 
                `</div>`))))
         `</div>
-      </main>
+      </aside>
+    </main>
 
     </body>
 

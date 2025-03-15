@@ -1,5 +1,8 @@
 dist/
 out/
+outs/
+output/
+outputs/
 play/
 
 play.*
