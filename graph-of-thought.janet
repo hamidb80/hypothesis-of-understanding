@@ -374,21 +374,22 @@
                              nil      nil)
                   ]
               (string 
-              `<div class="mb-3 card content ` (content-class key) `">`
+              `<div class="pb-3 content ` (content-class key) `" for="` (e :id)` ">
+                 <div class="card">`
+                  (if summ 
+                    (string 
+                      `<div class="card-header">
+                        <small class="text-muted">`
+                          summ
+                        `</small>
+                      </div>`))
 
-                (if summ 
-                  (string 
-                    `<div class="card-header">
-                      <small class="text-muted">`
-                        summ
-                      `</small>
-                    </div>`))
+                  `<div class="card-body" dir="auto">`
+                      (val :body)
+                  `</div>`
 
-                 `<div class="card-body" dir="auto">`
-                    (val :body)
-                 `</div>`
-
-               `</div>`))))
+                  `</div>
+               </div>`))))
         `</div>
       </aside>
     </main>
@@ -455,30 +456,51 @@
           }
       }
 
+      function focusNode(el) {
+        let id  = el.getAttribute("node-id")
+        let ans = anscestors[id]
+
+        qa(".node").forEach(e => {
+          let pid = e.getAttribute("node-id")
+          clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
+        })
+        qa(".edge").forEach(e => {
+          let pid = e.getAttribute("to-node-id")
+          clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
+        })
+      }
+
       function prepare(){
         qa(".node").forEach(el => {
-          let id  = el.getAttribute("node-id")
-          let ans = anscestors[id]
 
           el.onmouseenter = () => {
-            qa(".node").forEach(e => {
-              let pid = e.getAttribute("node-id")
-              clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
-            })
-            qa(".edge").forEach(e => {
-              let pid = e.getAttribute("to-node-id")
-              clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
-            })
+            focusNode(el)
 
+            let id  = el.getAttribute("node-id")
+            let ans = anscestors[id]
+            
             qa(".content").forEach(el => 
               clsx(el, !el.classList.contains(contentClass(nodes[id].content)), "opacity-25"))
             
             scrollToElement(q(".overflow-y-scroll"), q(contentClass(nodes[id].content, true)))
           }
+
           el.onmouseleave = () => {
-            // qa(".node").forEach(e => e.classList.remove("opacity-25"))
-            // qa(".edge").forEach(e => e.classList.remove("opacity-25"))
-            // qa(".content").forEach(e => e.classList.remove("opacity-25"))
+            qa(".node").forEach(e => e.classList.remove("opacity-25"))
+            qa(".edge").forEach(e => e.classList.remove("opacity-25"))
+            qa(".content").forEach(e => e.classList.remove("opacity-25"))
+          }
+        })
+
+        qa(".content").forEach(el => {
+          el.onmouseenter = () => {
+            focusNode(q(nodeClass(el.getAttribute("for"))))
+            qa(".content").forEach(e => clsx(e, e != el, "opacity-25"))
+          }
+
+          el.onmouseleave = () => {
+            qa(".content").forEach(e => clsx(e, false, "opacity-25"))
+
           }
         })
       }
@@ -487,8 +509,8 @@
 
       // -----------------------
 
-      function nodeClass(id){
-        return '.node-' + id
+      function nodeClass(id, dot = true){
+        return (dot ? '.' : '') + 'node-' + id
       }
       
       function contentClass(id, dot){
