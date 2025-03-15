@@ -338,15 +338,19 @@
         </center>
 
         <div class="my-3 d-flex justify-content-center">
-          <button class="mx-1 btn btn-primary" onclick="init()">   
-            init/reset 
+          <button class="mx-1 btn btn-primary" onclick="resetProgress()">
+            reset 
             <i class="bi bi-arrow-clockwise"></i>
           </button>
-          <button class="mx-1 btn btn-primary" onclick="goPrev()"> 
+          <button class="mx-1 btn btn-primary" onclick="skipTillEnd()">   
+            skip
+            <i class="bi bi-skip-forward"></i>
+          </button>
+          <button class="mx-1 btn btn-primary" onclick="prevStep()"> 
             prev 
             <i class="bi bi-arrow-left"></i>
           </button>
-          <button class="mx-1 btn btn-primary" onclick="goNext()"> 
+          <button class="mx-1 btn btn-primary" onclick="nextStep()"> 
             next 
             <i class="bi bi-arrow-right"></i>
           </button>
@@ -374,7 +378,7 @@
                              nil      nil)
                   ]
               (string 
-              `<div class="pb-3 content ` (content-class key) `" for="` (e :id)` ">
+              `<div class="pb-3 content ` (content-class key) `" for="` (e :id)`">
                  <div class="card">`
                   (if summ 
                     (string 
@@ -402,6 +406,14 @@
       const anscestors = `(to-js (got :anscestors))`
       let cursor
 
+      function nodeClass(id, dot = true){
+        return (dot ? '.' : '') + 'node-' + id
+      }
+      
+      function contentClass(id, dot){
+        return (dot ? '.' : '') + 'content-' + id
+      }
+
       // ------------------ states
 
       function qa(sel){
@@ -418,7 +430,6 @@
         else
           el.classList.remove(cls)
       } 
-
       
       function clearDisplay(el){
         el.classList.add("d-none")
@@ -470,6 +481,49 @@
         })
       }
 
+      function unversalStep(step){
+        let sel
+        let c 
+
+        for (let i = 0; i < events.length; i ++){
+          let e = events[i]
+          let sel =
+            (e.kind == "node") 
+            ? "[for='" + e.id + "']" 
+            : contentClass(e.content, true)
+          let c = q(sel)
+
+          clsx(c, step <  i, "d-none")
+          clsx(c, step != i, "opacity-25")
+          
+          if (step == i)
+            scrollToElement(q(".overflow-y-scroll"), c)
+
+          if (e.kind == "node"){
+            clsx(q(nodeClass(e.id)), step < i, "d-none")
+            let ed = qa("[to-node-id='"+ e.id   +"']")
+            if (ed.length) ed.forEach(el => clsx(el, step < i, "d-none"))
+          }
+        }
+      }
+
+      function resetProgress(){
+        cursor = -1
+        unversalStep(cursor)
+      }
+      function skipTillEnd(){
+        cursor = events.length
+        unversalStep(cursor)
+      }
+      function nextStep(){
+        cursor = Math.min(events.length - 1, cursor + 1)
+        unversalStep(cursor)
+      }
+      function prevStep(){
+        cursor = Math.max(0, cursor - 1)
+        unversalStep(cursor)
+      }
+
       function prepare(){
         qa(".node").forEach(el => {
 
@@ -500,26 +554,21 @@
 
           el.onmouseleave = () => {
             qa(".content").forEach(e => clsx(e, false, "opacity-25"))
-
+            qa(".node").forEach(e =>    clsx(e, false, "opacity-25"))
+            qa(".edge").forEach(e =>    clsx(e, false, "opacity-25"))
           }
         })
-      }
 
-      prepare()
+        resetProgress()
+      }
 
       // -----------------------
-
-      function nodeClass(id, dot = true){
-        return (dot ? '.' : '') + 'node-' + id
-      }
-      
-      function contentClass(id, dot){
-        return (dot ? '.' : '') + 'content-' + id
-      }
 
       up.compiler('.latex', el => {
         katex.render(el.innerText, el, { displayMode: true })
       })
+
+      prepare()
 
     </script>
 
