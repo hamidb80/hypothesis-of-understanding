@@ -325,7 +325,7 @@
     <body>
     
     <main class="row gx-2 m-3">
-      <aside class="col col-6 pt-2">
+      <aside class="col col-5 pt-2">
         <div class="fs-6">
           <i class="bi bi-share-fill"></i>
           Graph of Thoughts
@@ -353,7 +353,7 @@
         </div>
       </aside>
 
-      <aside class="col col-6 pt-2">
+      <aside class="col col-7 pt-2 overflow-y-scroll" style="height: calc(100vh - 40px)">
         <div class="fs-6">
           <i class="bi bi-person-walking"></i>
           Steps
@@ -363,19 +363,26 @@
 
         <div class="my-3">`
           (join-map (got :events) (fn [e] 
-            (let [key (e     :content)
-                  val (message-db key)]
+            (let [key      (e     :content)
+                  c        (e     :class)
+                  val      (message-db key)
+                  summ     (match c
+                             :problem "مسئله"
+                             :goal    "هدف"
+                             :reason  "تحلیل"
+                             :recall  "یادآوری"
+                             nil      nil)
+                  ]
               (string 
               `<div class="mb-3 card content ` (content-class key) `">`
 
-                (let [summ (val :summary)]
-                  (if summ 
-                    (string 
-                      `<div class="card-header">
-                        <small class="text-muted">`
-                          summ
-                       `</small>
-                      </div>`)))
+                (if summ 
+                  (string 
+                    `<div class="card-header">
+                      <small class="text-muted">`
+                        summ
+                      `</small>
+                    </div>`))
 
                  `<div class="card-body" dir="auto">`
                     (val :body)
@@ -390,6 +397,7 @@
 
     <script>
       const events     = `(to-js (got :events))`
+      const nodes      = `(to-js (got :nodes))`
       const anscestors = `(to-js (got :anscestors))`
       let cursor
 
@@ -424,6 +432,29 @@
         el.classList.remove("d-none")
       }
 
+      function scrollToElement(wrapper, target, behavior = 'smooth') {
+        switch (behavior) {
+            case 'smooth':
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                break;
+            case 'instant':
+                target.scrollIntoView();
+                break;
+            case 'center':
+                const rect = target.getBoundingClientRect();
+                const containerRect = wrapper.getBoundingClientRect();
+                
+                const offsetTop = rect.top + wrapper.scrollTop - 
+                              (containerRect.height / 2 - rect.height / 2);
+                
+                wrapper.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+                break;
+          }
+      }
+
       function prepare(){
         qa(".node").forEach(el => {
           let id  = el.getAttribute("node-id")
@@ -439,22 +470,20 @@
               clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
             })
 
+            qa(".content").forEach(el => 
+              clsx(el, !el.classList.contains(contentClass(nodes[id].content)), "opacity-25"))
+            
+            scrollToElement(q(".overflow-y-scroll"), q(contentClass(nodes[id].content, true)))
           }
           el.onmouseleave = () => {
-            qa(".node").forEach(e => e.classList.remove("opacity-25"))
-            qa(".edge").forEach(e => e.classList.remove("opacity-25"))
+            // qa(".node").forEach(e => e.classList.remove("opacity-25"))
+            // qa(".edge").forEach(e => e.classList.remove("opacity-25"))
+            // qa(".content").forEach(e => e.classList.remove("opacity-25"))
           }
         })
       }
 
       prepare()
-
-      function init(){
-        cursor = -1
-        qa(".node").forEach(hide)
-        qa(".edge").forEach(hide)
-        qa(".content").forEach(clearDisplay)
-      }
 
       // -----------------------
 
@@ -462,25 +491,8 @@
         return '.node-' + id
       }
       
-      function contentClass(id){
-        return '.content-' + id
-      }
-
-      function goNext(){
-        // hide previous
-        qa(contentClass(events[cursor]?.content)).forEach(clearDisplay)
-
-        cursor ++
-        let e = events[cursor]
-        if (e){
-          if (e.kind == 'node') {
-            qa(nodeClass(e.id)).forEach(show)
-          }
-          show(q(contentClass(e.content)))
-        }
-      }
-
-      function goPrev(){
+      function contentClass(id, dot){
+        return (dot ? '.' : '') + 'content-' + id
       }
 
       up.compiler('.latex', el => {
