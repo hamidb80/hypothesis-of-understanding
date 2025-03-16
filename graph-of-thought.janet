@@ -357,7 +357,7 @@
         </div>
       </aside>
 
-      <aside class="col col-7 pt-2 overflow-y-scroll" style="height: calc(100vh - 40px)">
+      <aside class="col col-7 pt-2 overflow-y-scroll content-bar" style="height: calc(100vh - 40px)">
         <div class="fs-6">
           <i class="bi bi-person-walking"></i>
           Steps
@@ -468,8 +468,8 @@
       }
 
       function focusNode(el) {
-        let id  = el.getAttribute("node-id")
-        let ans = anscestors[id]
+        let id  = el ? el.getAttribute("node-id") : ""
+        let ans = el ? anscestors[id] : []
 
         qa(".node").forEach(e => {
           let pid = e.getAttribute("node-id")
@@ -497,7 +497,7 @@
           clsx(c, step != i, "opacity-25")
           
           if (step == i)
-            scrollToElement(q(".overflow-y-scroll"), c)
+            scrollToElement(q(".content-bar"), c)
 
           if (e.kind == "node"){
             clsx(q(nodeClass(e.id)), step < i, "d-none")
@@ -542,7 +542,7 @@
             qa(".content").forEach(el => 
               clsx(el, !el.classList.contains(contentClass(nodes[id].content)), "opacity-25"))
             
-            scrollToElement(q(".overflow-y-scroll"), q(contentClass(nodes[id].content, true)))
+            scrollToElement(q(".content-bar"), q(contentClass(nodes[id].content, true)))
           }
 
           el.onmouseleave = () => {
@@ -553,7 +553,7 @@
         qa(".content").forEach(el => {
           el.onmouseenter = () => {
             let nodeId = el.getAttribute("for")
-            if (nodeId) focusNode(q(nodeClass(nodeId)))
+            focusNode(q(nodeClass(nodeId)))
             qa(".content").forEach(e => clsx(e, e != el, "opacity-25"))
           }
 
