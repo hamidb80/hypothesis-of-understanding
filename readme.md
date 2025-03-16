@@ -8,6 +8,7 @@
 - [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295)
 - [What Good Is Learning If You Don’t Remember It?](https://files.eric.ed.gov/fulltext/EJ1055665.pdf)
 - [Simple made Easy :: Rich Hickey](https://paulrcook.com/blog/simple-made-easy)
+- 
 
 ## Bluri's steps to solve a problem
 

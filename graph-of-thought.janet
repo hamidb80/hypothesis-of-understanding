@@ -375,7 +375,7 @@
                              :goal    "هدف"
                              :reason  "تحلیل"
                              :recall  "یادآوری"
-                             nil      nil)
+                             nil      "افکار")
                   ]
               (string 
               `<div class="pb-3 content ` (content-class key) `" for="` (e :id)`">
@@ -524,6 +524,12 @@
         unversalStep(cursor)
       }
 
+      function unfocusAll(){
+        qa(".content").forEach(e => clsx(e, false, "opacity-25"))
+        qa(".node").forEach(e =>    clsx(e, false, "opacity-25"))
+        qa(".edge").forEach(e =>    clsx(e, false, "opacity-25"))
+      }
+
       function prepare(){
         qa(".node").forEach(el => {
 
@@ -540,22 +546,19 @@
           }
 
           el.onmouseleave = () => {
-            qa(".node").forEach(e => e.classList.remove("opacity-25"))
-            qa(".edge").forEach(e => e.classList.remove("opacity-25"))
-            qa(".content").forEach(e => e.classList.remove("opacity-25"))
+            unfocusAll()
           }
         })
 
         qa(".content").forEach(el => {
           el.onmouseenter = () => {
-            focusNode(q(nodeClass(el.getAttribute("for"))))
+            let nodeId = el.getAttribute("for")
+            if (nodeId) focusNode(q(nodeClass(nodeId)))
             qa(".content").forEach(e => clsx(e, e != el, "opacity-25"))
           }
 
           el.onmouseleave = () => {
-            qa(".content").forEach(e => clsx(e, false, "opacity-25"))
-            qa(".node").forEach(e =>    clsx(e, false, "opacity-25"))
-            qa(".edge").forEach(e =>    clsx(e, false, "opacity-25"))
+            unfocusAll()
           }
         })
 
