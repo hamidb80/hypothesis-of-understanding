@@ -467,18 +467,35 @@
           }
       }
 
+      function highlightNode(el){
+        el.setAttribute("stroke", "black")
+        el.setAttribute("stroke-width", "4")
+      }
+      function blurNode(el){
+        el.removeAttribute("stroke")
+        el.removeAttribute("stroke-width")
+      }
+
       function focusNode(el) {
         let id  = el ? el.getAttribute("node-id") : ""
         let ans = el ? anscestors[id] : []
 
         qa(".node").forEach(e => {
           let pid = e.getAttribute("node-id")
+          if (id == pid) highlightNode(e)
+          else           blurNode(e)
           clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
         })
         qa(".edge").forEach(e => {
           let pid = e.getAttribute("to-node-id")
           clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
         })
+      }
+      
+      function unfocusAll(){
+        qa(".content").forEach(e => clsx(e, false, "opacity-25"))
+        qa(".node").forEach(e =>    {clsx(e, false, "opacity-25"); blurNode(e)})
+        qa(".edge").forEach(e =>    clsx(e, false, "opacity-25"))
       }
 
       function unversalStep(step){
@@ -500,7 +517,9 @@
             scrollToElement(q(".content-bar"), c)
 
           if (e.kind == "node"){
-            clsx(q(nodeClass(e.id)), step < i, "d-none")
+            let n = q(nodeClass(e.id))
+            clsx(n, step < i, "d-none")
+            
             let ed = qa("[to-node-id='"+ e.id   +"']")
             if (ed.length) ed.forEach(el => clsx(el, step < i, "d-none"))
           }
@@ -524,12 +543,6 @@
         unversalStep(cursor)
       }
 
-      function unfocusAll(){
-        qa(".content").forEach(e => clsx(e, false, "opacity-25"))
-        qa(".node").forEach(e =>    clsx(e, false, "opacity-25"))
-        qa(".edge").forEach(e =>    clsx(e, false, "opacity-25"))
-      }
-
       function prepare(){
         qa(".node").forEach(el => {
 
@@ -540,7 +553,7 @@
             let ans = anscestors[id]
             
             qa(".content").forEach(el => 
-              clsx(el, !el.classList.contains(contentClass(nodes[id].content)), "opacity-25"))
+              clsx(el, el.getAttribute("for") != id, "opacity-25"))
             
             scrollToElement(q(".content-bar"), q(contentClass(nodes[id].content, true)))
           }
