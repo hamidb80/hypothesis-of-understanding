@@ -1,5 +1,6 @@
 # GoT (Graph of Thought) is a DAG (Direct Acyclic Graph)
 # colors stolen from https://colorhunt.co/
+
 # ----------- debugging
 (defn inspect (a) 
   (pp a)
@@ -539,7 +540,7 @@
         unversalStep(cursor)
       }
       function prevStep(){
-        cursor = Math.max(0, cursor - 1)
+        cursor = Math.max(-1, cursor - 1)
         unversalStep(cursor)
       }
 
@@ -584,7 +585,14 @@
         katex.render(el.innerText, el, { displayMode: true })
       })
 
-      prepare()
+      document.body.onload = () => {
+        prepare()
+
+        document.body.onkeyup = (e) => {
+          if (e.key == "ArrowRight") nextStep()
+          if (e.key == "ArrowLeft")  prevStep()
+        }
+      }
 
     </script>
 

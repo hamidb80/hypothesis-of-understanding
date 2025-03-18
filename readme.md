@@ -10,6 +10,9 @@
 - Unison Programming language
 - [Neurite](https://github.com/satellitecomponent/Neurite) 
 - [Brilliant](https://brilliant.org/) | Learning by doing
+- nested white board
+- graph community detection
+- all of them are stupid
 
 ## Bluri's steps to solve a problem
 
