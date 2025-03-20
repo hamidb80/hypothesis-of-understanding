@@ -14,6 +14,9 @@
 - nested white board
 - graph community detection
 - all of them are stupid
+- Documentation formats: 
+   1. [textile](https://textile-lang.com/)
+   2. [Racket Scribble](https://docs.racket-lang.org/scribble/index.html)
 
 ## Bluri's steps to solve a problem
 
@@ -24,9 +27,6 @@
 4. **Reason/Calculate**: try to conclude or process previous attemps to extract new results.
 5. **Repeat**: repeat the process until you're done.
 6. **Doubt**: explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
-7. Documentation formats: 
-   1. [textile](https://textile-lang.com/)
-   2. [Racket Scribble](https://docs.racket-lang.org/scribble/index.html)
 
 ## Bluri's theory to indicate complexity of a problem
 the height of graph of thought (GoT) reperesents the complexity of the problem. the more the height of the graph, means that solving it requires *more steps* and hence is more complex.
