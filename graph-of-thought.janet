@@ -364,7 +364,7 @@
           Steps
         </div>
 
-        <img src="./image.png" class="w-100"/>
+        <img src="./example-question.png" class="w-100"/>
 
         <div class="my-3">`
           (join-map (got :events) (fn [e] 
