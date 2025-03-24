@@ -1,19 +1,13 @@
-(defn h/wrap (resolver inline data args)
+(defn h/wrap (resolver ctx data args)
   (let [acc @""]
     (each c args
-      (buffer/push acc 
-        (match (type c) 
-        :string c 
-                (resolver inline c))))
+      (buffer/push acc (resolver ctx c)))
     acc))
 
-(defn h/paragraph (resolver inline data args)
+(defn h/paragraph (resolver ctx data args)
   (let [acc @`<p dir="auto">`]
     (each c args
-      (buffer/push acc 
-        (match (type c) 
-        :string c 
-                (resolver inline c))))
+      (buffer/push acc (resolver true c)))
     (buffer/push acc "</p>")
     acc))
 
@@ -32,12 +26,14 @@
   })
 
 (defn to-html (content)
-  (defn resolver (inline obj)
-    (print "-----------------")
-    (pp obj)
-    ((resolvers (obj :node)) resolver inline (obj :data) (obj :body)))
+  (defn resolver (ctx obj)
+    (match (type obj)
+      :string         obj
+      :number (string obj)
+      :struct ((resolvers (obj :node)) resolver ctx (obj :data) (obj :body))
+              (error (string `invalid kind: ` (type obj)))))
   
-  (resolver false {
+  (resolver {:inline false} {
     :node :wrap 
     :body content})
 )
