@@ -1,22 +1,22 @@
-(defn h/wrap (resolver ctx data args)
-  (let [acc @""]
-    (each c args
-      (buffer/push acc (resolver ctx c)))
-    acc))
+(defn simple-wrapper (start end)
+  (fn [resolver ctx data args] 
+    (let [acc @""]
+        (buffer/push acc start)
+        (each c args (buffer/push acc (resolver ctx c)))
+        (buffer/push acc end)
+      acc)))
 
-(defn h/paragraph (resolver ctx data args)
-  (let [acc @`<p dir="auto">`]
-    (each c args
-      (buffer/push acc (resolver true c)))
-    (buffer/push acc "</p>")
-    acc))
+(def h/wrap      (simple-wrapper "" ""))
+(def h/paragraph (simple-wrapper `<p dir="auto">` `</p>`))
+(def h/italic    (simple-wrapper `<i>` `</i>`))
+(def h/bold      (simple-wrapper `<b>` `</b>`))
 
 (def resolvers {
-  :wrap   h/wrap
-  :title  h/paragraph
-  :p      h/paragraph
-  # :b     h/bold
-  # :i     h/italic
+  :wrap        h/wrap
+  :title       h/paragraph
+  :paragraph   h/paragraph
+  :bold        h/bold
+  :italic      h/italic
   # :u     h/underline
   # :s     h/strikethrough
   # :latex h/latex
@@ -38,22 +38,22 @@
     :body content})
 )
 
-(defn title    (& args) {:node :title    :body args})
-(defn abstract (& args) {:node :abstract :body args})
-(defn section  (& args) {:node :section  :body args})
-(defn centered (& args) {:node :center   :body args})
-(defn bold     (& args) {:node :bold     :body args})
-(defn italic   (& args) {:node :title    :body args})
-(defn itemlist (& args) {:node :list     :body args})
-(defn smaller  (& args) {:node :small    :body args})
-(defn larger   (& args) {:node :large    :body args})
-(defn p        (& args) {:node :p        :body args})
+(defn title    (& args) {:node :title       :body args})
+(defn abstract (& args) {:node :abstract    :body args})
+(defn section  (& args) {:node :section     :body args})
+(defn centered (& args) {:node :center      :body args})
+(defn bold     (& args) {:node :bold        :body args})
+(defn italic   (& args) {:node :italic      :body args})
+(defn itemlist (& args) {:node :list        :body args})
+(defn smaller  (& args) {:node :small       :body args})
+(defn larger   (& args) {:node :large       :body args})
+(defn p        (& args) {:node :paragraph   :body args})
 
 (def _ ` `)
 
 
 (def article [
-(title `On the Cookie-Eating Habits of Mice`)
+(title `On the Cookie-Eating Habits of `(italic `Mice`))
 
 # (abstract `If you give a mouse a cookie, he's going to ask for a glass of milk `)
  
