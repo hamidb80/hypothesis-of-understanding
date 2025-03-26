@@ -1,3 +1,5 @@
+# TODO use helper/
+
 # GoT (Graph of Thought) is a DAG (Direct Acyclic Graph)
 # colors stolen from https://colorhunt.co/
 
