@@ -1,4 +1,6 @@
+(use ./helper/stat)
 (use ./helper/vector)
+(use ./helper/matrix)
 (use ./helper/io)
 (use ./helper/js)
 (use ./helper/iter)
@@ -22,9 +24,6 @@
       (each n lst (put acc (key-generator n) n))
       acc))
 
-(defn avg (lst)
-  (/ (reduce + 0 lst) (length lst)))
-
 (defn rev-table [tab]
   (def acc @{})
   (eachp (k v) tab
@@ -34,19 +33,6 @@
               (array/push lst k))))
   acc)
 
-# ---------- matrix 
-(defn matrix-size (rows)
-  [ (length rows) 
-    (reduce max 0 (map length (values rows)))])
-
-(defn matrix-of (rows cols val)
-  (map (fn [_] (array/new-filled cols)) (range rows)))
-
-(defn get-cell [grid y x]
-  ((grid y) x))
-
-(defn put-cell [grid y x val]
-  (put (grid y) x val))
 # ---------- domain
 (defn node-class (id)
   (string "node-" id))
