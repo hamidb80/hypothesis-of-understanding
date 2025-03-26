@@ -1,25 +1,10 @@
-# TODO use helper/
+# tiny mind-tree creator.
 
-"""
-tiny mind-tree creator.
-"""
-
-(defn exec (cmd)
-  (os/execute cmd :pe))
-
-(defn file/put (path content)
-  (def        f (file/open path :w))
-  (file/write f content)
-  (file/close f))
-
-(defn file/exists (path) 
-  (not (nil? (os/stat path))))
-
-(defn join-map (lst f)
-  (string/join (map f lst)))
-
-(defn rand/int (a b)
-  (+ a (math/floor (* (- b a) (math/random)))))
+(use ./helper/iter)
+(use ./helper/io)
+(use ./helper/random)
+(use ./helper/system)
+(use ./helper/js)
 
 # props
 
@@ -149,29 +134,6 @@ tiny mind-tree creator.
                                         "")))
 )
 
-(defn JS (data)
-  (defn table-like (t) (string 
-      `{` 
-      (join-map (keys t) (fn (k) (string (JS k) `: ` (JS (t k)) `,`))) 
-      `}`))
-
-  (defn array-like (t) (string `[` 
-      (join-map data (fn (v) (string (JS v) `,`))) 
-    `]`))
-
-  (match (type data)
-    :table  (table-like data)
-    :struct (table-like data)
-    :array  (array-like data)
-    :tuple  (array-like data)
-
-    :keyword (string `"` data `"`)
-    :string  (string `"` data `"`)
-    :number  (string     data)
-    :boolean (string     data)
-    :nil     "null"
-    ))
-
 (defn mind-map/html-impl (mm out-dir use-cache level)
   (join-map mm
     (fn (u) (string
@@ -265,7 +227,7 @@ tiny mind-tree creator.
       }
 
       const blurClass = "opacity-25"
-      const contentTree = `(JS (mm :ids))`
+      const contentTree = `(to-js (mm :ids))`
 
       function toggleBlurNodes(root, blur) {
         let el = root ? document.querySelector('#' + root) : document;

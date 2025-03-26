@@ -1,10 +1,7 @@
 # TODO use helper/
 
-(defn file/put (path content)
-  (def        f (file/open path :w))
-  (file/write f content)
-  (file/close f))
-  
+(use ./helper/io)
+
 # ------------------------------------------------------
 
 (defn init-article () @{})
@@ -78,32 +75,34 @@
 (def _ ` `)
 
 
-(def article [
-(h 1 `On the Cookie-Eating Habits of `(i `Mice`))
+(defn simple-test ()
+  (def article [
+    (h 1 `On the Cookie-Eating Habits of `(i `Mice`))
 
-# (abs `If you give a mouse a cookie, he's going to ask for a glass of milk `)
- 
-# (section `The Consequences of Milk `)
+    # (abs `If you give a mouse a cookie, he's going to ask for a glass of milk `)
+    
+    # (section `The Consequences of Milk `)
 
-# (p
-# `He's a `(smaller `small mouse`)`. The glass is too `(larger `big`) 
-# `---`(bold `way `(larger `too `(larger `big`)))`. 
-# So, he'll `(italic `probably`)` ask you for a straw.`
-# `If a mouse eats all your cookies, put up a sign that says`)
+    # (p
+    # `He's a `(smaller `small mouse`)`. The glass is too `(larger `big`) 
+    # `---`(bold `way `(larger `too `(larger `big`)))`. 
+    # So, he'll `(italic `probably`)` ask you for a straw.`
+    # `If a mouse eats all your cookies, put up a sign that says`)
 
-# (centered
-#   (bold `Cookies Wanted`)_(italic `Chocolate chip preferred!`))
+    # (centered
+    #   (bold `Cookies Wanted`)_(italic `Chocolate chip preferred!`))
 
-(p `and see if anyone brings you more.`)
+    (p `and see if anyone brings you more.`)
 
-# (centered (bold `Notice to Mice`))
- 
-# (itemlist 
-#   `We have cookies for you.`
-#   `If you want to eat a cookie, you must bring your own straw.`
-# )
-])
+    # (centered (bold `Notice to Mice`))
+    
+    # (itemlist 
+    #   `We have cookies for you.`
+    #   `If you want to eat a cookie, you must bring your own straw.`
+    # )
+  ])
+  # (pp article)
+  # (print (to-html article))
+  (file/put "./play.html" (to-html article)))
 
-(pp article)
-(print (to-html article))
-(file/put "./play.html" (to-html article))
+(simple-test)

@@ -15,7 +15,8 @@
 - [makandra cards](https://makandracards.com/)
 
 ## Graph of Thought (GoT)
-- Is a *directed* graph
+- GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
+- GoK (Graph of Knowledge) is a Directed Graph (may have cycles too)
 
 ## Bluri's steps to solve a problem
 
@@ -40,3 +41,9 @@ Thus the term *Straight-Forward* is subjective according to the learning materia
 Note that just connecting 2 nodes are not important, the direction of the edge also matters. for example a language learner first looks at the word e.g. "camera", then translates it to his mother tongue e.g. Persian ("دوربین") and then translating, he imagines the real camera in his mind. but he may have trouble to do it vice verse i.e. seeing a camera and then finding its English word. it is true that the person probably can find the word *after some time* but it is not **obvious** i.e. it's not present *directly* in his Knowledge Graph.
 
 In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
+
+## Development
+- colors stolen from [ColorHunt](https://colorhunt.co/)
+
+### Versions
+- Janet: 1.38

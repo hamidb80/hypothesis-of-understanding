@@ -1,3 +1,5 @@
+# a vector is simply stored as an array e.g. [x y z]
+
 (defn v+ (v1 v2) 
   (map + v1 v2))
 

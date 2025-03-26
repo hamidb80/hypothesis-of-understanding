@@ -1,129 +1,8 @@
-# TODO use helper/
-
-# GoT (Graph of Thought) is a DAG (Direct Acyclic Graph)
-# colors stolen from https://colorhunt.co/
-
-# ----------- debugging
-(defn inspect (a) 
-  (pp a)
-  a)
-
-(defn inspects (a) 
-  (print a)
-  a)
-
-# ------------ files 
-(defn file/put (path content)
-  (def        f (file/open path :w))
-  (file/write f content)
-  (file/close f))
-
-(defn file/exists (path) 
-  (not (nil? (os/stat path))))
-
-# ---------- vector arithmatic
-# (defn zip (a b) (map tuple a b))
-(defn v+ (v1 v2) 
-  (map + v1 v2))
-
-(defn v- (v1 v2) 
-  (map - v1 v2))
-
-(defn v* (scalar v) 
-  (map (fn (x) (* x scalar)) v))
-
-(defn v-mag (v) 
-  (math/sqrt (reduce + 0 (map * v v))))
-
-(defn v-norm (a) 
-  (v* (/ 1 (v-mag a)) a))
-
-# ---------- JSON
-(defn join-map (lst f)
-  (string/join (map f lst)))
-
-(defn to-js (data)
-  (defn table-like (t) (string 
-      `{` 
-      (join-map (keys t) (fn (k) (string (to-js k) `: ` (to-js (t k)) `,`))) 
-      `}`))
-
-  (defn array-like (t) (string `[` 
-      (join-map data (fn (v) (string (to-js v) `,`))) 
-    `]`))
-
-  (match (type data)
-    :table  (table-like data)
-    :struct (table-like data)
-    :array  (array-like data)
-    :tuple  (array-like data)
-
-    :keyword (string `"` data `"`)
-    :string  (string `"` data `"`)
-    :number  (string     data)
-    :boolean (string     data)
-    :nil     "null"
-    ))
-
-# ---------- pure svg thing
-(defn svg/normalize (c)
-  (match (type c)
-          :array  (string/join c " ")
-          :string              c))
-
-(defn to-xml-attrs (attrs)
-  (let [acc @[]]
-    (eachp [k v] attrs
-      (array/push acc (string k `="` v `"`)))
-    (string/join acc " ")))
-
-(defn svg/rect [x y w h c]
-   (string `<rect 
-      x="`x`" 
-      y="`y`" 
-      width="`w`" 
-      height="`h`" 
-      fill="`c`" 
-    />`))
-
-(defn svg/wrap [ox oy w h b content]
-  (string 
-    `<svg 
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="`ox` `oy` ` w ` ` h `"
-      width="` w`"
-      height="`h`"
-    >`
-      (if b (svg/rect 0 0 w h b))
-      (svg/normalize content)
-    `</svg>`))
-
-(defn svg/group [content]
-  (string 
-    `<g` `>` 
-      (svg/normalize content) 
-    `</g>`))
-
-(defn svg/circle [x y r fill &opt attrs]
-  (string 
-    `<circle 
-      r="` r`" 
-      cx="`x`" 
-      cy="`y`" 
-      fill="`fill`" `
-      (if attrs (to-xml-attrs attrs))
-      `/>`))
-
-(defn svg/line [p g w fill &opt attrs]
-  (string 
-    `<line 
-      x1="` (first p) `" 
-      y1="` (last  p) `" 
-      x2="` (first g) `" 
-      y2="` (last  g) `" 
-      stroke-width="` w `"
-      stroke="` fill `"
-      ` (if attrs (to-xml-attrs attrs)) `/>`))
+(use ./helper/vector)
+(use ./helper/io)
+(use ./helper/js)
+(use ./helper/iter)
+(use ./helper/svg)
 
 # ----------- random helpers
 (defn not-nil-indexes (row)
@@ -168,12 +47,6 @@
 
 (defn put-cell [grid y x val]
   (put (grid y) x val))
-
-# ---------- HTML elements
-(defn h/latex (eq)
-  (string `<div class="latex">`
-            eq
-          `</div>`))
 # ---------- domain
 (defn node-class (id)
   (string "node-" id))
@@ -643,7 +516,7 @@
   :div-operator (c nil `
       یادته تقسیم چیکار میکرد؟
     ` )
-  :project-operator (c nil (h/latex `\prod_{}^{}`))
+  :project-operator (c nil `\prod_{}^{}`)
   :sigma-operator (c nil `
       سیگما
     ` )

@@ -1,3 +1,5 @@
+(use ./iter)
+
 (defn to-js (data)
   (defn table-like (t) (string 
       `{` 
