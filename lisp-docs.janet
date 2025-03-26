@@ -1,28 +1,52 @@
-(defn simple-wrapper (start end)
+(defn file/put (path content)
+  (def        f (file/open path :w))
+  (file/write f content)
+  (file/close f))
+  
+# ------------------------------------------------------
+
+(defn init-article () @{})
+
+(defn process-article (resolvers article)
+  )
+
+# ------------------------------------------------------
+
+(defn simple-wrapper (start-fn end-fn)
   (fn [resolver ctx data args] 
     (let [acc @""]
-        (buffer/push acc start)
+        (buffer/push acc (start-fn data))
         (each c args (buffer/push acc (resolver ctx c)))
-        (buffer/push acc end)
+        (buffer/push acc (end-fn data))
       acc)))
 
-(def h/wrap      (simple-wrapper "" ""))
-(def h/paragraph (simple-wrapper `<p dir="auto">` `</p>`))
-(def h/italic    (simple-wrapper `<i>` `</i>`))
-(def h/bold      (simple-wrapper `<b>` `</b>`))
+(defn const1 (ret) 
+  (fn [_] ret))
 
-(def resolvers {
-  :wrap        h/wrap
-  :title       h/paragraph
-  :paragraph   h/paragraph
-  :bold        h/bold
-  :italic      h/italic
-  # :u     h/underline
-  # :s     h/strikethrough
-  # :latex h/latex
-  # :title h/h1
-  # :img   h/image
-  # :video h/video
+(def r/wrap           (simple-wrapper (const1 "")               (const1 "")))
+(def r/paragraph      (simple-wrapper (const1 `<p dir="auto">`) (const1 `</p>`)))
+(def r/italic         (simple-wrapper (const1 `<i>`)            (const1 `</i>`)))
+(def r/bold           (simple-wrapper (const1 `<b>`)            (const1 `</b>`)))
+(def r/underline      (simple-wrapper (const1 `<u>`)            (const1 `</u>`)))
+(def r/strikethrough  (simple-wrapper (const1 `<s>`)            (const1 `</s>`)))
+(def r/latex          (simple-wrapper (const1 `<math>`)         (const1 `</math>`)))
+(def r/header         (simple-wrapper (fn [d] (string "<h" d ">")) 
+                                      (fn [d] (string "</h" d ">"))))
+
+(def html-resolvers {
+  :wrap            r/wrap
+  
+  :bold            r/bold
+  :italic          r/italic
+  :underline       r/underline
+  :strikethrough   r/strikethrough
+  
+  :header          r/header
+  :paragraph       r/paragraph
+  
+  :latex           r/latex
+  # :image           r/image
+  # :video           r/video
   })
 
 (defn to-html (content)
@@ -30,7 +54,7 @@
     (match (type obj)
       :string         obj
       :number (string obj)
-      :struct ((resolvers (obj :node)) resolver ctx (obj :data) (obj :body))
+      :struct ((html-resolvers (obj :node)) resolver ctx (obj :data) (obj :body))
               (error (string `invalid kind: ` (type obj)))))
   
   (resolver {:inline false} {
@@ -38,24 +62,24 @@
     :body content})
 )
 
-(defn title    (& args) {:node :title       :body args})
-(defn abstract (& args) {:node :abstract    :body args})
-(defn section  (& args) {:node :section     :body args})
-(defn centered (& args) {:node :center      :body args})
-(defn bold     (& args) {:node :bold        :body args})
-(defn italic   (& args) {:node :italic      :body args})
-(defn itemlist (& args) {:node :list        :body args})
-(defn smaller  (& args) {:node :small       :body args})
-(defn larger   (& args) {:node :large       :body args})
-(defn p        (& args) {:node :paragraph   :body args})
+(defn h    (size & args) {:node :header      :body args :data size })
+(defn abs  (& args)      {:node :abstract    :body args})
+(defn sec  (& args)      {:node :section     :body args})
+(defn cnt  (& args)      {:node :center      :body args})
+(defn b    (& args)      {:node :bold        :body args})
+(defn i    (& args)      {:node :italic      :body args})
+(defn ul   (& args)      {:node :list        :body args})
+(defn sm   (& args)      {:node :small       :body args})
+(defn lg   (& args)      {:node :large       :body args})
+(defn p    (& args)      {:node :paragraph   :body args})
 
 (def _ ` `)
 
 
 (def article [
-(title `On the Cookie-Eating Habits of `(italic `Mice`))
+(h 1 `On the Cookie-Eating Habits of `(i `Mice`))
 
-# (abstract `If you give a mouse a cookie, he's going to ask for a glass of milk `)
+# (abs `If you give a mouse a cookie, he's going to ask for a glass of milk `)
  
 # (section `The Consequences of Milk `)
 
@@ -80,3 +104,4 @@
 
 (pp article)
 (print (to-html article))
+(file/put "./play.html" (to-html article))

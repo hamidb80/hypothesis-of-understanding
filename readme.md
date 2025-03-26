@@ -2,6 +2,8 @@
 
 > Transmit Understanding, not just knowledge.
 
+## Aha moments
+
 - *Constructinism* and *Connectionism* [Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
 - The art of [note-"making"](https://mischavandenburg.substack.com/p/the-art-of-note-making).
 - [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295)
@@ -11,12 +13,9 @@
 - [Neurite](https://github.com/satellitecomponent/Neurite) 
 - [Brilliant](https://brilliant.org/) | Learning by doing
 - [makandra cards](https://makandracards.com/)
-- nested white board
-- graph community detection
-- all of them are stupid
-- Documentation formats: 
-   1. [textile](https://textile-lang.com/)
-   2. [Racket Scribble](https://docs.racket-lang.org/scribble/index.html)
+
+## Graph of Thought (GoT)
+- Is a *directed* graph
 
 ## Bluri's steps to solve a problem
 
@@ -32,3 +31,12 @@
 the height of graph of thought (GoT) reperesents the complexity of the problem. the more the height of the graph, means that solving it requires *more steps* and hence is more complex.
 
 The more the width of the graph of thougth means more ideas involved or more options have to be considered.
+
+## Bluri's opinion about a solution to a problem
+If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is *Straight-Forward*, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not *Straight-Forward*.
+
+Thus the term *Straight-Forward* is subjective according to the learning material and the learner.
+
+Note that just connecting 2 nodes are not important, the direction of the edge also matters. for example a language learner first looks at the word e.g. "camera", then translates it to his mother tongue e.g. Persian ("دوربین") and then translating, he imagines the real camera in his mind. but he may have trouble to do it vice verse i.e. seeing a camera and then finding its English word. it is true that the person probably can find the word *after some time* but it is not **obvious** i.e. it's not present *directly* in his Knowledge Graph.
+
+In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
