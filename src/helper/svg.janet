@@ -1,3 +1,5 @@
+# Scalable Vector Graphic (SVG) utilities
+
 (defn svg/normalize (c)
   (match (type c)
           :array  (string/join c " ")

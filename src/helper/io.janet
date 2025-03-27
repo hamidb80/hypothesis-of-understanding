@@ -1,3 +1,5 @@
+# input/output utilities
+
 (defn file/put (path content)
   (def        f (file/open path :w))
   (file/write f content)
