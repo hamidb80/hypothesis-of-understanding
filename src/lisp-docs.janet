@@ -104,4 +104,9 @@
   # (print (to-html article))
   (file/put "./play.html" (to-html article)))
 
-(simple-test)
+# (simple-test)
+
+(defn compile-all (dir)
+  "find all doc files in the `dir` and compile them"
+  # TODO
+  )
