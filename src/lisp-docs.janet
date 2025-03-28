@@ -59,27 +59,29 @@
       # :array  
               (error (string "invalid kind: " (type obj)))))
   
-  (resolver {:inline false} {
-    :node :wrap 
-    :body content})
+  (resolver 
+    {:inline false} 
+    {:node :wrap 
+     :body content})
 )
 
-(defn h    (size & args) {:node :header      :body args :data size })
-(defn h1   (& args)      (h 1 ;args))
-(defn h2   (& args)      (h 2 ;args))
-(defn h3   (& args)      (h 3 ;args))
-(defn h4   (& args)      (h 4 ;args))
-(defn h5   (& args)      (h 5 ;args))
-(defn h6   (& args)      (h 6 ;args))
-(defn sec  (& args)      {:node :section     :body args})
-(defn abs  (& args)      {:node :abstract    :body args})
-(defn cnt  (& args)      {:node :center      :body args})
-(defn b    (& args)      {:node :bold        :body args})
-(defn i    (& args)      {:node :italic      :body args})
-(defn ul   (& args)      {:node :list        :body args})
-(defn sm   (& args)      {:node :small       :body args})
-(defn lg   (& args)      {:node :large       :body args})
-(defn p    (& args)      {:node :paragraph   :body args})
+(defn h      (size & args) {:node :header      :body args :data size })
+(defn h1     (& args)      (h 1 ;args))
+(defn h2     (& args)      (h 2 ;args))
+(defn h3     (& args)      (h 3 ;args))
+(defn h4     (& args)      (h 4 ;args))
+(defn h5     (& args)      (h 5 ;args))
+(defn h6     (& args)      (h 6 ;args))
+(defn named  (& args)      {:node :named       :body args}) # assign name to document, ignored at HTML compilation
+(defn sec    (& args)      {:node :section     :body args})
+(defn abs    (& args)      {:node :abstract    :body args})
+(defn cnt    (& args)      {:node :center      :body args})
+(defn b      (& args)      {:node :bold        :body args})
+(defn i      (& args)      {:node :italic      :body args})
+(defn ul     (& args)      {:node :list        :body args})
+(defn sm     (& args)      {:node :small       :body args})
+(defn lg     (& args)      {:node :large       :body args})
+(defn p      (& args)      {:node :paragraph   :body args})
 
 (def _ " ")
 
@@ -101,4 +103,8 @@
 
 # -----------------------------------------------
 
-(pp (compile-deep "./notes"))
+# TODO add import like :/db/ra/join :/math/integral/formula
+
+(def db (compile-deep "./notes"))
+
+(pp db)
