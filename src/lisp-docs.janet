@@ -1,4 +1,6 @@
+(use ./helper/debug)
 (use ./helper/io)
+(use ./helper/path)
 
 # ------------------------------------------------------
 
@@ -60,8 +62,14 @@
 )
 
 (defn h    (size & args) {:node :header      :body args :data size })
-(defn abs  (& args)      {:node :abstract    :body args})
+(defn h1   (& args)      (h 1 ;args))
+(defn h2   (& args)      (h 2 ;args))
+(defn h3   (& args)      (h 3 ;args))
+(defn h4   (& args)      (h 4 ;args))
+(defn h5   (& args)      (h 5 ;args))
+(defn h6   (& args)      (h 6 ;args))
 (defn sec  (& args)      {:node :section     :body args})
+(defn abs  (& args)      {:node :abstract    :body args})
 (defn cnt  (& args)      {:node :center      :body args})
 (defn b    (& args)      {:node :bold        :body args})
 (defn i    (& args)      {:node :italic      :body args})
@@ -74,39 +82,20 @@
 
 # ------------------------------------------------------
 
-(defn simple-test ()
-  (def article [
-    (h 1 `On the Cookie-Eating Habits of `(i `Mice`))
+(defn compile-deep-impl (root lookup)
+  (each p (os/diri root)
+    (match (path/mode p)
+          :directory (compile-deep-impl p lookup)
+          :file      (put lookup p (eval-string (slurp p))))))
 
-    # (abs `If you give a mouse a cookie, he's going to ask for a glass of milk `)
-    
-    # (section `The Consequences of Milk `)
-
-    # (p
-    # `He's a `(smaller `small mouse`)`. The glass is too `(larger `big`) 
-    # `---`(bold `way `(larger `too `(larger `big`)))`. 
-    # So, he'll `(italic `probably`)` ask you for a straw.`
-    # `If a mouse eats all your cookies, put up a sign that says`)
-
-    # (centered
-    #   (bold `Cookies Wanted`)_(italic `Chocolate chip preferred!`))
-
-    (p `and see if anyone brings you more.`)
-
-    # (centered (bold `Notice to Mice`))
-    
-    # (itemlist 
-    #   `We have cookies for you.`
-    #   `If you want to eat a cookie, you must bring your own straw.`
-    # )
-  ])
-  # (pp article)
-  # (print (to-html article))
-  (file/put "./play.html" (to-html article)))
-
-# (simple-test)
-
-(defn compile-all (dir)
+(defn compile-deep (dir)
   "find all doc files in the `dir` and compile them"
-  # TODO
-  )
+  
+  (let [acc @{}]
+    (compile-deep-impl dir acc)
+    acc))
+
+# -----------------------------------------------
+
+# (def a (os/diri rrr))
+# (pp (compile-deep rrr))
