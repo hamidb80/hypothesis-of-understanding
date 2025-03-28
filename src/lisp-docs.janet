@@ -54,7 +54,10 @@
       :string         obj
       :number (string obj)
       :struct ((html-resolvers (obj :node)) resolver ctx (obj :data) (obj :body))
-              (error (string `invalid kind: ` (type obj)))))
+      # TODO for imports [ imported content placed as list ]
+      # :tuple  
+      # :array  
+              (error (string "invalid kind: " (type obj)))))
   
   (resolver {:inline false} {
     :node :wrap 
@@ -78,7 +81,7 @@
 (defn lg   (& args)      {:node :large       :body args})
 (defn p    (& args)      {:node :paragraph   :body args})
 
-(def _ ` `)
+(def _ " ")
 
 # ------------------------------------------------------
 
@@ -86,7 +89,8 @@
   (each p (os/diri root)
     (match (path/mode p)
           :directory (compile-deep-impl p lookup)
-          :file      (put lookup p (eval-string (slurp p))))))
+          :file      (if (string/has-suffix? ".janet" p)
+                          (put lookup p (eval-string (slurp p)))))))
 
 (defn compile-deep (dir)
   "find all doc files in the `dir` and compile them"
@@ -97,5 +101,4 @@
 
 # -----------------------------------------------
 
-# (def a (os/diri rrr))
-# (pp (compile-deep rrr))
+(pp (compile-deep "./notes"))
