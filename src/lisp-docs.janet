@@ -72,7 +72,7 @@
 (defn h4     (& args)      (h 4 ;args))
 (defn h5     (& args)      (h 5 ;args))
 (defn h6     (& args)      (h 6 ;args))
-(defn named  (& args)      {:node :named       :body args}) # assign name to document, ignored at HTML compilation
+(defn alias  (& args)      {:node :alias       :body args}) # assign name to document, ignored at HTML compilation
 (defn sec    (& args)      {:node :section     :body args})
 (defn abs    (& args)      {:node :abstract    :body args})
 (defn cnt    (& args)      {:node :center      :body args})
