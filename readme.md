@@ -3,8 +3,12 @@
 ## Overture
 > If you find something hard to understand, _BLAME YOUR OWN LACK OF KNOWLEDGE!_ since you were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
 
-## Goal
-> To transmit Understanding, not just knowledge
+lets pray: 
+> O God, whose wisdom has no limits and whose power transcends all imagination— I ask You to shine Your ceaseless light of knowledge into the shadows of my mind, dispelling the darkness of ignorance, so that I may know more and understand deeper
+
+## Goals
+- transmit Understanding, not just knowledge
+- unlock understanding of understanding
 
 ## Aha moments
 - *Constructinism* and *Connectionism* [Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
@@ -14,7 +18,7 @@
 - [Simple made Easy :: Rich Hickey](https://paulrcook.com/blog/simple-made-easy)
 - [Unison](https://www.unison-lang.org/) programming language: database as source code
 - [Mint](https://github.com/mint-lang/mint) programming language: `import` less programming
-- [Hypermedia Systems Book](https://hypermedia.systems/)
+- [Hypermedia Systems Book](https://hypermedia.systems/) + [HTMX essays](https://htmx.org/essays/)
 - [Neurite](https://github.com/satellitecomponent/Neurite) 
 - [Brilliant](https://brilliant.org/) | Learning by doing
 - [makandra cards](https://makandracards.com/)
