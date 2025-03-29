@@ -8,7 +8,7 @@
 (use ./helper/tab)
 (use ./helper/svg)
 
-(def git-ext ".got.lisp") # markup language in lisp format
+(def got-ext ".got.lisp") # markup language in lisp format
 
 # ------------------------
 (defn- node-class (id)
@@ -452,7 +452,7 @@
 
 # ----------------------- 
 
-(defn n [id class parents content] # node
+(defn n [id class parents content] # [n]ode
   # :problem :recall :reason :calculate
   {:kind     :node 
    :id       id
