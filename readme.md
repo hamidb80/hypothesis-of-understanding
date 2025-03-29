@@ -1,7 +1,7 @@
 [![ReadMeSupportPalestine](https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg)](https://github.com/Safouene1/support-palestine-banner)
 
 ## Overture
-> If you find something hard to understand, _blame your own lack of knowledge!_ You were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
+> If you find something hard to understand, _BLAME YOUR OWN LACK OF KNOWLEDGE!_ since you were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
 
 ## Goal
 > To transmit Understanding, not just knowledge
@@ -14,6 +14,7 @@
 - [Simple made Easy :: Rich Hickey](https://paulrcook.com/blog/simple-made-easy)
 - [Unison](https://www.unison-lang.org/) programming language: database as source code
 - [Mint](https://github.com/mint-lang/mint) programming language: `import` less programming
+- [Hypermedia Systems Book](https://hypermedia.systems/)
 - [Neurite](https://github.com/satellitecomponent/Neurite) 
 - [Brilliant](https://brilliant.org/) | Learning by doing
 - [makandra cards](https://makandracards.com/)

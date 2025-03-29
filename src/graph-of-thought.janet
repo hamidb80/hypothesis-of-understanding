@@ -4,6 +4,8 @@
 (use ./helper/io)
 (use ./helper/js)
 (use ./helper/iter)
+(use ./helper/range)
+(use ./helper/tab)
 (use ./helper/svg)
 
 # ----------- random helpers
@@ -12,26 +14,6 @@
     (eachp [i n] row
       (if n (array/push acc i)))
     acc))
-
-(defn- keep-ends (lst) 
-    [(first lst) (last lst)])
-
-(defn- range-len (indicies)
-  (+ 1 (- (last indicies) (first indicies))))
-
-(defn- to-table (lst key-generator)
-  (let [acc @{}]
-      (each n lst (put acc (key-generator n) n))
-      acc))
-
-(defn- rev-table [tab]
-  (def acc @{})
-  (eachp (k v) tab
-    (let [lst (acc v)]
-         (if (nil? lst)
-              (put acc v @[k])
-              (array/push lst k))))
-  acc)
 
 # ---------- domain
 (defn- node-class (id)
