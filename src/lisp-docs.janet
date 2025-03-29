@@ -48,9 +48,7 @@
 (def r/underline      (simple-wrapper (const1 `<u>`)            (const1 `</u>`)))
 (def r/strikethrough  (simple-wrapper (const1 `<s>`)            (const1 `</s>`)))
 (def r/latex          (simple-wrapper (const1 `<math>`)         (const1 `</math>`)))
-(def r/header         (simple-wrapper (fn [d] (string "<h" d ">")) 
-                                      (fn [d] (string "</h" d ">"))))
-
+(def r/header         (simple-wrapper |(string "<h" $ ">")      |(string "</h" $ ">")))
 (def html-resolvers {
   :wrap            r/wrap
   
@@ -67,13 +65,13 @@
   # :video           r/video
   })
 
-(defn to-html (content)
+(defn jml/to-html (content)
   (defn resolver (ctx node)
     (match (type/simple node)
       :string         node
       :number      (string node)
       :struct ((html-resolvers (node :node)) resolver ctx (node :data) (node :body))
-      :tuple  (join-map [node] to-html) # for imports [ imported content placed as list ]
+      :tuple  (join-map [node] jml/to-html) # for imports [ imported content placed as list ]
               (do 
                 (pp node)
                 (error (string "invalid kind: " (type node)))
@@ -132,5 +130,5 @@
 (def db (finalize-db (compile-deep subdir) k2p nil))
 
 (pp db)
-(def res (to-html (db (k2p :db/join))))
+(def res (jml/to-html (db (k2p :db/join))))
 (file/put "./play.html" res)
