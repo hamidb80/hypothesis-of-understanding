@@ -1,9 +1,12 @@
-## Intro
+[![ReadMeSupportPalestine](https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg)](https://github.com/Safouene1/support-palestine-banner)
 
-> Transmit Understanding, not just knowledge.
+## Overture
+> If you find something hard to understand, _blame your own lack of knowledge!_ You were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
+
+## Goal
+> To transmit Understanding, not just knowledge
 
 ## Aha moments
-
 - *Constructinism* and *Connectionism* [Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
 - The art of [note-"making"](https://mischavandenburg.substack.com/p/the-art-of-note-making).
 - [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295)

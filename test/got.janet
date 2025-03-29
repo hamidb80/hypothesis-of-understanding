@@ -1,5 +1,16 @@
 (use ../src/helper/io)
+(use ../src/helper/path)
+
 (use ../src/graph-of-thought)
+(use ../src/lisp-docs)
+
+# -------------------------------
+
+(def subdir "./notes")
+
+(defn k2p (k) 
+  (string (path/join subdir k) format-extension))
+
 
 (def message-db {
   :welldone (c nil "به جواب رسیدیم")

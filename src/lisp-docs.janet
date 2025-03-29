@@ -30,7 +30,7 @@
 
 # ------------------------------------------------------
 
-(defn simple-wrapper (start-fn end-fn)
+(defn- simple-wrapper (start-fn end-fn)
   (fn [resolver ctx data args] 
     (let [acc @""]
         (buffer/push acc (start-fn data))
@@ -38,18 +38,18 @@
         (buffer/push acc (end-fn data))
       acc)))
 
-(defn const1 (ret) 
+(defn- const1 (ret) 
   (fn [_] ret))
 
-(def r/wrap           (simple-wrapper (const1 "")               (const1 "")))
-(def r/paragraph      (simple-wrapper (const1 `<p dir="auto">`) (const1 `</p>`)))
-(def r/italic         (simple-wrapper (const1 `<i>`)            (const1 `</i>`)))
-(def r/bold           (simple-wrapper (const1 `<b>`)            (const1 `</b>`)))
-(def r/underline      (simple-wrapper (const1 `<u>`)            (const1 `</u>`)))
-(def r/strikethrough  (simple-wrapper (const1 `<s>`)            (const1 `</s>`)))
-(def r/latex          (simple-wrapper (const1 `<math>`)         (const1 `</math>`)))
-(def r/header         (simple-wrapper |(string "<h" $ ">")      |(string "</h" $ ">")))
-(def html-resolvers {
+(def- r/wrap           (simple-wrapper (const1 "")               (const1 "")))
+(def- r/paragraph      (simple-wrapper (const1 `<p dir="auto">`) (const1 `</p>`)))
+(def- r/italic         (simple-wrapper (const1 `<i>`)            (const1 `</i>`)))
+(def- r/bold           (simple-wrapper (const1 `<b>`)            (const1 `</b>`)))
+(def- r/underline      (simple-wrapper (const1 `<u>`)            (const1 `</u>`)))
+(def- r/strikethrough  (simple-wrapper (const1 `<s>`)            (const1 `</s>`)))
+(def- r/latex          (simple-wrapper (const1 `<math>`)         (const1 `</math>`)))
+(def- r/header         (simple-wrapper |(string "<h" $ ">")      |(string "</h" $ ">")))
+(def- html-resolvers {
   :wrap            r/wrap
   
   :bold            r/bold
@@ -106,7 +106,7 @@
 
 # ------------------------------------------------------
 
-(defn compile-deep-impl (root lookup)
+(defn- compile-deep-impl (root lookup)
   (each p (os/diri root)
     (match (path/mode p)
           :directory (compile-deep-impl p lookup)
