@@ -21,6 +21,7 @@
     article))
 
 (defn finalize-db (db key-to-path resolvers)
+  # TODO keep a lookup table and to not resolve again what is resolved before
   (let [acc @{}]
     (eachp [k v] db
       (put acc k (finalize-article db key-to-path resolvers v)))
@@ -129,4 +130,6 @@
          |(string (path/join subdir $) format-extension)
       nil))
 (pp db)
-(print (to-html (db "./notes/db/join.jml")))
+(def res (to-html (db "./notes/db/join.jml")))
+
+(file/put "./play.html" res)
