@@ -1,13 +1,31 @@
 (use ./helper/debug)
+(use ./helper/types)
+(use ./helper/iter)
 (use ./helper/io)
 (use ./helper/path)
 
+
 # ------------------------------------------------------
 
-(defn init-article () @{})
+(def format-extension ".jml") # janet markup language
 
-(defn process-article (resolvers article)
-  )
+# ------------------------------------------------------
+
+(defn finalize-article (db key-to-path resolvers article)
+  (map 
+    (fn [node]
+      (match (type/simple node)
+        :keyword  (db (key-to-path node))
+        :tuple    (finalize-article db key-to-path resolvers node)
+                     node))
+    article))
+
+(defn finalize-db (db key-to-path resolvers)
+  (let [acc @{}]
+    (eachp [k v] db
+      (put acc k (finalize-article db key-to-path resolvers v)))
+    acc))
+
 
 # ------------------------------------------------------
 
@@ -49,15 +67,16 @@
   })
 
 (defn to-html (content)
-  (defn resolver (ctx obj)
-    (match (type obj)
-      :string         obj
-      :number (string obj)
-      :struct ((html-resolvers (obj :node)) resolver ctx (obj :data) (obj :body))
-      # TODO for imports [ imported content placed as list ]
-      # :tuple  
-      # :array  
-              (error (string "invalid kind: " (type obj)))))
+  (defn resolver (ctx node)
+    (match (type/simple node)
+      :string         node
+      :number      (string node)
+      :struct ((html-resolvers (node :node)) resolver ctx (node :data) (node :body))
+      :tuple  (join-map [node] to-html) # for imports [ imported content placed as list ]
+              (do 
+                (pp node)
+                (error (string "invalid kind: " (type node)))
+                )))
   
   (resolver 
     {:inline false} 
@@ -73,6 +92,7 @@
 (defn h5     (& args)      (h 5 ;args))
 (defn h6     (& args)      (h 6 ;args))
 (defn alias  (& args)      {:node :alias       :body args}) # assign name to document, ignored at HTML compilation
+(defn tags   (& args)      {:node :tags        :body args}) # 
 (defn sec    (& args)      {:node :section     :body args})
 (defn abs    (& args)      {:node :abstract    :body args})
 (defn cnt    (& args)      {:node :center      :body args})
@@ -91,7 +111,7 @@
   (each p (os/diri root)
     (match (path/mode p)
           :directory (compile-deep-impl p lookup)
-          :file      (if (string/has-suffix? ".janet" p)
+          :file      (if (string/has-suffix? format-extension p)
                           (put lookup p (eval-string (slurp p)))))))
 
 (defn compile-deep (dir)
@@ -103,8 +123,10 @@
 
 # -----------------------------------------------
 
-# TODO add import like :/db/ra/join :/math/integral/formula
-
-(def db (compile-deep "./notes"))
-
+(def subdir "./notes")
+(def db (finalize-db 
+          (compile-deep subdir) 
+         |(string (path/join subdir $) format-extension)
+      nil))
 (pp db)
+(print (to-html (db "./notes/db/join.jml")))
