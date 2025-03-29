@@ -7,24 +7,24 @@
 (use ./helper/svg)
 
 # ----------- random helpers
-(defn not-nil-indexes (row)
+(defn- not-nil-indexes (row)
   (let [acc @[]]
     (eachp [i n] row
       (if n (array/push acc i)))
     acc))
 
-(defn keep-ends (lst) 
+(defn- keep-ends (lst) 
     [(first lst) (last lst)])
 
-(defn range-len (indicies)
+(defn- range-len (indicies)
   (+ 1 (- (last indicies) (first indicies))))
 
-(defn to-table (lst key-generator)
+(defn- to-table (lst key-generator)
   (let [acc @{}]
       (each n lst (put acc (key-generator n) n))
       acc))
 
-(defn rev-table [tab]
+(defn- rev-table [tab]
   (def acc @{})
   (eachp (k v) tab
     (let [lst (acc v)]
@@ -34,16 +34,16 @@
   acc)
 
 # ---------- domain
-(defn node-class (id)
+(defn- node-class (id)
   (string "node-" id))
 
-(defn content-class (id)
+(defn- content-class (id)
   (string "content-" id))
 
-(defn positioned-item (n r c rng rw) 
+(defn- positioned-item (n r c rng rw) 
   {:node n :row r :col c :row-range rng :row-width rw})
 
-(defn GoT/to-svg-impl (got) # extracts nessesary information for plotting
+(defn- GoT/to-svg-impl (got) # extracts nessesary information for plotting
   (let [acc @[]]
     (eachp [l nodes] (got :grid)
       (eachp [i n] nodes
@@ -51,7 +51,7 @@
           (if n (array/push acc (positioned-item n l i (keep-ends idx) (range-len idx)))))))
     acc))
 
-(defn GoT/svg-calc-pos (item got cfg ctx)
+(defn- GoT/svg-calc-pos (item got cfg ctx)
     [(+ (cfg :padx) (* (cfg :spacex)    (got :width)  (* (/ 1 (+ 1 (item :row-width))) (+ 1 (- (item :col) (first (item :row-range))))) ) (* -1 (ctx :cutx))) 
      (+ (cfg :pady) (* (cfg :spacey) (- (got :height) (item :row) 1)))])
 
@@ -87,7 +87,7 @@
     
       acc)))
 
-(defn GoT/build-levels [events]
+(defn- GoT/build-levels [events]
   (def  levels @{})
   (each e events 
     (match (e :kind)
@@ -95,7 +95,7 @@
            :node     (put levels (e :id) (+ 1 (reduce max 0 (map levels (e :parents)))))))
   levels)
 
-(defn GoT/extract-edges [events]
+(defn- GoT/extract-edges [events]
   (let [acc @[]]
        (each e events
           (match (e :kind)
@@ -103,12 +103,12 @@
                     (array/push acc [a (e :id)]))))
        acc))
 
-(defn GoT/init-grid [rows]
+(defn- GoT/init-grid [rows]
   (let [size (matrix-size rows)]
        (matrix-of (first size) (last size) nil)))
 
 
-(defn GoT/place-node (grid size levels node selected-row parents)
+(defn- GoT/place-node (grid size levels node selected-row parents)
   # places and then returns the position
   (def height (first size))
   (def width  (last size))
@@ -134,7 +134,7 @@
                 (-- i)
                 (++ j))))))
 
-(defn GoT/fill-grid (events levels)
+(defn- GoT/fill-grid (events levels)
   (let [rows  (rev-table   levels)
         shape (matrix-size rows)
         grid  (GoT/init-grid rows)]
@@ -143,7 +143,7 @@
         :node (GoT/place-node grid shape levels (e :id) (dec (levels (e :id))) (e :parents) )))
     grid))
 
-(defn GoT/all-anscestors (topological-sorted-node-ids nodes-tab)
+(defn- GoT/all-anscestors (topological-sorted-node-ids nodes-tab)
   (let [acc @{}]
     (each node topological-sorted-node-ids
       (let [ac @{}]

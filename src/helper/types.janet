@@ -9,6 +9,4 @@
     :array   :tuple
     :tuple   :tuple
     
-    :number  :number
-    :boolean :boolean
-    :keyword :keyword))
+    (type a)))
