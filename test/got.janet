@@ -9,7 +9,7 @@
 (def subdir "./notes")
 
 (defn k2p (k) 
-  (string (path/join subdir k) format-extension))
+  (string (path/join subdir k) markup-ext))
 
 
 (def message-db {

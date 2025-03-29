@@ -8,22 +8,22 @@
 (use ./helper/tab)
 (use ./helper/svg)
 
-# ----------- random helpers
-(defn- not-nil-indexes (row)
-  (let [acc @[]]
-    (eachp [i n] row
-      (if n (array/push acc i)))
-    acc))
+(def git-ext ".got.lisp") # markup language in lisp format
 
-# ---------- domain
+# ------------------------
 (defn- node-class (id)
   (string "node-" id))
 
 (defn- content-class (id)
   (string "content-" id))
 
-(defn- positioned-item (n r c rng rw) 
-  {:node n :row r :col c :row-range rng :row-width rw})
+# ------------------------
+(defn- positioned-item (n r c rng rw) {
+   :node      n 
+   :row       r 
+   :col       c 
+   :row-range rng 
+   :row-width rw})
 
 (defn- GoT/to-svg-impl (got) # extracts nessesary information for plotting
   (let [acc @[]]
@@ -448,7 +448,6 @@
       }
 
     </style>
-    
     </html>`))
 
 # ----------------------- 
@@ -461,11 +460,11 @@
    :parents  parents
    :content  content})
 
-(defn m [content] # question or hint
+(defn m [content] # [m]essge, question or hint
   {:kind    :message 
    :content content})
 
-(defn c [summary body]
+(defn c [summary body] # [c]ontent. wrapper around msssage
   {:kind    :content
    :summary summary
    :body    body})

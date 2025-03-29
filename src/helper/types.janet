@@ -1,4 +1,4 @@
-(defn type/simple (a)
+(defn type/reduced (a)
   (match (type a)
     :string  :string
     :buffer  :string

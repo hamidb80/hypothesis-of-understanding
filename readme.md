@@ -1,4 +1,4 @@
-[![ReadMeSupportPalestine](https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg)](https://github.com/Safouene1/support-palestine-banner)
+<div align="center"><a href="https://github.com/Safouene1/support-palestine-banner/blob/master/Markdown-pages/Support.md"><img src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg" alt="Support Palestine" style="width: 100%;"></a></div>
 
 ## Overture
 > If you find something hard to understand, _BLAME YOUR OWN LACK OF KNOWLEDGE!_ since you were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali

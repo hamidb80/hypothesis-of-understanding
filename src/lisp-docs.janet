@@ -7,14 +7,14 @@
 
 # ------------------------------------------------------
 
-(def format-extension ".jml") # janet markup language
+(def markup-ext ".mu.lisp") # markup language in lisp format
 
 # ------------------------------------------------------
 
 (defn finalize-article (db key-to-path resolvers article)
   (map 
     (fn [node]
-      (match (type/simple node)
+      (match (type/reduced node)
         :keyword  (db (key-to-path node))
         :tuple    (finalize-article db key-to-path resolvers node)
                      node))
@@ -67,7 +67,7 @@
 
 (defn jml/to-html (content)
   (defn resolver (ctx node)
-    (match (type/simple node)
+    (match (type/reduced node)
       :string         node
       :number      (string node)
       :struct ((html-resolvers (node :node)) resolver ctx (node :data) (node :body))
@@ -110,7 +110,7 @@
   (each p (os/diri root)
     (match (path/mode p)
           :directory (compile-deep-impl p lookup)
-          :file      (if (string/has-suffix? format-extension p)
+          :file      (if (string/has-suffix? markup-ext p)
                           (put lookup p (eval-string (slurp p)))))))
 
 (defn compile-deep (dir)

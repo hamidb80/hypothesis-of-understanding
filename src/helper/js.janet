@@ -4,7 +4,7 @@
 (use ./iter)
 
 (defn to-js (data)
-  (match (type/simple data)
+  (match (type/reduced data)
     :struct (string 
       `{` 
       (join-map (keys data) (fn (k) (string (to-js k) `: ` (to-js (data k)) `,`))) 
