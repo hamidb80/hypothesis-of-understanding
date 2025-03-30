@@ -3,11 +3,12 @@
 (use ./helper/iter)
 (use ./helper/io)
 (use ./helper/path)
+(use ./helper/macros)
 
 
 # ------------------------------------------------------
 
-(def markup-ext ".mu.lisp") # markup language in lisp format
+(def markup-ext ".mu.janet") # markup language in Janet lisp format
 
 # ------------------------------------------------------
 
@@ -22,21 +23,19 @@
 
 (defn finalize-db (db key-to-path resolvers)
   # TODO keep a lookup table and to not resolve again what is resolved before
-  (let [acc @{}]
+  (let-acc @{}
     (eachp [k v] db
-      (put acc k (finalize-article db key-to-path resolvers v)))
-    acc))
+      (put acc k (finalize-article db key-to-path resolvers v)))))
 
 
 # ------------------------------------------------------
 
 (defn- simple-wrapper (start-fn end-fn)
   (fn [resolver ctx data args] 
-    (let [acc @""]
-        (buffer/push acc (start-fn data))
-        (each c args (buffer/push acc (resolver ctx c)))
-        (buffer/push acc (end-fn data))
-      acc)))
+    (let-acc @""
+      (buffer/push acc (start-fn data))
+      (each c args (buffer/push acc (resolver ctx c)))
+      (buffer/push acc (end-fn data)))))
 
 (defn- const1 (ret) 
   (fn [_] ret))
@@ -65,13 +64,13 @@
   # :video           r/video
   })
 
-(defn jml/to-html (content)
+(defn mu/to-html (content)
   (defn resolver (ctx node)
     (match (type/reduced node)
       :string         node
       :number      (string node)
       :struct ((html-resolvers (node :node)) resolver ctx (node :data) (node :body))
-      :tuple  (join-map [node] jml/to-html) # for imports [ imported content placed as list ]
+      :tuple  (join-map [node] mu/to-html) # for imports [ imported content placed as list ]
               (do 
                 (pp node)
                 (error (string "invalid kind: " (type node)))
@@ -103,21 +102,3 @@
 (defn p      (& args)      {:node :paragraph   :body args})
 
 (def _ " ")
-
-# ------------------------------------------------------
-
-(defn- compile-deep-impl (root lookup)
-  (each p (os/diri root)
-    (match (path/mode p)
-          :directory (compile-deep-impl p lookup)
-          :file      (if (string/has-suffix? markup-ext p)
-                          (put lookup p (eval-string (slurp p)))))))
-
-(defn compile-deep (dir)
-  "find all doc files in the `dir` and compile them"
-  
-  (let [acc @{}]
-    (compile-deep-impl dir acc)
-    acc))
-
-# -----------------------------------------------

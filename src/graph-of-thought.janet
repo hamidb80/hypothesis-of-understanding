@@ -7,8 +7,9 @@
 (use ./helper/range)
 (use ./helper/tab)
 (use ./helper/svg)
+(use ./helper/macros)
 
-(def got-ext ".got.lisp") # markup language in lisp format
+(def got-ext ".got.janet") # markup language in Janet lisp format
 
 # ------------------------
 (defn- node-class (id)
@@ -26,12 +27,11 @@
    :row-width rw})
 
 (defn- GoT/to-svg-impl (got) # extracts nessesary information for plotting
-  (let [acc @[]]
+  (let-acc @[]
     (eachp [l nodes] (got :grid)
       (eachp [i n] nodes
         (let [idx (not-nil-indexes nodes)]
-          (if n (array/push acc (positioned-item n l i (keep-ends idx) (range-len idx)))))))
-    acc))
+          (if n (array/push acc (positioned-item n l i (keep-ends idx) (range-len idx)))))))))
 
 (defn- GoT/svg-calc-pos (item got cfg ctx)
     [(+ (cfg :padx) (* (cfg :spacex)    (got :width)  (* (/ 1 (+ 1 (item :row-width))) (+ 1 (- (item :col) (first (item :row-range))))) ) (* -1 (ctx :cutx))) 
@@ -78,27 +78,27 @@
   levels)
 
 (defn- GoT/extract-edges [events]
-  (let [acc @[]]
+  (let-acc @[]
        (each e events
           (match (e :kind)
             :node (each a (e :parents)
-                    (array/push acc [a (e :id)]))))
-       acc))
+                    (array/push acc [a (e :id)]))))))
 
 (defn- GoT/init-grid [rows]
   (let [size (matrix-size rows)]
        (matrix-of (first size) (last size) nil)))
-
 
 (defn- GoT/place-node (grid size levels node selected-row parents)
   # places and then returns the position
   (def height (first size))
   (def width  (last size))
   
-  (def parents-col (map (fn [p] (let [row (dec (levels p))
-                        col (find-index (fn [y] (= y p)) (grid row))] 
-                        col)) 
-                    parents))
+  (def parents-col (map 
+    (fn [p] 
+      (let [row (dec (levels p))
+            col (find-index (fn [y] (= y p)) (grid row))]
+        col)) 
+    parents))
  
   (def center (min (dec width) (/ (if (even? width) width (inc width)) 2)))
   (def avg-parents-col (if (empty? parents) center (avg parents-col)))
@@ -126,15 +126,14 @@
     grid))
 
 (defn- GoT/all-anscestors (topological-sorted-node-ids nodes-tab)
-  (let [acc @{}]
+  (let-acc @{}
     (each node topological-sorted-node-ids
       (let [ac @{}]
         (each a ((nodes-tab node) :parents)
           (put ac a 1)
           (each aa (acc a)
             (put ac aa 1)))
-      (put acc node (keys ac))))
-    acc))
+      (put acc node (keys ac))))))
 
 (defn GoT/init [events] 
   (let [levels            (GoT/build-levels events)

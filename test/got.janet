@@ -3,14 +3,16 @@
 
 (use ../src/graph-of-thought)
 (use ../src/lisp-docs)
+(use ../src/solution)
 
 # -------------------------------
 
 (def subdir "./notes")
 
-(defn k2p (k) 
+(defn k2p (k)
   (string (path/join subdir k) markup-ext))
 
+(def db (finalize-db (compile-deep subdir) k2p nil))
 
 (def message-db {
   :welldone (c nil "به جواب رسیدیم")
@@ -20,9 +22,7 @@
     جبر رابطه ای هست
   `)
 
-  :init (c nil `
-    گزینه 1 رو بررسی میکنیم  
-  `)
+  :init (c nil (mu/to-html (db (k2p :db/ra))))
 
   :div-operator (c nil `
       یادته تقسیم چیکار میکرد؟
