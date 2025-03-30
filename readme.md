@@ -7,8 +7,7 @@ lets pray:
 > O God, whose wisdom has no limits and whose power transcends all imagination— I ask You to shine Your ceaseless light of knowledge into the shadows of my mind, dispelling the darkness of ignorance, so that I may know more and understand deeper
 
 ## Goals
-- transmit Understanding, not just knowledge
-- unlock understanding of understanding
+> Transmit Understanding, not just knowledge
 
 ## Aha moments
 - *Constructinism* and *Connectionism* [Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
@@ -24,7 +23,7 @@ lets pray:
 - [makandra cards](https://makandracards.com/)
 - [Bjork Learning and Forgetting Lab](https://bjorklab.psych.ucla.edu/research/)
 
-## Graph of Thought (GoT)
+## terms
 - GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
 - GoK (Graph of Knowledge) is a Directed Graph (may have cycles too)
 
@@ -39,16 +38,16 @@ lets pray:
 6. **Doubt**: explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
 
 ## Bluri's theory to indicate complexity of a problem
-the height of graph of thought (GoT) reperesents the complexity of the problem. the more the height of the graph, means that solving it requires *more steps* and hence is more complex.
+the height of GoT reperesents the complexity of the problem. the more the height of the GoT, means that solving it requires *more steps* and hence is more complex.
 
-The more the width of the graph of thougth means more ideas involved or more options have to be considered.
+The more the width of the GoT more ideas involved or more options have to be considered.
 
 ## Bluri's opinion about a solution to a problem
 If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is _Straight-Forward_, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not Straight-Forward.
 
 Thus the term _Straight-Forward_ is subjective according to the learning material and the learner.
 
-Note that just connecting 2 nodes are not important, the direction of the edge also matters. for example a language learner first looks at the word e.g. "camera", then translates it to his mother tongue e.g. Persian ("دوربین") and then translating, he imagines the real camera in his mind. but he may have trouble to do it vice verse i.e. seeing a camera and then finding its English word. it is true that the person probably can find the word _after some time_ but it is not **obvious** i.e. it's not present _directly_ in his Knowledge Graph.
+Note that just connecting 2 nodes are not important, the direction of the edge also matters. for example a language learner first looks at the word e.g. "camera", then translates it to his mother tongue e.g. Persian ("دوربین") and then translating, he imagines the real camera in his mind. but he may have trouble to do it vice verse i.e. seeing a camera and then finding its English word. it is true that the person probably can find the word _after some time_ but it is not **obvious** i.e. it's not present _directly_ in his GoK.
 
 In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
 
@@ -64,11 +63,15 @@ by the definition, you might've guessed that creative work is not _staright-forw
 Reference:
 - [A Surprising Link Between Creativity and False Memories](https://www.psychologytoday.com/us/blog/ulterior-motives/202110/surprising-link-between-creativity-and-false-memories)
 
+## Why GoK per se is not enough
+...
+
 ## Development
 - colors stolen from [ColorHunt](https://colorhunt.co/)
 
 ### Versions
 - Janet: 1.38
 
-## TODO
+## notes for myself
 - add citations if possible
+- chain of thought: زنچیزه **افکار**
