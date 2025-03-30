@@ -11,13 +11,19 @@
                  (string a "/" b)))
 
 (defn filename/split (path)
+  "convert file.long.ext -> file, .long.ext"
+
   (let [i (find-index |(= (chr ".") $) path (length path))]
     [(slice path 0 i) (slice path i (length path))]))
 
 (defn dirname/split (path)
+  "normal path split: a/b/c -> [a, b, c]"
+  
   (string/split "/" path))
 
 (defn dirname/split-rec (path)
+  "canonical split a/b/c -> ./a, ./a/b, ./a/b/c"
+
   (var cur "")
   (reduce 
     (fn [acc n] 
@@ -27,6 +33,8 @@
     (dirname/split path)))
 
 (defn path/split (path)
+  "converts a/b/c.d -> {:dir a/b/ :name c :ext d}"
+
   (let [i          (find-last-index |(= (chr "/") $) path 0)
         dir        (slice path 0 (inc i))
         file       (slice path (inc i) (length path))
