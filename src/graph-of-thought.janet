@@ -15,9 +15,6 @@
 (defn- node-class (id)
   (string "node-" id))
 
-(defn- content-class (id)
-  (string "content-" id))
-
 # ------------------------
 (defn- positioned-item (n r c rng rw) {
    :node      n 
@@ -219,7 +216,7 @@
                              nil      "افکار")
                   ]
               (string 
-              `<div class="pb-3 content ` (content-class key) `" for="` (e :id)`">
+              `<div class="pb-3 content" content="` key `" for="` (e :id)`">
                  <div class="card">`
                   (if summ 
                     (string 
@@ -251,10 +248,6 @@
         return (dot ? '.' : '') + 'node-' + id
       }
       
-      function contentClass(id, dot){
-        return (dot ? '.' : '') + 'content-' + id
-      }
-
       // ------------------ states
 
       function qa(sel){
@@ -345,10 +338,7 @@
 
         for (let i = 0; i < events.length; i ++){
           let e = events[i]
-          let sel =
-            (e.kind == "node") 
-            ? "[for='" + e.id + "']" 
-            : contentClass(e.content, true)
+          let sel = "[for='" + e.id + "']" 
           let c = q(sel)
 
           clsx(c, step <  i, "d-none")
@@ -457,6 +447,7 @@
    :parents  parents
    :content  content})
 
-(defn m [content] # [m]essge, question or hint
+(defn m [id content] # [m]essge, question or hint
   {:kind    :message 
+   :id       id
    :content content})

@@ -15,7 +15,6 @@
 (defn finalize-article (db key-to-path resolvers article)
   (map 
     (fn [node]
-      (pp node)
       (match (type/reduced node)
         :keyword  (let [k (key-to-path node)
                         ref (db k)]
