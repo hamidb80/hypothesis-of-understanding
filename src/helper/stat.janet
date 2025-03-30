@@ -1,4 +1,4 @@
 # statistical utilities
 
 (defn avg (lst)
-  (/ (reduce + 0 lst) (length lst)))
+  (/ (sum lst) (length lst)))

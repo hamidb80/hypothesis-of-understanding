@@ -1,10 +1,11 @@
 # iterating utilities
 
+(use ./macros)
+
 (defn join-map (lst f)
   (string/join (map f lst)))
 
 (defn not-nil-indexes (row)
-  (let [acc @[]]
+  (let-acc @[]
     (eachp [i n] row
-      (if n (array/push acc i)))
-    acc))
+      (if n (array/push acc i)))))

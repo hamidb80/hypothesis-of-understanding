@@ -1,6 +1,8 @@
 (use ../src/helper/io)
 (use ../src/helper/path)
+
 (use ../src/lisp-docs)
+(use ../src/graph-of-thought)
 (use ../src/solution)
 
 # --------------------------------------------
