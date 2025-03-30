@@ -7,3 +7,6 @@
 (defn path/join (a b)
   (if (is-dir a) (string a b)
                  (string a "/" b)))
+
+(defn path/file-name (path)
+  (first (string/split "." (last (string/split "/" path)))))

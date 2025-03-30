@@ -61,6 +61,9 @@ I've read somewhere that creative people tend to forgot more, as their brain get
 
 by the definition, you might've guessed that creative work is not _staright-forward_.
 
+Reference:
+- [A Surprising Link Between Creativity and False Memories](https://www.psychologytoday.com/us/blog/ulterior-motives/202110/surprising-link-between-creativity-and-false-memories)
+
 ## Development
 - colors stolen from [ColorHunt](https://colorhunt.co/)
 

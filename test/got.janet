@@ -7,16 +7,9 @@
 
 # -------------------------------
 
-(def  output-path "./play.html")
-(def  subdir      "./notes")
+(def  output-dir  "./dist")
+(def  notes-dir   "./notes")
 
-(defn k2mu (k)  (string (path/join subdir k) markup-ext))
-(defn k2go (k)  (string (path/join subdir k) got-ext))
-
-(def  db       (finalize-db (load-deep subdir) k2mu nil))
-(defn reff (k) (mu/to-html (db (k2mu k))))
-
-(def ggg (GoT/init (db (k2go :db/q1))))
 (def got-style-config {
   :radius   16
   :spacex  100
@@ -32,6 +25,29 @@
               :recall    "#864AF9"
               :calculate "#E85C0D"
               :reason    "#5CB338" }})
-(def  svg-repr (GoT/to-svg  ggg got-style-config))
-(def html-repr (GoT/to-html ggg svg-repr reff))
-(file/put output-path html-repr)
+
+(defn k2mu (k)  (string (path/join notes-dir k) markup-ext))
+(defn k2go (k)  (string (path/join notes-dir k) got-ext))
+
+(def  db       (finalize-db (load-deep notes-dir) k2mu nil))
+(defn reff (k) (mu/to-html (db (k2mu k))))
+
+
+# TODO now do it for all of the files
+
+(eachp [k v] db
+  (cond 
+    (string/has-suffix? got-ext k) (do 
+        (def ggg (GoT/init v))
+
+        (def  svg-repr (GoT/to-svg  ggg got-style-config))
+        (def html-repr (GoT/to-html ggg svg-repr reff))
+        (def new-path (path/join output-dir (string (path/file-name k) ".html")))
+
+        # (pp new-path)
+        (file/put new-path html-repr))
+        
+    (string/has-suffix? markup-ext k) (do 
+      (def new-path (path/join output-dir (string (path/file-name k) ".html")))
+      (pp new-path)
+      (file/put new-path (mu/to-html v)))))
