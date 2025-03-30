@@ -232,7 +232,7 @@
                       </div>`))
 
                   `<div class="card-body" dir="auto">`
-                      (val :body)
+                      val
                   `</div>`
 
                   `</div>
@@ -397,8 +397,8 @@
             
             qa(".content").forEach(el => 
               clsx(el, el.getAttribute("for") != id, "opacity-25"))
-            
-            scrollToElement(q(".content-bar"), q(contentClass(nodes[id].content, true)))
+
+            scrollToElement(q(".content-bar"), q("[for="+id+"]"))
           }
 
           el.onmouseleave = () => {
@@ -462,8 +462,3 @@
 (defn m [content] # [m]essge, question or hint
   {:kind    :message 
    :content content})
-
-(defn c [summary body] # [c]ontent. wrapper around msssage
-  {:kind    :content
-   :summary summary
-   :body    body})

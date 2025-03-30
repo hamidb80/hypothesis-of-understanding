@@ -1,6 +1,7 @@
 # input/output utilities
 
 (use ./path)
+(use ./macros)
 
 (defn file/put (path content)
   (def        f (file/open path :w))

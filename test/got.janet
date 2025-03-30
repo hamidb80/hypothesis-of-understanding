@@ -14,59 +14,26 @@
 
 (def db (finalize-db (compile-deep subdir) k2p nil))
 
-(def message-db {
-  :welldone (c nil "به جواب رسیدیم")
-  
-  :focus (c nil `
-    خب از سوال معلومه که در مورد 
-    جبر رابطه ای هست
-  `)
-
-  :init (c nil (mu/to-html (db (k2p :db/ra))))
-
-  :div-operator (c nil `
-      یادته تقسیم چیکار میکرد؟
-    ` )
-  :project-operator (c nil `\prod_{}^{}`)
-  :sigma-operator (c nil `
-      سیگما
-    ` )
-
-  :join-operator (c nil `
-      جوین
-    ` )
-
-  :op-1 (c nil `
-      این گزینه بهمون همه کتاب هایی رو میده که توسط همه افراد بالای 18 سال به امانت گرفته شدن
-      پس چیزی نیست که ما میخوایم
-    `)
-  :op-2 (c nil `
-      این گزینه بهمون همه کتاب های آقای احمدی ای رو میده که توسط حداقل یک آدم 18 ساله وکوچکتر به امانت گرفته شده
-      پس چیزی نیست که ما میخوایم
-    `)
-  :op-3 (c nil `پس چیزی نیست که ما میخوایم`)
-  :op-4 (c nil `
-      این گزینه بهمون همه کتاب های آقای احمدی رو میده که توسط هیچ 18 به بالا امانت گرفته نشده.
-    `)
-})
+(defn reff (k)
+  (mu/to-html (db (k2p k))))
 
 (def got1 (GoT/init [
-  (m :focus)
-  (n :root       :problem []      :init)
+  (m :hello)
+  (n :root       :problem []      :hello)
   
-  (n :sigma      :recall  [:root] :sigma-operator)
-  (n :project    :recall  [:root] :project-operator)
-  (n :div        :recall  [:root] :div-operator)
+  (n :sigma      :recall  [:root] :hello)
+  (n :project    :recall  [:root] :hello)
+  (n :div        :recall  [:root] :hello)
 
-  (n :op-1-final :reason  [:div :project :sigma] :op-1)
+  (n :op-1-final :reason  [:div :project :sigma] :hello)
 
-  (n :join        :recall  [:root] :join-operator)
+  (n :join        :recall  [:root] :hello)
 
-  (n :op-2-final :reason  [:join :project :sigma] :op-2)
-  (n :op-3-final :reason  [:join :project :sigma] :op-3)
-  (n :op-4-final :reason  [:join :project :sigma] :op-4)
+  (n :op-2-final :reason  [:join :project :sigma] :hello)
+  (n :op-3-final :reason  [:join :project :sigma] :hello)
+  (n :op-4-final :reason  [:join :project :sigma] :hello)
   
-  (n :goal :goal  [:op-4-final] :op-4)
+  (n :goal :goal  [:op-4-final] :hello)
 ]))
 
 # (pp got1)
@@ -87,4 +54,4 @@
                               :calculate "#E85C0D"
                               :reason    "#5CB338" }}))
 
-(file/put "./play.html" (GoT/to-html got1 svg-got1 message-db))
+(file/put "./play.html" (GoT/to-html got1 svg-got1 reff))
