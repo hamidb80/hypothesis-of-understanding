@@ -18,8 +18,8 @@
       (match (type/reduced node)
         :keyword  (let [k (key-to-path node)
                         ref (db k)]
-                    (if (not (nil? ref)) ref 
-                        (error (string "the key " k " for node " node " has failed to reference"))))
+                    (assert (not (nil? ref)) (string "the key " k " for node " node " has failed to reference"))
+                    ref)
 
         :tuple    (finalize-article db key-to-path resolvers node)
                      node))

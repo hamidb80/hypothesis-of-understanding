@@ -132,7 +132,10 @@
             (put ac aa 1)))
       (put acc node (keys ac))))))
 
-(defn  GoT/init [events] 
+(defn  GoT/init [events]
+  (assert (= (length events) (length (distinct (map |($ :id) events))))
+          "all events must have unique ids") 
+
   (let [levels            (GoT/build-levels events)
         grid              (GoT/fill-grid    events levels)
         nodes             (to-table events (fn [e] (if (= :node (e :kind)) (e :id))) identity)]

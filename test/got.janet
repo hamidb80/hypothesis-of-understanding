@@ -9,7 +9,7 @@
 # -------------------------------
 
 (def  output-dir  "./dist/")
-(def  notes-dir   "./notes")
+(def  notes-dir   "./notes/")
 
 (def got-style-config {
   :radius   16
@@ -31,7 +31,10 @@
 (defn k2go (k)  (string (path/join notes-dir k) got-ext))
 
 (def  db       (finalize-db (load-deep notes-dir) k2mu nil))
-(defn reff (k) (mu/to-html (db (k2mu k))))
+(defn reff (k)
+  (let [r (db (k2mu k))]
+    (assert (not (nil? r)) (string "the reference " k " is invalid"))
+    (mu/to-html r)))
 
 (eachp [k v] db
   (let [path-parts (path/split k)]
