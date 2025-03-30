@@ -2,6 +2,8 @@
   (m :explain    :db/ra/join)
   (n :root       :problem []      :hello)
 
+  (m :explain    :db/ra/join)
+
   (n :sigma      :recall  [:root] :hello)
   (n :project    :recall  [:root] :hello)
   (n :div        :recall  [:root] :hello)
