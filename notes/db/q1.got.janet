@@ -1,18 +1,18 @@
 [
-  (m :focus)
-  (n :root       :problem []      :init)
+  (m :hello)
+  (n :root       :problem []      :hello)
   
-  (n :sigma      :recall  [:root] :sigma-operator)
-  (n :project    :recall  [:root] :project-operator)
-  (n :div        :recall  [:root] :div-operator)
+  (n :sigma      :recall  [:root] :hello)
+  (n :project    :recall  [:root] :hello)
+  (n :div        :recall  [:root] :hello)
 
-  (n :op-1-final :reason  [:div :project :sigma] :op-1)
+  (n :op-1-final :reason  [:div :project :sigma] :hello)
 
-  (n :join        :recall  [:root] :join-operator)
+  (n :join       :recall  [:root] :hello)
 
-  (n :op-2-final :reason  [:join :project :sigma] :op-2)
-  (n :op-3-final :reason  [:join :project :sigma] :op-3)
-  (n :op-4-final :reason  [:join :project :sigma] :op-4)
+  (n :op-2-final :reason  [:join :project :sigma] :hello)
+  (n :op-3-final :reason  [:join :project :sigma] :hello)
+  (n :op-4-final :reason  [:join :project :sigma] :hello)
   
-  (n :goal :goal  [:op-4-final] :op-4)
+  (n :goal :goal  [:op-4-final] :hello)
 ]

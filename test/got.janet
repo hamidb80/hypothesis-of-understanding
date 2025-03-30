@@ -9,29 +9,14 @@
 
 (def  output-path "./play.html")
 (def  subdir      "./notes")
-(defn k2p (k)  (string (path/join subdir k) markup-ext))
-(def  db       (finalize-db (compile-deep subdir) k2p nil))
-(defn reff (k) (mu/to-html (db (k2p k))))
 
-(def events [
-  (m :hello)
-  (n :root       :problem []      :hello)
-  
-  (n :sigma      :recall  [:root] :hello)
-  (n :project    :recall  [:root] :hello)
-  (n :div        :recall  [:root] :hello)
+(defn k2mu (k)  (string (path/join subdir k) markup-ext))
+(defn k2go (k)  (string (path/join subdir k) got-ext))
 
-  (n :op-1-final :reason  [:div :project :sigma] :hello)
+(def  db       (finalize-db (compile-deep subdir) k2mu nil))
+(defn reff (k) (mu/to-html (db (k2mu k))))
 
-  (n :join       :recall  [:root] :hello)
-
-  (n :op-2-final :reason  [:join :project :sigma] :hello)
-  (n :op-3-final :reason  [:join :project :sigma] :hello)
-  (n :op-4-final :reason  [:join :project :sigma] :hello)
-  
-  (n :goal :goal  [:op-4-final] :hello)
-])
-(def ggg (GoT/init events))
+(def ggg (GoT/init (db (k2go :db/q1))))
 (def got-style-config {
   :radius   16
   :spacex  100
@@ -40,7 +25,7 @@
   :pady     50
   :stroke    4
   :node-pad  6
-  :background nil # "black"
+  :background nil
   :stroke-color          "#212121"
   :color-map {:problem   "#212121"
               :goal      "#212121"
