@@ -22,6 +22,7 @@ lets pray:
 - [Neurite](https://github.com/satellitecomponent/Neurite) 
 - [Brilliant](https://brilliant.org/) | Learning by doing
 - [makandra cards](https://makandracards.com/)
+- [Bjork Learning and Forgetting Lab](https://bjorklab.psych.ucla.edu/research/)
 
 ## Graph of Thought (GoT)
 - GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
@@ -65,3 +66,6 @@ by the definition, you might've guessed that creative work is not _staright-forw
 
 ### Versions
 - Janet: 1.38
+
+## TODO
+- add citations if possible

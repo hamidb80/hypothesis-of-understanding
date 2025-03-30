@@ -15,8 +15,10 @@ integration of GoT and Notes
   (each p (os/diri root)
     (match (path/mode p)
           :directory (compile-deep-impl p lookup)
-          :file      (if (string/has-suffix? markup-ext p)
-                          (put lookup p (eval-string (slurp p)))))))
+          :file      (cond 
+                      (string/has-suffix? markup-ext p) (put lookup p (eval-string (slurp p)))
+                      # (string/has-suffix?    got-ext p) nil 
+                      ))))
 
 (defn compile-deep (dir)
   "find all doc files in the `dir` and compile them"
