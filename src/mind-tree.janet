@@ -1,6 +1,6 @@
-"""
+"
 tiny mind-tree creator.
-"""
+"
 
 (use ./helper/iter)
 (use ./helper/io)

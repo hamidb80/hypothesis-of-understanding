@@ -1,6 +1,6 @@
-"""
+"
 integration of GoT and Notes
-"""
+"
 
 (use ./helper/io)
 (use ./helper/path)
@@ -14,7 +14,7 @@ integration of GoT and Notes
 # ------------------------------------------------------
 
 (defn compile-deep (dir)
-  "find all markup/got files in the `dir` and compile them"
+  "find all markup/GoT files in the `dir` and compile them"
 
   (to-table 
     (filter 
