@@ -12,7 +12,7 @@
 (def  db       (finalize-db (compile-deep subdir) k2p nil))
 (defn reff (k) (mu/to-html (db (k2p k))))
 
-(def got1 (GoT/init [
+(def events [
   (m :hello)
   (n :root       :problem []      :hello)
   
@@ -29,24 +29,23 @@
   (n :op-4-final :reason  [:join :project :sigma] :hello)
   
   (n :goal :goal  [:op-4-final] :hello)
-]))
-
-# (pp got1)
-
-(def svg-got1 
-  (GoT/to-svg got1 {:radius   16
-                  :spacex  100
-                  :spacey   80
-                  :padx    100
-                  :pady     50
-                  :stroke    4
-                  :node-pad  6
-                  :background nil # "black"
-                  :stroke-color          "#212121"
-                  :color-map {:problem   "#212121"
-                              :goal      "#212121"
-                              :recall    "#864AF9"
-                              :calculate "#E85C0D"
-                              :reason    "#5CB338" }}))
-
-(file/put "./play.html" (GoT/to-html got1 svg-got1 reff))
+])
+(def got1 (GoT/init events))
+(def got-style-config {
+  :radius   16
+  :spacex  100
+  :spacey   80
+  :padx    100
+  :pady     50
+  :stroke    4
+  :node-pad  6
+  :background nil # "black"
+  :stroke-color          "#212121"
+  :color-map {:problem   "#212121"
+              :goal      "#212121"
+              :recall    "#864AF9"
+              :calculate "#E85C0D"
+              :reason    "#5CB338" }})
+(def output-path "./play.html")
+(def svg-repr (GoT/to-svg got1 got-style-config))
+(file/put output-path (GoT/to-html got1 svg-repr reff))
