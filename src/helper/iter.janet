@@ -3,6 +3,8 @@
 (use ./macros)
 
 (defn join-map (lst f)
+  "syntatic sugar"
+
   (string/join (map f lst)))
 
 (defn not-nil-indexes (row)
@@ -12,6 +14,7 @@
 
 (defn find-last-index (pred lst dflt)
   "reverse of `find-index`"
+
   (var i (dec (length lst)))
   (var j dflt)
   (while (<= 0 i)

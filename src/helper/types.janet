@@ -1,4 +1,6 @@
 (defn type/reduced (a)
+  "simplitied version of `type` function"
+
   (match (type a)
     :string  :string
     :buffer  :string
