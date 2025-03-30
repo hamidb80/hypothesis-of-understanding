@@ -9,7 +9,7 @@
 (use ./helper/svg)
 (use ./helper/macros)
 
-(def got-ext ".got.janet") # markup language in Janet lisp format
+(def got-ext ".got.janet") # graph of thought representation in Janet lisp format
 
 # ------------------------
 (defn- node-class (id)
@@ -205,8 +205,6 @@
           <i class="bi bi-person-walking"></i>
           Steps
         </div>
-
-        <img src="./example-question.png" class="w-100"/>
 
         <div class="my-3">`
           (join-map (got :events) (fn [e] 

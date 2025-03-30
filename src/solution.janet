@@ -8,13 +8,13 @@ integration of GoT and Notes
 (use ./helper/macros)
 (use ./helper/iter)
 
-(use ./lisp-docs)
+(use ./markup)
 (use ./graph-of-thought)
 
 # ------------------------------------------------------
 
-(defn compile-deep (dir)
-  "find all markup/GoT files in the `dir` and compile them"
+(defn load-deep (dir)
+  "find all markup/GoT files in the `dir` and load them"
 
   (to-table 
     (filter 
@@ -24,5 +24,3 @@ integration of GoT and Notes
       (os/list-files-rec dir))
     identity
     |(eval-string (slurp $))))
-
-# -----------------------------------------------

@@ -2,7 +2,7 @@
 (use ../src/helper/path)
 
 (use ../src/graph-of-thought)
-(use ../src/lisp-docs)
+(use ../src/markup)
 (use ../src/solution)
 
 # -------------------------------
@@ -13,7 +13,7 @@
 (defn k2mu (k)  (string (path/join subdir k) markup-ext))
 (defn k2go (k)  (string (path/join subdir k) got-ext))
 
-(def  db       (finalize-db (compile-deep subdir) k2mu nil))
+(def  db       (finalize-db (load-deep subdir) k2mu nil))
 (defn reff (k) (mu/to-html (db (k2mu k))))
 
 (def ggg (GoT/init (db (k2go :db/q1))))
@@ -32,5 +32,6 @@
               :recall    "#864AF9"
               :calculate "#E85C0D"
               :reason    "#5CB338" }})
-(def svg-repr (GoT/to-svg ggg got-style-config))
-(file/put output-path (GoT/to-html ggg svg-repr reff))
+(def  svg-repr (GoT/to-svg  ggg got-style-config))
+(def html-repr (GoT/to-html ggg svg-repr reff))
+(file/put output-path html-repr)
