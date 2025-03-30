@@ -23,7 +23,7 @@ integration of GoT and Notes
     (os/list-files-rec-impl root pred acc)))
 
 (defn compile-deep (dir)
-  "find all doc files in the `dir` and compile them"
+  "find all markup/got files in the `dir` and compile them"
 
   (to-table 
     (os/list-files-rec dir |(or 
