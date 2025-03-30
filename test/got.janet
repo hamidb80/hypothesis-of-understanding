@@ -7,15 +7,10 @@
 
 # -------------------------------
 
-(def subdir "./notes")
-
-(defn k2p (k)
-  (string (path/join subdir k) markup-ext))
-
-(def db (finalize-db (compile-deep subdir) k2p nil))
-
-(defn reff (k)
-  (mu/to-html (db (k2p k))))
+(def  subdir   "./notes")
+(defn k2p (k)  (string (path/join subdir k) markup-ext))
+(def  db       (finalize-db (compile-deep subdir) k2p nil))
+(defn reff (k) (mu/to-html (db (k2p k))))
 
 (def got1 (GoT/init [
   (m :hello)
