@@ -1,4 +1,4 @@
 [
 (h1 `Hello Lisp docs!`)
-(p `hey this os so cool`)
+(p `hey `(i `this`)` os so cool`)
 ]

@@ -37,7 +37,7 @@
     [(+ (cfg :padx) (* (cfg :spacex)    (got :width)  (* (/ 1 (+ 1 (item :row-width))) (+ 1 (- (item :col) (first (item :row-range))))) ) (* -1 (ctx :cutx))) 
      (+ (cfg :pady) (* (cfg :spacey) (- (got :height) (item :row) 1)))])
 
-(defn GoT/to-svg [got cfg]
+(defn  GoT/to-svg [got cfg]
   (def cutx (/ (* (got :width) (cfg :spacex)) (+ 1 (got :width))))
 
   (svg/wrap 0 0
@@ -135,7 +135,7 @@
             (put ac aa 1)))
       (put acc node (keys ac))))))
 
-(defn GoT/init [events] 
+(defn  GoT/init [events] 
   (let [levels            (GoT/build-levels events)
         grid              (GoT/fill-grid    events levels)
         nodes             (to-table events (fn [e] (if (= :node (e :kind)) (e :id))) identity)]
@@ -148,7 +148,7 @@
          :height          (length grid) 
          :width           (length (grid 0))}))
 
-(defn GoT/to-html (got svg message-db)
+(defn  GoT/to-html (got svg message-db)
   (string `
     <!DOCTYPE html>
     <html lang="en">
