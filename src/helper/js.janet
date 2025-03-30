@@ -3,8 +3,9 @@
 (use ./types)
 (use ./iter)
 
-(defn to-js (data)
+(defn to-js 
   "Converts a Lisp data-structure into its corresponding JS data-structure"
+  (data)
 
   (match (type/reduced data)
     :struct (string 
