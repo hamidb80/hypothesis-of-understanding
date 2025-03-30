@@ -7,7 +7,8 @@
 
 # -------------------------------
 
-(def  subdir   "./notes")
+(def  output-path "./play.html")
+(def  subdir      "./notes")
 (defn k2p (k)  (string (path/join subdir k) markup-ext))
 (def  db       (finalize-db (compile-deep subdir) k2p nil))
 (defn reff (k) (mu/to-html (db (k2p k))))
@@ -22,7 +23,7 @@
 
   (n :op-1-final :reason  [:div :project :sigma] :hello)
 
-  (n :join        :recall  [:root] :hello)
+  (n :join       :recall  [:root] :hello)
 
   (n :op-2-final :reason  [:join :project :sigma] :hello)
   (n :op-3-final :reason  [:join :project :sigma] :hello)
@@ -30,7 +31,7 @@
   
   (n :goal :goal  [:op-4-final] :hello)
 ])
-(def got1 (GoT/init events))
+(def ggg (GoT/init events))
 (def got-style-config {
   :radius   16
   :spacex  100
@@ -46,6 +47,5 @@
               :recall    "#864AF9"
               :calculate "#E85C0D"
               :reason    "#5CB338" }})
-(def output-path "./play.html")
-(def svg-repr (GoT/to-svg got1 got-style-config))
-(file/put output-path (GoT/to-html got1 svg-repr reff))
+(def svg-repr (GoT/to-svg ggg got-style-config))
+(file/put output-path (GoT/to-html ggg svg-repr reff))
