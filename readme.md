@@ -64,7 +64,19 @@ Reference:
 - [A Surprising Link Between Creativity and False Memories](https://www.psychologytoday.com/us/blog/ulterior-motives/202110/surprising-link-between-creativity-and-false-memories)
 
 ## Why GoK per se is not enough
-...
+according to definition of _straight-forward_ solution, one can implement a question that the GoK be completly useless (i.e. the connection between concepts not be present). 
+
+In order to mitigate the above problem, one might suggest that adding a lots of edges between nodes (cross referencing) surely solves the problem. that is correct in one aspect, but it will arise a worse problem; nobody can understand a super dense GoK but first looking at it!
+
+Another solution would be to create different versions of GoK based on different aspects e.g. most important nodes be people, most important nodes be time-line, most important be based on specific features and so on ...
+
+That is why tools like GoK of Obisidian software would not help much and they are rather a fancy feature to make people say _WOW!_
+
+The real problem is that the GoK **must be placed in the person's brain**, not in the computer. computers are already good at storing and retriving data efficiently. we as the users of these apps were supposed to make our learning journey easier but now it is completly oppsoite.
+
+I've tried implmenting a GoK app similar to [Kumu](https://kumu.io/) named [ReMS](https://github.com/hamidb80/rems) (Remembering Management System) and not only it was time-consuming, it would not help me understant better. sure the remembering got easier but it was mostly becuase of documenting stuff; and I even want to say that, it was _very shallow_ kind of remembering.
+
+the above assertion hold true for mind-mapping since GoK is a lot more powerful than mind-map.
 
 ## Development
 - colors stolen from [ColorHunt](https://colorhunt.co/)
@@ -74,4 +86,4 @@ Reference:
 
 ## notes for myself
 - add citations if possible
-- chain of thought: زنچیزه **افکار**
+- chain of thought: زنچیزه افکار
