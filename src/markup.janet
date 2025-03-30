@@ -15,8 +15,13 @@
 (defn finalize-article (db key-to-path resolvers article)
   (map 
     (fn [node]
+      (pp node)
       (match (type/reduced node)
-        :keyword  (db (key-to-path node))
+        :keyword  (let [k (key-to-path node)
+                        ref (db k)]
+                    (if (not (nil? ref)) ref 
+                        (error (string "the key " k " for node " node " has failed to reference"))))
+
         :tuple    (finalize-article db key-to-path resolvers node)
                      node))
     article))

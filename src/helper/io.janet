@@ -30,3 +30,7 @@
 (defn os/list-files-rec (root)
   (let-acc @[] 
     (os/list-files-rec-impl root acc)))
+
+(defn os/mkdir-rec (path)
+  (each p (dirname/split-rec path)
+    (os/mkdir p)))

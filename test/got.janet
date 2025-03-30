@@ -1,5 +1,6 @@
 (use ../src/helper/io)
 (use ../src/helper/path)
+(use ../src/helper/str)
 
 (use ../src/graph-of-thought)
 (use ../src/markup)
@@ -7,7 +8,7 @@
 
 # -------------------------------
 
-(def  output-dir  "./dist")
+(def  output-dir  "./dist/")
 (def  notes-dir   "./notes")
 
 (def got-style-config {
@@ -29,25 +30,28 @@
 (defn k2mu (k)  (string (path/join notes-dir k) markup-ext))
 (defn k2go (k)  (string (path/join notes-dir k) got-ext))
 
+
 (def  db       (finalize-db (load-deep notes-dir) k2mu nil))
-(defn reff (k) (mu/to-html (db (k2mu k))))
-
-
-# TODO now do it for all of the files
+# (defn reff (k) (mu/to-html (db (k2mu k))))
+(defn reff (k) (print ">>>>>>>>>>>>>>>>>>>>" k))
+# (pp (load-deep notes-dir))
+# (pp db)
 
 (eachp [k v] db
-  (cond 
-    (string/has-suffix? got-ext k) (do 
-        (def ggg (GoT/init v))
+  (let [path-parts (path/split k)]
+    # (pp path-parts)
+    (cond 
+      (string/has-suffix? got-ext k) (do 
+          (def ggg (GoT/init v))
 
-        (def  svg-repr (GoT/to-svg  ggg got-style-config))
-        (def html-repr (GoT/to-html ggg svg-repr reff))
-        (def new-path (path/join output-dir (string (path/file-name k) ".html")))
-
-        # (pp new-path)
-        (file/put new-path html-repr))
-        
-    (string/has-suffix? markup-ext k) (do 
-      (def new-path (path/join output-dir (string (path/file-name k) ".html")))
-      (pp new-path)
-      (file/put new-path (mu/to-html v)))))
+          (def  svg-repr (GoT/to-svg  ggg got-style-config))
+          (def html-repr (GoT/to-html ggg svg-repr reff))
+          (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
+          (os/mkdir-rec ((path/split new-path) :dir))
+          (file/put new-path html-repr))
+          
+      (string/has-suffix? markup-ext k) (do 
+        (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
+        (os/mkdir-rec ((path/split new-path) :dir))
+        (file/put new-path (mu/to-html v)))
+        )))
