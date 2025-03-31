@@ -51,4 +51,4 @@
       (string/has-suffix? markup-ext k) (do 
         (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
         (os/mkdir-rec ((path/split new-path) :dir))
-        (file/put new-path (mu/to-html v))))))
+        (file/put new-path (mu/wrap-html ((path/split k) :name) (mu/to-html v)))))))

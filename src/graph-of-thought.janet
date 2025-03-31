@@ -9,6 +9,8 @@
 (use ./helper/svg)
 (use ./helper/macros)
 
+(use ./com)
+
 (def got-ext ".got.janet") # graph of thought representation in Janet lisp format
 
 # ------------------------
@@ -149,21 +151,14 @@
          :width           (length (grid 0))}))
 
 (defn  GoT/to-html (got svg message-db)
+  (def title "graph of thought")
+
   (string `
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Name </title>
-        
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.css">
-        <link href=" https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css " rel="stylesheet">
-
-        <script src="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.js"></script>
-        <script src=" https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js "></script>
+        <title> ` title ` </title>
+        ` common-head `
     </head>
     <body>
     

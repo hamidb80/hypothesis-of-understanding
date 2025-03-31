@@ -5,6 +5,8 @@
 (use ./helper/path)
 (use ./helper/macros)
 
+(use ./com)
+
 
 # ------------------------------------------------------
 
@@ -68,6 +70,7 @@
   # :video           r/video
   })
 
+
 (defn mu/to-html (content)
   (defn resolver (ctx node)
     (match (type/reduced node)
@@ -85,6 +88,25 @@
     {:node :wrap 
      :body content})
 )
+(defn mu/wrap-html (key str)
+  (string `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title> ` key ` </title>
+        ` common-head `
+    </head>
+    <body>
+
+    <div class="container my-5">
+    
+      <div class="card">
+        <div class="card-body"> ` str ` </div>
+      </div>
+    
+    </div>
+    </body>
+    </html>`))
 
 (defn h      (size & args) {:node :header      :body args :data size })
 (defn h1     (& args)      (h 1 ;args))
