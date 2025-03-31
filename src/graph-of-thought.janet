@@ -411,7 +411,6 @@
         }
 
         // -----------------------
-
         
         prepare()
 
@@ -420,12 +419,13 @@
           if (e.key == "ArrowLeft")  prevStep()
         }) 
 
-        // q('#reset-progress-action').onclick = resetProgress
-        // q("#skip-till-end-action").onclick = skipTillEnd
+        q('#reset-progress-action').onclick = resetProgress
+        q("#skip-till-end-action").onclick = skipTillEnd
         q("#prev-step-action").onclick = prevStep
         q("#next-step-action").onclick = nextStep
       
       })
+
       up.compiler('.latex', el => {
         katex.render(el.innerText, el, { displayMode: true })
       })

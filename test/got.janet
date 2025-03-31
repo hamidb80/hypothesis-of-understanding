@@ -31,13 +31,11 @@
 # (pp raw-db)
 
 (def  db (finalize-db raw-db nil))
-
 # (pp db)
 
 (defn reff (k)
-  (let [r (db k)]
-    (assert (not (nil? r)) (string "the reference " k " is invalid"))
-    (mu/to-html (r :content))))
+  (assert (not (nil? (db k))) (string "the reference " k " is invalid"))
+  (mu/to-html ((db k) :content)))
 
 (eachp [id entity] db
   (let [path-parts (path/split (entity :path))]
