@@ -23,7 +23,7 @@
       (match (type/reduced vv)
         
         :keyword  (let [ref (db vv)]
-                    (assert (not (nil? ref)) (string "the key :" vv " has failed to reference"))
+                    (assert (not (nil? ref)) (string "the key :" vv " has failed to reference."))
                     (ref :content))
         
         :struct   (match (vv :node)

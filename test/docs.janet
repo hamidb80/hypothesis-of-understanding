@@ -7,13 +7,7 @@
 
 # --------------------------------------------
 
-(def subdir "./notes")
-
-(defn k2p (k) 
-  (string (path/join subdir k) markup-ext))
-
-(def db (finalize-db (compile-deep subdir) k2p nil))
-
-(pp db)
-(def res (mu/to-html (db (k2p :db/join))))
+(def subdir "./notes/")
+(def db (finalize-db (load-deep subdir) nil))
+(def res (mu/to-html ((db :db/ra/join) :content)))
 (file/put "./play.html" res)
