@@ -45,10 +45,8 @@
           (def  svg-repr (GoT/to-svg  ggg got-style-config))
           (def html-repr (GoT/to-html ggg svg-repr reff))
           (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
-          (os/mkdir-rec ((path/split new-path) :dir))
           (file/put new-path html-repr))
           
       (string/has-suffix? markup-ext k) (do 
         (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
-        (os/mkdir-rec ((path/split new-path) :dir))
         (file/put new-path (mu/wrap-html ((path/split k) :name) (mu/to-html v)))))))

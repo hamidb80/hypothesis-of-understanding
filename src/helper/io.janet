@@ -3,11 +3,6 @@
 (use ./path)
 (use ./macros)
 
-(defn file/put (path content)
-  (def        f (file/open path :w))
-  (file/write f content)
-  (file/close f))
-
 (defn file/exists (path) 
   (not (nil? (os/stat path))))
 
@@ -34,3 +29,9 @@
 (defn os/mkdir-rec (path)
   (each p (dirname/split-rec path)
     (os/mkdir p)))
+
+(defn file/put (path content)
+  (os/mkdir-rec ((path/split path) :dir))
+  (def        f (file/open path :w))
+  (file/write f content)
+  (file/close f))

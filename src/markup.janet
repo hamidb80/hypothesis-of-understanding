@@ -14,6 +14,9 @@
 
 # ------------------------------------------------------
 
+# TODO add local-ref resolver 
+# {:node :local-ref   :body body}
+
 (defn finalize-article (db key-to-path resolvers article)
   (map 
     (fn [node]
@@ -126,5 +129,6 @@
 (defn sm     (& args)      {:node :small       :body args})
 (defn lg     (& args)      {:node :large       :body args})
 (defn p      (& args)      {:node :paragraph   :body args})
+(defn ref    (kw & body)   {:node :local-ref   :body body})
 
 (def _ " ")
