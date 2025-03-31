@@ -26,7 +26,7 @@ lets pray:
 ## terms
 - GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
 - GoK (Graph of Knowledge) is a Directed Graph (may have cycles too)
-- straight-forward: Straight-Forward
+- SF: Straight-Forward
 
 ## Bluri's steps to solve a problem
 
