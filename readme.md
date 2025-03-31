@@ -38,6 +38,8 @@ lets pray:
 5. **Repeat**: repeat the process until you're done.
 6. **Doubt**: explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
 
+> Thanks to Eric Demaine for his SRTBOT method for formulating a dynamic programming. see "introduction to algorithms" in MIT open course ware.
+
 ## Bluri's theory to indicate complexity of a problem
 the height of GoT reperesents the complexity of the problem. the more the height of the GoT, means that solving it requires *more steps* and hence is more complex.
 
