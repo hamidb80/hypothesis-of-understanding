@@ -25,6 +25,12 @@
                         ref (db k)]
                     (assert (not (nil? ref)) (string "the key " k " for node " node " has failed to reference"))
                     ref)
+        
+        :struct   (match (node :node)
+                    :local-ref (do 
+                      (assert (not (nil? (db (key-to-path (node :data))))) "reference does not exists")
+                      node)
+                    node)
 
         :tuple    (finalize-article db key-to-path resolvers node)
                      node))
@@ -57,6 +63,16 @@
 (def- r/strikethrough  (simple-wrapper (const1 `<s>`)            (const1 `</s>`)))
 (def- r/latex          (simple-wrapper (const1 `<math>`)         (const1 `</math>`)))
 (def- r/header         (simple-wrapper |(string "<h" $ ">")      |(string "</h" $ ">")))
+
+(def base-addr "/dist/")
+
+(defn- r/local-ref [resolver ctx data args] 
+  (string 
+    `<a up-follow href="` base-addr data `.html">` 
+      (resolver ctx args)
+    `</a>`))
+
+
 (def- html-resolvers {
   :wrap            r/wrap
   
@@ -69,6 +85,7 @@
   :paragraph       r/paragraph
   
   :latex           r/latex
+  :local-ref       r/local-ref
   # :image           r/image
   # :video           r/video
   })
@@ -129,6 +146,6 @@
 (defn sm     (& args)      {:node :small       :body args})
 (defn lg     (& args)      {:node :large       :body args})
 (defn p      (& args)      {:node :paragraph   :body args})
-(defn ref    (kw & body)   {:node :local-ref   :body body})
+(defn ref    (kw & body)   {:node :local-ref   :body body  :data kw})
 
 (def _ " ")

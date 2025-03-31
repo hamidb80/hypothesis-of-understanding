@@ -162,7 +162,7 @@
     </head>
     <body>
     
-    <main class="row gx-2 m-3">
+    <main class="row gx-2 m-3" got>
       <aside class="col col-5 pt-2">
         <div class="fs-6">
           <i class="bi bi-share-fill"></i>
@@ -176,19 +176,19 @@
         </center>
 
         <div class="my-3 d-flex justify-content-center">
-          <button class="mx-1 btn btn-primary" onclick="resetProgress()">
+          <button class="mx-1 btn btn-primary" id="reset-progress-action">
             reset 
             <i class="bi bi-arrow-clockwise"></i>
           </button>
-          <button class="mx-1 btn btn-primary" onclick="skipTillEnd()">   
+          <button class="mx-1 btn btn-primary" id="skip-till-end-action">   
             skip
             <i class="bi bi-skip-forward"></i>
           </button>
-          <button class="mx-1 btn btn-primary" onclick="prevStep()"> 
+          <button class="mx-1 btn btn-primary" id="prev-step-action"> 
             prev 
             <i class="bi bi-arrow-left"></i>
           </button>
-          <button class="mx-1 btn btn-primary" onclick="nextStep()"> 
+          <button class="mx-1 btn btn-primary" id="next-step-action"> 
             next 
             <i class="bi bi-arrow-right"></i>
           </button>
@@ -237,11 +237,6 @@
     </body>
 
     <script>
-      const events     = `(to-js (got :events))`
-      const nodes      = `(to-js (got :nodes))`
-      const anscestors = `(to-js (got :anscestors))`
-      let cursor
-
       function nodeClass(id, dot = true){
         return (dot ? '.' : '') + 'node-' + id
       }
@@ -308,119 +303,131 @@
         el.removeAttribute("stroke-width")
       }
 
-      function focusNode(el) {
-        let id  = el ? el.getAttribute("node-id") : ""
-        let ans = el ? anscestors[id] : []
+      up.compiler('[got]', _ => {
 
-        qa(".node").forEach(e => {
-          let pid = e.getAttribute("node-id")
-          if (id == pid) highlightNode(e)
-          else           blurNode(e)
-          clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
-        })
-        qa(".edge").forEach(e => {
-          let pid = e.getAttribute("to-node-id")
-          clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
-        })
-      }
-      
-      function unfocusAll(){
-        qa(".content").forEach(e => clsx(e, false, "opacity-25"))
-        qa(".node").forEach(e =>    {clsx(e, false, "opacity-25"); blurNode(e)})
-        qa(".edge").forEach(e =>    clsx(e, false, "opacity-25"))
-      }
+        const events     = `(to-js (got :events))`
+        const nodes      = `(to-js (got :nodes))`
+        const anscestors = `(to-js (got :anscestors))`
+        let cursor
+        
+        function focusNode(el) {
+          let id  = el ? el.getAttribute("node-id") : ""
+          let ans = el ? anscestors[id] : []
 
-      function unversalStep(step){
-        let sel
-        let c 
+          qa(".node").forEach(e => {
+            let pid = e.getAttribute("node-id")
+            if (id == pid) highlightNode(e)
+            else           blurNode(e)
+            clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
+          })
+          qa(".edge").forEach(e => {
+            let pid = e.getAttribute("to-node-id")
+            clsx(e, id != pid  && !ans.includes(pid), "opacity-25")
+          })
+        }
+        
+        function unfocusAll(){
+          qa(".content").forEach(e => clsx(e, false, "opacity-25"))
+          qa(".node").forEach(e =>    {clsx(e, false, "opacity-25"); blurNode(e)})
+          qa(".edge").forEach(e =>    clsx(e, false, "opacity-25"))
+        }
 
-        for (let i = 0; i < events.length; i ++){
-          let e = events[i]
-          let sel = "[for='" + e.id + "']" 
-          let c = q(sel)
+        function unversalStep(step){
+          let sel
+          let c 
 
-          clsx(c, step <  i, "d-none")
-          clsx(c, step != i, "opacity-25")
-          
-          if (step == i)
-            scrollToElement(q(".content-bar"), c)
+          for (let i = 0; i < events.length; i ++){
+            let e = events[i]
+            let sel = "[for='" + e.id + "']" 
+            let c = q(sel)
 
-          if (e.kind == "node"){
-            let n = q(nodeClass(e.id))
-            clsx(n, step < i, "d-none")
+            clsx(c, step <  i, "d-none")
+            clsx(c, step != i, "opacity-25")
             
-            let ed = qa("[to-node-id='"+ e.id   +"']")
-            if (ed.length) ed.forEach(el => clsx(el, step < i, "d-none"))
+            if (step == i)
+              scrollToElement(q(".content-bar"), c)
+
+            if (e.kind == "node"){
+              let n = q(nodeClass(e.id))
+              clsx(n, step < i, "d-none")
+              
+              let ed = qa("[to-node-id='"+ e.id   +"']")
+              if (ed.length) ed.forEach(el => clsx(el, step < i, "d-none"))
+            }
           }
         }
-      }
 
-      function resetProgress(){
-        cursor = -1
-        unversalStep(cursor)
-      }
-      function skipTillEnd(){
-        cursor = events.length
-        unversalStep(cursor)
-      }
-      function nextStep(){
-        cursor = Math.min(events.length - 1, cursor + 1)
-        unversalStep(cursor)
-      }
-      function prevStep(){
-        cursor = Math.max(-1, cursor - 1)
-        unversalStep(cursor)
-      }
+        function resetProgress(){
+          cursor = -1
+          unversalStep(cursor)
+        }
+        function skipTillEnd(){
+          cursor = events.length
+          unversalStep(cursor)
+        }
+        function nextStep(){
+          cursor = Math.min(events.length - 1, cursor + 1)
+          unversalStep(cursor)
+        }
+        function prevStep(){
+          cursor = Math.max(-1, cursor - 1)
+          unversalStep(cursor)
+        }
 
-      function prepare(){
-        qa(".node").forEach(el => {
+        function prepare(){
+          qa(".node").forEach(el => {
 
-          el.onmouseenter = () => {
-            focusNode(el)
+            el.onmouseenter = () => {
+              focusNode(el)
 
-            let id  = el.getAttribute("node-id")
-            let ans = anscestors[id]
-            
-            qa(".content").forEach(el => 
-              clsx(el, el.getAttribute("for") != id, "opacity-25"))
+              let id  = el.getAttribute("node-id")
+              let ans = anscestors[id]
+              
+              qa(".content").forEach(el => 
+                clsx(el, el.getAttribute("for") != id, "opacity-25"))
 
-            scrollToElement(q(".content-bar"), q("[for="+id+"]"))
-          }
+              scrollToElement(q(".content-bar"), q("[for="+id+"]"))
+            }
 
-          el.onmouseleave = () => {
-            unfocusAll()
-          }
-        })
+            el.onmouseleave = () => {
+              unfocusAll()
+            }
+          })
 
-        qa(".content").forEach(el => {
-          el.onmouseenter = () => {
-            let nodeId = el.getAttribute("for")
-            focusNode(q(nodeClass(nodeId)))
-            qa(".content").forEach(e => clsx(e, e != el, "opacity-25"))
-          }
+          qa(".content").forEach(el => {
+            el.onmouseenter = () => {
+              let nodeId = el.getAttribute("for")
+              focusNode(q(nodeClass(nodeId)))
+              qa(".content").forEach(e => clsx(e, e != el, "opacity-25"))
+            }
 
-          el.onmouseleave = () => {
-            unfocusAll()
-          }
-        })
+            el.onmouseleave = () => {
+              unfocusAll()
+            }
+          })
 
-        resetProgress()
-      }
+          resetProgress()
+        }
 
-      // -----------------------
+        // -----------------------
 
+        
+        prepare()
+
+        window.addEventListener("keyup", (e) => {
+          if (e.key == "ArrowRight") nextStep()
+          if (e.key == "ArrowLeft")  prevStep()
+        }) 
+
+        // q('#reset-progress-action').onclick = resetProgress
+        // q("#skip-till-end-action").onclick = skipTillEnd
+        q("#prev-step-action").onclick = prevStep
+        q("#next-step-action").onclick = nextStep
+      
+      })
       up.compiler('.latex', el => {
         katex.render(el.innerText, el, { displayMode: true })
       })
-
-      document.body.onload = () => {
-        prepare()
-
-        document.body.onkeyup = (e) => {
-          if (e.key == "ArrowRight") nextStep()
-          if (e.key == "ArrowLeft")  prevStep()
-        }
-      }
 
     </script>
 
