@@ -14,33 +14,38 @@
 
 # ------------------------------------------------------
 
-# TODO add local-ref resolver 
-# {:node :local-ref   :body body}
+# TODO keep a lookup table and to not resolve again what is resolved before, also solved deep resovaltion problem
 
-(defn finalize-article (db key-to-path resolvers article)
+(defn finalize-article (db resolvers article)
   (map 
-    (fn [node]
-      (match (type/reduced node)
-        :keyword  (let [k (key-to-path node)
-                        ref (db k)]
-                    (assert (not (nil? ref)) (string "the key " k " for node " node " has failed to reference"))
-                    ref)
+    (fn [vv]
+
+      (match (type/reduced vv)
         
-        :struct   (match (node :node)
+        :keyword  (let [ref (db vv)]
+                    (assert (not (nil? ref)) (string "the key :" vv " has failed to reference"))
+                    (ref :content))
+        
+        :struct   (match (vv :node)
                     :local-ref (do 
-                      (assert (not (nil? (db (key-to-path (node :data))))) "reference does not exists")
-                      node)
-                    node)
+                      (assert (not (nil? (db (vv :data)))) " reference does not exists")
+                      vv)
+                    vv)
 
-        :tuple    (finalize-article db key-to-path resolvers node)
-                     node))
-    article))
+        :tuple    (finalize-article db resolvers vv)
+                     vv))
+    (article :content)))
 
-(defn finalize-db (db key-to-path resolvers)
-  # TODO keep a lookup table and to not resolve again what is resolved before
+
+(defn finalize-db (db resolvers)
   (let-acc @{}
-    (eachp [k v] db
-      (put acc k (finalize-article db key-to-path resolvers v)))))
+    (eachp [id entity] db
+      (put acc id {:kind (entity :kind) 
+                   :path (entity :path)
+                   :content 
+                      (match (entity :kind)
+                        :note (finalize-article db resolvers entity)
+                        :got                                 (entity :content))}))))
 
 
 # ------------------------------------------------------
@@ -93,9 +98,10 @@
 
 (defn mu/to-html (content)
   (defn resolver (ctx node)
+    # (pp node)
     (match (type/reduced node)
       :string         node
-      :number      (string node)
+      :number (string node)
       :struct ((html-resolvers (node :node)) resolver ctx (node :data) (node :body))
       :tuple  (join-map [node] mu/to-html) # for imports [ imported content placed as list ]
               (do 

@@ -1,3 +1,5 @@
+(use ./helper/debug)
+
 (use ./helper/stat)
 (use ./helper/vector)
 (use ./helper/matrix)
@@ -237,11 +239,10 @@
     </body>
 
     <script>
+
       function nodeClass(id, dot = true){
         return (dot ? '.' : '') + 'node-' + id
       }
-      
-      // ------------------ states
 
       function qa(sel){
         return [...document.querySelectorAll(sel)]

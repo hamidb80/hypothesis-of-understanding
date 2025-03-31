@@ -27,26 +27,34 @@
               :calculate "#E85C0D"
               :reason    "#5CB338" }})
 
-(defn k2mu (k)  (string (path/join notes-dir k) markup-ext))
-(defn k2go (k)  (string (path/join notes-dir k) got-ext))
+(def raw-db (load-deep notes-dir))
+# (pp raw-db)
 
-(def  db       (finalize-db (load-deep notes-dir) k2mu nil))
+(def  db (finalize-db raw-db nil))
+
+# (pp db)
+
 (defn reff (k)
-  (let [r (db (k2mu k))]
+  (let [r (db k)]
     (assert (not (nil? r)) (string "the reference " k " is invalid"))
-    (mu/to-html r)))
+    (mu/to-html (r :content))))
 
-(eachp [k v] db
-  (let [path-parts (path/split k)]
+(eachp [id entity] db
+  (let [path-parts (path/split (entity :path))]
+    
+    # (print ">>>>>>>>>>>>>>")
     # (pp path-parts)
-    (cond 
-      (string/has-suffix? got-ext k) (do 
-          (def ggg (GoT/init v))
-          (def  svg-repr (GoT/to-svg  ggg got-style-config))
-          (def html-repr (GoT/to-html ggg svg-repr reff))
-          (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
-          (file/put new-path html-repr))
-          
-      (string/has-suffix? markup-ext k) (do 
+    
+    (match (entity :kind)
+      :got (do 
+        (def ggg (GoT/init (entity :content)))
+        (def  svg-repr (GoT/to-svg  ggg got-style-config))
+        (def html-repr (GoT/to-html ggg svg-repr reff))
         (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
-        (file/put new-path (mu/wrap-html ((path/split k) :name) (mu/to-html v)))))))
+        (pp new-path)
+        (file/put new-path html-repr))
+          
+      :note (do 
+        (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
+        (pp new-path)
+        (file/put new-path (mu/wrap-html (path-parts :name) (mu/to-html (entity :content))))))))

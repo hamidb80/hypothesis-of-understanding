@@ -2,8 +2,9 @@
 
 (defn to-table (lst key-gen val-gen)
   (let-acc @{}
-    (each n lst 
-      (put acc (key-gen n) (val-gen n)))))
+    (each n lst
+      (let [k (key-gen n)]
+        (put acc k (val-gen n))))))
 
 (defn rev-table [tab]
   "
