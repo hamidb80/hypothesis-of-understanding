@@ -26,6 +26,7 @@ lets pray:
 ## terms
 - GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
 - GoK (Graph of Knowledge) is a Directed Graph (may have cycles too)
+- straight-forward: Straight-Forward
 
 ## Bluri's steps to solve a problem
 
@@ -43,9 +44,9 @@ the height of GoT reperesents the complexity of the problem. the more the height
 The more the width of the GoT more ideas involved or more options have to be considered.
 
 ## Bluri's opinion about a solution to a problem
-If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is _Straight-Forward_, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not Straight-Forward.
+If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is _straight-forward_, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not straight-forward or it is _Explorative_.
 
-Thus the term _Straight-Forward_ is subjective according to the learning material and the learner.
+Thus the term straight-forward is subjective according to the learning material and the learner.
 
 Note that just connecting 2 nodes are not important, the direction of the edge also matters. for example a language learner first looks at the word e.g. "camera", then translates it to his mother tongue e.g. Persian ("دوربین") and then translating, he imagines the real camera in his mind. but he may have trouble to do it vice verse i.e. seeing a camera and then finding its English word. it is true that the person probably can find the word _after some time_ but it is not **obvious** i.e. it's not present _directly_ in his GoK.
 
@@ -58,13 +59,13 @@ to create something new, the person need to connect sometimes even unrelated nod
 
 I've read somewhere that creative people tend to forgot more, as their brain gets good at losing connection between nodes in KoG and even creating false connections between them.
 
-by the definition, you might've guessed that creative work is not _staright-forward_.
+by the definition, you might've guessed that creative work is not straight-forward.
 
 Reference:
 - [A Surprising Link Between Creativity and False Memories](https://www.psychologytoday.com/us/blog/ulterior-motives/202110/surprising-link-between-creativity-and-false-memories)
 
 ## Why GoK per se is not enough
-according to definition of _straight-forward_ solution, one can implement a question that the GoK be completly useless (i.e. the connection between concepts not be present). 
+according to definition of straight-forward solution, one can implement a question that the GoK be completly useless (i.e. the connection between concepts not be present). 
 
 In order to mitigate the above problem, one might suggest that adding a lots of edges between nodes (cross referencing) surely solves the problem. that is correct in one aspect, but it will arise a worse problem; nobody can understand a super dense GoK but first looking at it!
 
@@ -76,7 +77,24 @@ The real problem is that the GoK **must be placed in the person's brain**, not i
 
 I've tried implmenting a GoK app similar to [Kumu](https://kumu.io/) named [ReMS](https://github.com/hamidb80/rems) (Remembering Management System) and not only it was time-consuming, it would not help me understant better. sure the remembering got easier but it was mostly becuase of documenting stuff; and I even want to say that, it was _very shallow_ kind of remembering.
 
-the above assertion hold true for mind-mapping since GoK is a lot more powerful than mind-map.
+### On Mind Maps
+the above assertion hold true for mind-mapping since GoK is a lot more powerful than mind-map. some of them are funny I must say.
+
+I've asked DeepSeek AI to give opponion about mind maps if he were Richard Feyman. the result is actually impressive:
+
+> "Nature doesn’t organize itself into pretty radial diagrams. If your understanding can’t handle a little chaos, it’s not understanding—it’s interior decorating."
+
+> "Mind maps are like tour buses: you see all the sights, but you never step into the street. Real thinking means getting lost sometimes."
+
+> "Drawing a line between two ideas doesn’t mean you’ve connected them—any more than tying a string between two lampposts means you’ve invented the telegraph."
+
+> "The best mind map is the one you crumple up and throw away—because you don’t need it anymore."
+
+> "Drawing a mind map to understand physics is like painting a sailboat to learn the wind."
+
+> "Knowledge isn’t a dot you can connect—it’s the fire that burns between them."
+
+> "Understanding isn’t a tree. It’s a wildfire—and you’re supposed to be the arsonist."
 
 ## Development
 - colors stolen from [ColorHunt](https://colorhunt.co/)
