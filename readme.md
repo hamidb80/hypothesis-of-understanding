@@ -78,9 +78,9 @@ The real problem is that the GoK **must be placed in the person's brain**, not i
 I've tried implmenting a GoK app similar to [Kumu](https://kumu.io/) named [ReMS](https://github.com/hamidb80/rems) (Remembering Management System) and not only it was time-consuming, it would not help me understant better. sure the remembering got easier but it was mostly becuase of documenting stuff; and I even want to say that, it was _very shallow_ kind of remembering.
 
 ### On Mind Maps
-the above assertion hold true for mind-mapping since GoK is a lot more powerful than mind-map. some of them are funny I must say.
+the above assertion hold true for mind-mapping since GoK is a lot more powerful than mind-map.
 
-I've asked DeepSeek AI to give opponion about mind maps if he were Richard Feyman. the result is actually impressive:
+I've asked DeepSeek AI to give opponion about mind maps if he were Richard Feyman. the result is actually impressive (some of them are rather funny):
 
 > "Nature doesn’t organize itself into pretty radial diagrams. If your understanding can’t handle a little chaos, it’s not understanding—it’s interior decorating."
 
@@ -95,6 +95,9 @@ I've asked DeepSeek AI to give opponion about mind maps if he were Richard Feyma
 > "Knowledge isn’t a dot you can connect—it’s the fire that burns between them."
 
 > "Understanding isn’t a tree. It’s a wildfire—and you’re supposed to be the arsonist."
+
+### Benefits
+well in my opponion the only benefit of using GoK or Mind maps is that you kinda see the structure of the content and gives a whole overview; but the benefits stops here...
 
 ## Development
 - colors stolen from [ColorHunt](https://colorhunt.co/)
