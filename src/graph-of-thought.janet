@@ -231,7 +231,7 @@
                           
                           <div>`
                             (if has-link [
-                              `<a class="text-muted" href="` (router key) `.html">`
+                              `<a class="text-muted" up-follow href="` (router key) `.html">`
                                 key
                                 `<i class="bi bi-pin mx-1"></i>`
                               `</a>`])
