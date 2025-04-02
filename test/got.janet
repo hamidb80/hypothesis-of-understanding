@@ -9,7 +9,7 @@
 # -------------------------------
 
 (def  output-dir  "./dist/")
-(def  notes-dir   "./notes/")
+(def  notes-dir   "./notes")
 
 (def got-style-config {
   :radius   16
@@ -46,7 +46,7 @@
 
     (match (entity :kind)
       :got 
-        (let [ggg (GoT/init (entity :content))
+        (let [ggg       (GoT/init (entity :content))
               html-repr (GoT/to-html ggg (GoT/to-svg  ggg got-style-config) reff)]
           (file/put new-path html-repr))
           

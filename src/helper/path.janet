@@ -10,6 +10,9 @@
   (if (is-dir a) (string a b)
                  (string a "/" b)))
 
+(defn path/dir (p)
+  (if (string/has-suffix? "/" p) p (string p "/")))
+
 (defn filename/split (path)
   "convert file.long.ext -> file, .long.ext"
 
@@ -27,7 +30,7 @@
   (var cur "")
   (reduce 
     (fn [acc n] 
-      (if (empty? n) acc 
+      (if (empty? n)  acc 
           (array/push acc (set cur (string cur n "/"))))) 
     @[] 
     (dirname/split path)))

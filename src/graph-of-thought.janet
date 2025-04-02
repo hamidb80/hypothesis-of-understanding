@@ -13,6 +13,9 @@
 (use ./helper/macros)
 
 (use ./com)
+(use ./locales)
+
+# ------------------------
 
 (def got-ext ".got.janet") # graph of thought representation in Janet lisp format
 
@@ -210,13 +213,7 @@
               (let [key      (e     :content)
                     c        (e     :class)
                     val      (message-db key)
-                    summ     (match c
-                              :problem "مسئله"
-                              :goal    "هدف"
-                              :reason  "تحلیل"
-                              :recall  "یادآوری"
-                              nil      "افکار")
-                    ]
+                    summ     (dict (or c :thoughts))]
                 [
                 `<div class="pb-3 content" content="` key `" for="` (e :id)`">
                   <div class="card">`

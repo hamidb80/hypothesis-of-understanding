@@ -117,7 +117,7 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <title> ` key ` </title>` 
+        <title>` key `</title>` 
         common-head 
     `</head>
     <body>

@@ -16,17 +16,14 @@ integration of GoT and Notes
 
 (def partial-file-name-suffix "_")
 
-(defn load-deep (dir)
+(defn load-deep (root)
   "
   find all markup/GoT files in the `dir` and load them.
-
-  id -> {:kind    one of [:note :got]
-         :content data-structure
-         :path    str }
   "
-
-  (let-acc @{}
-    (each p (os/list-files-rec dir)
+  (let [acc @{}
+        root-dir (path/dir root)]
+    
+    (each p (os/list-files-rec root-dir)
       (let [pparts    (path/split p)
             kind (cond 
                   (string/has-suffix? markup-ext p) :note
@@ -34,8 +31,9 @@ integration of GoT and Notes
                   nil)]
         (if kind 
           (put acc 
-            (keyword (string/remove-prefix dir (pparts :dir)) (pparts :name)) 
+            (keyword (string/remove-prefix root-dir (pparts :dir)) (pparts :name)) 
             {:path    p
              :kind    kind
              :partial (string/has-suffix? partial-file-name-suffix (pparts :name))
-             :content (eval-string (slurp p))}))))))
+             :content (eval-string (slurp p))}))))
+    acc))
