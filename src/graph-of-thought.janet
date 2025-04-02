@@ -443,6 +443,8 @@
 
 # ----------------------- 
 
+# TODO link to the doc page if not :partial
+
 (defn n [id class parents content] # [n]ode
   # :problem :recall :reason :calculate
   {:kind     :node 

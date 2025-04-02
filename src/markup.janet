@@ -16,7 +16,7 @@
 
 # ------------------------------------------------------
 
-# TODO keep a lookup table and to not resolve again what is resolved before, also solved deep resovaltion problem
+# TODO resolve deeply + cache
 
 (defn finalize-article (db resolvers article)
   (map 
