@@ -169,6 +169,8 @@
     </head>
     <body>
     
+    ` navv `
+
     <main class="row gx-2 m-3" got>
       <aside class="col col-5 pt-2">
         <div class="fs-6 mb-3">
@@ -218,31 +220,28 @@
                     has-link (not (article :partial))]
                 [
                 `<div class="pb-3 content" content="` key `" for="` (e :id)`">
-                  <div class="card"> `
-                    
-                    (if (or summ has-link) [
-                      `<div class="card-header d-flex justify-content-between">
-                          <div>`
-                            (if summ [
-                              `<small class="text-muted">` 
-                                summ 
-                              `</small>`])
-                          `</div>
-                          
-                          <div>`
-                            (if has-link [
-                              `<a class="text-muted" up-follow href="` (router key) `.html">`
-                                key
-                                `<i class="bi bi-pin mx-1"></i>`
-                              `</a>`])
-                          `</div>
-                        </div>`])
+                  <div class="card">`
+                    `<div class="card-header d-flex justify-content-between">
+                        <div>`
+                          (if summ [
+                            `<small class="text-muted">` 
+                              summ 
+                            `</small>`])
+                        `</div>
+                        <div>`
+                          (if has-link [
+                            `<a class="text-muted" up-follow href="` (router key) `.html">`
+                              key
+                              `<i class="bi bi-pin mx-1"></i>`
+                            `</a>`])
+                        `</div>
+                      </div>`
 
                     `<div class="card-body" dir="auto">`
                         (mu/to-html (article :content) router)
                     `</div>`
 
-                    `</div>
+                  `</div>
                 </div>`])))
         `</div>
       </aside>

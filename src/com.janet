@@ -10,3 +10,17 @@
   <script src="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.css">
 `)
+
+
+(def navv `
+  <nav class="navbar navbar-light bg-light px-3 d-flex justify-content-between">
+    <div>
+    </div>
+    
+    <a class="navbar-brand" href="#">
+      nav bar
+    </a>
+    
+    <div>
+    </div>
+  </nav>`)
