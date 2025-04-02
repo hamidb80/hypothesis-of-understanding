@@ -1,8 +1,8 @@
 [
-  (m :explain    :db/ra/join)
+  (m :explain    :db/ra/join_)
   (n :root       :problem []      :hello)
 
-  (m :wtf        :db/ra/join)
+  (m :wtf        :db/ra/join_)
 
   (n :sigma      :recall  [:root] :hello)
   (n :project    :recall  [:root] :hello)

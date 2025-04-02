@@ -1,6 +1,7 @@
 (use ./helper/debug)
 (use ./helper/types)
 (use ./helper/iter)
+(use ./helper/tab)
 (use ./helper/io)
 (use ./helper/path)
 (use ./helper/macros)
@@ -19,9 +20,7 @@
 (defn finalize-article (db resolvers article)
   (map 
     (fn [vv]
-
       (match (type/reduced vv)
-        
         :keyword  (let [ref (db vv)]
                     (assert (not (nil? ref)) (string "the key :" vv " has failed to reference."))
                     (ref :content))
@@ -40,12 +39,10 @@
 (defn finalize-db (db resolvers)
   (let-acc @{}
     (eachp [id entity] db
-      (put acc id {:kind (entity :kind) 
-                   :path (entity :path)
-                   :content 
-                      (match (entity :kind)
-                        :note (finalize-article db resolvers entity)
-                        :got                                 (entity :content))}))))
+      (put acc id (assoc entity :content 
+        (match (entity :kind)
+          :note (finalize-article db resolvers entity)
+          :got                                 (entity :content)))))))
 
 
 # ------------------------------------------------------

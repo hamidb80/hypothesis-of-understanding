@@ -42,17 +42,14 @@
     
     # (print ">>>>>>>>>>>>>>")
     # (pp path-parts)
-    
+    (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
+
     (match (entity :kind)
-      :got (do 
-        (def ggg (GoT/init (entity :content)))
-        (def  svg-repr (GoT/to-svg  ggg got-style-config))
-        (def html-repr (GoT/to-html ggg svg-repr reff))
-        (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
-        (pp new-path)
-        (file/put new-path html-repr))
+      :got 
+        (let [ggg (GoT/init (entity :content))
+              html-repr (GoT/to-html ggg (GoT/to-svg  ggg got-style-config) reff)]
+          (file/put new-path html-repr))
           
-      :note (do 
-        (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
-        (pp new-path)
-        (file/put new-path (mu/wrap-html (path-parts :name) (mu/to-html (entity :content))))))))
+      :note
+        (if-not (entity :partial)
+          (file/put new-path (mu/wrap-html (path-parts :name) (mu/to-html (entity :content))))))))

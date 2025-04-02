@@ -23,7 +23,7 @@ lets pray:
 - [Neurite](https://github.com/satellitecomponent/Neurite) 
 - [Brilliant](https://brilliant.org/) | Learning by doing
 - [makandra cards](https://makandracards.com/)
-- [Bjork Learning and Forgetting Lab](https://bjorklab.psych.ucla.edu/research/)
+- Networks of the Brain by Olaf Sporns
 
 ## terms
 - GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
