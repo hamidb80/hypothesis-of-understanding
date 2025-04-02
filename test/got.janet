@@ -52,4 +52,4 @@
           
       :note
         (if-not (entity :partial)
-          (file/put new-path (mu/wrap-html (path-parts :name) (mu/to-html (entity :content))))))))
+          (file/put new-path (mu/wrap-html id (mu/to-html (entity :content))))))))

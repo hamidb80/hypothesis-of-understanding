@@ -2,22 +2,15 @@
 
 (use ./types)
 (use ./iter)
+(use ./str)
 
 (defn to-js 
   "Converts a Lisp data-structure into its corresponding JS data-structure"
   (data)
 
   (match (type/reduced data)
-    :struct (string 
-      `{` 
-      (join-map (keys data) (fn (k) (string (to-js k) `: ` (to-js (data k)) `,`))) 
-      `}`)
-    
-    :tuple  (string 
-      `[` 
-      (join-map data (fn (v) (string (to-js v) `,`))) 
-      `]`)
-
+    :struct (flat-string `{` (map |[(to-js $) `: ` (to-js (data $)) `,`] (keys data)) `}`)
+    :tuple  (flat-string `[` (map |[(to-js $)                       `,`]       data)  `]`)
     :keyword (string `"` data `"`)
     :string  (string `"` data `"`)
     :number  (string     data)

@@ -2,10 +2,8 @@
 
 (use ./macros)
 
-(defn join-map (lst f)
-  "syntatic sugar"
-
-  (string/join (map f lst)))
+(defn map- (lst f) 
+  (map f lst))
 
 (defn not-nil-indexes (row)
   (let-acc @[]

@@ -1,6 +1,7 @@
 (use ./helper/debug)
 (use ./helper/types)
 (use ./helper/iter)
+(use ./helper/str)
 (use ./helper/tab)
 (use ./helper/io)
 (use ./helper/path)
@@ -100,7 +101,7 @@
       :string         node
       :number (string node)
       :struct ((html-resolvers (node :node)) resolver ctx (node :data) (node :body))
-      :tuple  (join-map [node] mu/to-html) # for imports [ imported content placed as list ]
+      :tuple  (string/join (map mu/to-html [node])) # for imports [ imported content placed as list ]
               (do 
                 (pp node)
                 (error (string "invalid kind: " (type node)))
@@ -112,21 +113,35 @@
      :body content})
 )
 (defn mu/wrap-html (key str)
-  (string `
+  (flat-string `
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <title> ` key ` </title>
-        ` common-head `
-    </head>
+        <title> ` key ` </title>` 
+        common-head 
+    `</head>
     <body>
 
     <div class="container my-5">
-    
+
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">`
+          (let [p (dirname/split key)] 
+            (map
+              (fn [n i]
+                (string
+                  `<li class="breadcrumb-item ` (if (= i (dec (length p))) `active`) `">` 
+                    n 
+                  `</li>`))
+              p (range (length p))))
+        `</ol>
+      </nav>
+
+
       <div class="card">
         <div class="card-body"> ` str ` </div>
       </div>
-    
+      
     </div>
     </body>
     </html>`))

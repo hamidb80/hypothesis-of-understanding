@@ -14,6 +14,8 @@ integration of GoT and Notes
 
 # ------------------------------------------------------
 
+(def partial-file-name-suffix "_")
+
 (defn load-deep (dir)
   "
   find all markup/GoT files in the `dir` and load them.
@@ -35,5 +37,5 @@ integration of GoT and Notes
             (keyword (string/remove-prefix dir (pparts :dir)) (pparts :name)) 
             {:path    p
              :kind    kind
-             :partial (string/has-suffix? "_" (pparts :name))
+             :partial (string/has-suffix? partial-file-name-suffix (pparts :name))
              :content (eval-string (slurp p))}))))))

@@ -111,34 +111,35 @@ tiny mind-tree creator.
     `</button>`))
 
 (defn html/props (u out-dir use-cache)
-  (join-map (u :properties) 
-            (fn (p) (match (p :kind)
-                          :pdf-reference (let [ page-num      ((p :data) :page) 
-                                                file-path     ((p :data) :file)
-                                                book-name     ((p :data) :name)
-                                                img-path      (string ((p :data) :page) ".png") 
-                                                e             (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache) ] 
-                                          (html/card "danger" 
-                                             (string
-                                                `<div class="card-header">`
-                                                  `📕 `
-                                                  `<a target="_blank" href="file:///` file-path `#page=` page-num `">page ` page-num `</a>` 
-                                                  `<span> from ` book-name `</span>`
-                                                  `<br/>`
-                                                `</div>`)
+  (string/join (map- 
+    (u :properties)
+    (fn (p) (match (p :kind)
+      :pdf-reference (let [ page-num      ((p :data) :page) 
+                            file-path     ((p :data) :file)
+                            book-name     ((p :data) :name)
+                            img-path      (string ((p :data) :page) ".png") 
+                            e             (extract-page file-path (- page-num 1) (string out-dir img-path) use-cache) ] 
+                      (html/card "danger" 
+                          (string
+                            `<div class="card-header">`
+                              `📕 `
+                              `<a target="_blank" href="file:///` file-path `#page=` page-num `">page ` page-num `</a>` 
+                              `<span> from ` book-name `</span>`
+                              `<br/>`
+                            `</div>`)
 
-                                             (string 
-                                                `<center class="w-100">
-                                                  <img style="max-width: 100%;" src="./` img-path `"/>
-                                                </center>` )))
-                          :latex         (html/card "dark"    "" (string `<code>` (p :data) `</code>`))
-                          :web-url       (html/card "primary" "" (string `<a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a>`))
-                                        "")))
+                          (string 
+                            `<center class="w-100">
+                              <img style="max-width: 100%;" src="./` img-path `"/>
+                            </center>` )))
+      :latex         (html/card "dark"    "" (string `<code>` (p :data) `</code>`))
+      :web-url       (html/card "primary" "" (string `<a target="_blank" href="` ((p :data) :url) `">` ((p :data) :text) `</a>`))
+                    ""))))
 )
 
 (defn mind-map/html-impl (mm out-dir use-cache level)
-  (join-map mm
-    (fn (u) (string
+  (flat-string 
+    (map (fn (u) [
       `<details class="mind-tree-node" id="` (u :id) `">
         <summary class="mt-1 branch-label">
            <span class="clickable" onclick="toggleFocusNode('` (u :id) `')">`
@@ -155,12 +156,10 @@ tiny mind-tree creator.
          <div class="border-start border-gray my-1 ps-4">`
           (mind-map/html-impl (u :children) out-dir use-cache (+ 1 level))
         `</div>
-       </details>`))
-))
+       </details>`])) mm))
 
 (defn mind-map/html (mm title out-dir use-cache) 
-  (string
-    `
+  (flat-string `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -264,11 +263,11 @@ tiny mind-tree creator.
         </div>
       </nav>
       <div class="container py-3">`
-        (join-map (values (mm :ids))
-                  (fn [n] (string 
-                      `<div id="content-` (n :id)  `" class="content d-none">`
-                        (html/props n out-dir use-cache)
-                      `</div>`)))
+        (map (fn [n] (string 
+              `<div id="content-` (n :id)  `" class="content d-none">`
+                (html/props n out-dir use-cache)
+              `</div>`))
+            (values (mm :ids)))
 
      `</div>
     </aside>

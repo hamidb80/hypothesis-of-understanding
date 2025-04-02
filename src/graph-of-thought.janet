@@ -5,6 +5,7 @@
 (use ./helper/matrix)
 (use ./helper/io)
 (use ./helper/js)
+(use ./helper/str)
 (use ./helper/iter)
 (use ./helper/range)
 (use ./helper/tab)
@@ -155,7 +156,7 @@
 (defn  GoT/to-html (got svg message-db)
   (def title "graph of thought")
 
-  (string `
+  (flat-string `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -204,34 +205,34 @@
         </div>
 
         <div class="my-3">`
-          (join-map (got :events) (fn [e] 
-            (let [key      (e     :content)
-                  c        (e     :class)
-                  val      (message-db key)
-                  summ     (match c
-                             :problem "مسئله"
-                             :goal    "هدف"
-                             :reason  "تحلیل"
-                             :recall  "یادآوری"
-                             nil      "افکار")
-                  ]
-              (string 
-              `<div class="pb-3 content" content="` key `" for="` (e :id)`">
-                 <div class="card">`
-                  (if summ 
-                    (string 
-                      `<div class="card-header">
-                        <small class="text-muted">`
-                          summ
-                        `</small>
-                      </div>`))
+          (map- (got :events) 
+            (fn [e] 
+              (let [key      (e     :content)
+                    c        (e     :class)
+                    val      (message-db key)
+                    summ     (match c
+                              :problem "مسئله"
+                              :goal    "هدف"
+                              :reason  "تحلیل"
+                              :recall  "یادآوری"
+                              nil      "افکار")
+                    ]
+                [
+                `<div class="pb-3 content" content="` key `" for="` (e :id)`">
+                  <div class="card">`
+                    (if summ 
+                      [`<div class="card-header">
+                          <small class="text-muted">`
+                            summ
+                          `</small>
+                        </div>`])
 
-                  `<div class="card-body" dir="auto">`
-                      val
-                  `</div>`
+                    `<div class="card-body" dir="auto">`
+                        val
+                    `</div>`
 
-                  `</div>
-               </div>`))))
+                    `</div>
+                </div>`])))
         `</div>
       </aside>
     </main>
