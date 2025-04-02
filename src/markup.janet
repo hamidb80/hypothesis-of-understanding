@@ -17,6 +17,7 @@
 # ------------------------------------------------------
 
 # TODO resolve deeply + cache
+# TODO prefix path
 
 (defn finalize-article (db resolvers article)
   (map 
@@ -49,10 +50,10 @@
 # ------------------------------------------------------
 
 (defn- simple-wrapper (start-fn end-fn)
-  (fn [resolver ctx data args] 
+  (fn [resolver router ctx data args] 
     (let-acc @""
       (buffer/push acc (start-fn data))
-      (each c args (buffer/push acc (resolver ctx c)))
+      (each c args (buffer/push acc (resolver router ctx c)))
       (buffer/push acc (end-fn data)))))
 
 (defn- const1 (ret) 
@@ -67,12 +68,10 @@
 (def- r/latex          (simple-wrapper (const1 `<math>`)         (const1 `</math>`)))
 (def- r/header         (simple-wrapper |(string "<h" $ ">")      |(string "</h" $ ">")))
 
-(def base-addr "/dist/")
-
-(defn- r/local-ref [resolver ctx data args] 
-  (string 
-    `<a up-follow href="` base-addr data `.html">` 
-      (resolver ctx args)
+(defn- r/local-ref [resolver router ctx data args] 
+  (string
+    `<a up-follow href="` (router data) `.html">` 
+      (resolver router ctx args)
     `</a>`))
 
 
@@ -94,24 +93,24 @@
   })
 
 
-(defn mu/to-html (content)
-  (defn resolver (ctx node)
+(defn mu/to-html (content router)
+  (defn resolver (router ctx node)
     # (pp node)
     (match (type/reduced node)
       :string         node
       :number (string node)
-      :struct ((html-resolvers (node :node)) resolver ctx (node :data) (node :body))
-      :tuple  (string/join (map mu/to-html [node])) # for imports [ imported content placed as list ]
+      :struct ((html-resolvers (node :node)) resolver router ctx (node :data) (node :body))
+      :tuple  (string/join (map |(mu/to-html $ router) [node])) # for imports [ imported content placed as list ]
               (do 
                 (pp node)
                 (error (string "invalid kind: " (type node)))
                 )))
   
-  (resolver 
+  (resolver router 
     {:inline false} 
     {:node :wrap 
-     :body content})
-)
+     :body content}))
+
 (defn mu/wrap-html (key str)
   (flat-string `
     <!DOCTYPE html>

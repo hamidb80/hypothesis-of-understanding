@@ -33,9 +33,12 @@
 (def  db (finalize-db raw-db nil))
 # (pp db)
 
+(defn router (n) 
+  (string "/dist/" n))
+
 (defn reff (k)
   (assert (not (nil? (db k))) (string "the reference " k " is invalid"))
-  (mu/to-html ((db k) :content)))
+  (mu/to-html ((db k) :content) router))
 
 (eachp [id entity] db
   (let [path-parts (path/split (entity :path))]
@@ -52,4 +55,4 @@
           
       :note
         (if-not (entity :partial)
-          (file/put new-path (mu/wrap-html id (mu/to-html (entity :content))))))))
+          (file/put new-path (mu/wrap-html id (mu/to-html (entity :content) router )))))))

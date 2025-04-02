@@ -12,5 +12,5 @@
       db       (finalize-db raw-db nil)
       id       :db/ra/join_
       article  ((db id) :content)
-      res      (mu/to-html article)]
+      res      (mu/to-html article |(string "/dist/" $))]
   (file/put "./play.html" res))
