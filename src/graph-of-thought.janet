@@ -14,6 +14,7 @@
 
 (use ./com)
 (use ./locales)
+(use ./markup)
 
 # ------------------------
 
@@ -156,7 +157,7 @@
          :height          (length grid) 
          :width           (length (grid 0))}))
 
-(defn  GoT/to-html (got svg message-db)
+(defn  GoT/to-html (got svg db router)
   (def title "graph of thought")
 
   (flat-string `
@@ -212,20 +213,33 @@
             (fn [e] 
               (let [key      (e     :content)
                     c        (e     :class)
-                    val      (message-db key)
-                    summ     (dict (or c :thoughts))]
+                    article  (db key)
+                    summ     (dict (or c :thoughts))
+                    has-link (not (article :partial))]
                 [
                 `<div class="pb-3 content" content="` key `" for="` (e :id)`">
-                  <div class="card">`
-                    (if summ 
-                      [`<div class="card-header">
-                          <small class="text-muted">`
-                            summ
-                          `</small>
+                  <div class="card"> `
+                    
+                    (if (or summ has-link) [
+                      `<div class="card-header d-flex justify-content-between">
+                          <div>`
+                            (if summ [
+                              `<small class="text-muted">` 
+                                summ 
+                              `</small>`])
+                          `</div>
+                          
+                          <div>`
+                            (if has-link [
+                              `<a class="text-muted" href="` (router key) `.html">`
+                                key
+                                `<i class="bi bi-pin mx-1"></i>`
+                              `</a>`])
+                          `</div>
                         </div>`])
 
                     `<div class="card-body" dir="auto">`
-                        val
+                        (mu/to-html (article :content) router)
                     `</div>`
 
                     `</div>

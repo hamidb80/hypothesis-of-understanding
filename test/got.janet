@@ -36,9 +36,9 @@
 (defn router (n) 
   (string "/dist/" n))
 
-(defn reff (k)
-  (assert (not (nil? (db k))) (string "the reference " k " is invalid"))
-  (mu/to-html ((db k) :content) router))
+# (defn reff (k)
+#   (assert (not (nil? (db k))) (string "the reference " k " is invalid"))
+#   (mu/to-html ((db k) :content) router))
 
 (eachp [id entity] db
   (let [
@@ -49,7 +49,7 @@
       (match (entity :kind)
         :got 
           (let [ggg       (GoT/init (entity :content))
-                html-repr (GoT/to-html ggg (GoT/to-svg  ggg got-style-config) reff)]
+                html-repr (GoT/to-html ggg (GoT/to-svg  ggg got-style-config) db router)]
             (file/put new-path html-repr))
             
         :note
