@@ -32,8 +32,8 @@ integration of GoT and Notes
         (if kind 
           (put acc 
             (keyword (string/remove-prefix root-dir (pparts :dir)) (pparts :name)) 
-            {:path    p
-             :kind    kind
-             :partial (string/has-suffix? partial-file-name-suffix (pparts :name))
-             :content (eval-string (slurp p))}))))
+            @{:path    p
+              :kind    kind
+              :partial (string/has-suffix? partial-file-name-suffix (pparts :name))
+              :content (eval-string (slurp p))}))))
     acc))

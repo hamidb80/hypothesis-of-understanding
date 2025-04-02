@@ -41,18 +41,16 @@
   (mu/to-html ((db k) :content) router))
 
 (eachp [id entity] db
-  (let [path-parts (path/split (entity :path))]
-    
-    # (print ">>>>>>>>>>>>>>")
-    # (pp path-parts)
-    (def new-path (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html")))
+  (let [
+    path-parts (path/split (entity :path))
+    new-path   (path/join output-dir (string (string/remove-prefix notes-dir (path-parts :dir)) (path-parts :name) ".html"))]
 
-    (match (entity :kind)
-      :got 
-        (let [ggg       (GoT/init (entity :content))
-              html-repr (GoT/to-html ggg (GoT/to-svg  ggg got-style-config) reff)]
-          (file/put new-path html-repr))
-          
-      :note
-        (if-not (entity :partial)
-          (file/put new-path (mu/wrap-html id (mu/to-html (entity :content) router )))))))
+    (if-not (entity :partial)
+      (match (entity :kind)
+        :got 
+          (let [ggg       (GoT/init (entity :content))
+                html-repr (GoT/to-html ggg (GoT/to-svg  ggg got-style-config) reff)]
+            (file/put new-path html-repr))
+            
+        :note
+          (file/put new-path (mu/wrap-html id (mu/to-html (entity :content) router)))))))

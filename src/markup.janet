@@ -16,9 +16,6 @@
 
 # ------------------------------------------------------
 
-# TODO resolve deeply + cache
-# TODO prefix path
-
 (defn finalize-article (db resolvers article)
   (map 
     (fn [vv]
@@ -41,7 +38,7 @@
 (defn finalize-db (db resolvers)
   (let-acc @{}
     (eachp [id entity] db
-      (put acc id (assoc entity :content 
+      (put acc id (put entity :content 
         (match (entity :kind)
           :note (finalize-article db resolvers entity)
           :got                                 (entity :content)))))))
@@ -59,16 +56,16 @@
 (defn- const1 (ret) 
   (fn [_] ret))
 
-(def- r/wrap           (simple-wrapper (const1 "")               (const1 "")))
-(def- r/paragraph      (simple-wrapper (const1 `<p dir="auto">`) (const1 `</p>`)))
-(def- r/italic         (simple-wrapper (const1 `<i>`)            (const1 `</i>`)))
-(def- r/bold           (simple-wrapper (const1 `<b>`)            (const1 `</b>`)))
-(def- r/underline      (simple-wrapper (const1 `<u>`)            (const1 `</u>`)))
-(def- r/strikethrough  (simple-wrapper (const1 `<s>`)            (const1 `</s>`)))
-(def- r/latex          (simple-wrapper (const1 `<math>`)         (const1 `</math>`)))
-(def- r/header         (simple-wrapper |(string "<h" $ ">")      |(string "</h" $ ">")))
+(def- h/wrap           (simple-wrapper (const1 "")               (const1 "")))
+(def- h/paragraph      (simple-wrapper (const1 `<p dir="auto">`) (const1 `</p>`)))
+(def- h/italic         (simple-wrapper (const1 `<i>`)            (const1 `</i>`)))
+(def- h/bold           (simple-wrapper (const1 `<b>`)            (const1 `</b>`)))
+(def- h/underline      (simple-wrapper (const1 `<u>`)            (const1 `</u>`)))
+(def- h/strikethrough  (simple-wrapper (const1 `<s>`)            (const1 `</s>`)))
+(def- h/latex          (simple-wrapper (const1 `<math>`)         (const1 `</math>`)))
+(def- h/header         (simple-wrapper |(string "<h" $ ">")      |(string "</h" $ ">")))
 
-(defn- r/local-ref [resolver router ctx data args] 
+(defn- h/local-ref [resolver router ctx data args] 
   (string
     `<a up-follow href="` (router data) `.html">` 
       (resolver router ctx args)
@@ -76,20 +73,20 @@
 
 
 (def- html-resolvers {
-  :wrap            r/wrap
+  :wrap            h/wrap
   
-  :bold            r/bold
-  :italic          r/italic
-  :underline       r/underline
-  :strikethrough   r/strikethrough
+  :bold            h/bold
+  :italic          h/italic
+  :underline       h/underline
+  :strikethrough   h/strikethrough
   
-  :header          r/header
-  :paragraph       r/paragraph
+  :header          h/header
+  :paragraph       h/paragraph
   
-  :latex           r/latex
-  :local-ref       r/local-ref
-  # :image           r/image
-  # :video           r/video
+  :latex           h/latex
+  :local-ref       h/local-ref
+  # :image           h/image
+  # :video           h/video
   })
 
 

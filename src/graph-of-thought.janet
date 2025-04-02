@@ -170,9 +170,9 @@
     
     <main class="row gx-2 m-3" got>
       <aside class="col col-5 pt-2">
-        <div class="fs-6">
+        <div class="fs-6 mb-3">
           <i class="bi bi-share-fill"></i>
-          Graph of Thoughts
+          ` (dict :graph-of-thought) `
         </div>
 
         <center>
@@ -183,19 +183,19 @@
 
         <div class="my-3 d-flex justify-content-center">
           <button class="mx-1 btn btn-primary" id="reset-progress-action">
-            reset 
+            ` (dict :reset) `
             <i class="bi bi-arrow-clockwise"></i>
           </button>
           <button class="mx-1 btn btn-primary" id="skip-till-end-action">   
-            skip
+            ` (dict :skip) `
             <i class="bi bi-skip-forward"></i>
           </button>
           <button class="mx-1 btn btn-primary" id="prev-step-action"> 
-            prev 
+            ` (dict :prev) `
             <i class="bi bi-arrow-left"></i>
           </button>
           <button class="mx-1 btn btn-primary" id="next-step-action"> 
-            next 
+            ` (dict :next) `
             <i class="bi bi-arrow-right"></i>
           </button>
         </div>
@@ -204,7 +204,7 @@
       <aside class="col col-7 pt-2 overflow-y-scroll content-bar" style="height: calc(100vh - 40px)">
         <div class="fs-6">
           <i class="bi bi-person-walking"></i>
-          Steps
+          ` (dict :steps) `
         </div>
 
         <div class="my-3">`
@@ -442,8 +442,6 @@
     </html>`))
 
 # ----------------------- 
-
-# TODO link to the doc page if not :partial
 
 (defn n [id class parents content] # [n]ode
   # :problem :recall :reason :calculate

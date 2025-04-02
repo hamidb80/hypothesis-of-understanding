@@ -1,20 +1,20 @@
 [
   (m :explain    :db/ra/join_)
-  (n :root       :problem []      :hello)
+  (n :root       :problem []      :db/intro)
 
   (m :wtf        :db/ra/join_)
 
-  (n :sigma      :recall  [:root] :hello)
-  (n :project    :recall  [:root] :hello)
-  (n :div        :recall  [:root] :hello)
+  (n :sigma      :recall  [:root] :db/intro)
+  (n :project    :recall  [:root] :db/intro)
+  (n :div        :recall  [:root] :db/intro)
 
-  (n :op-1-final :reason  [:div :project :sigma] :hello)
+  (n :op-1-final :reason  [:div :project :sigma] :db/intro)
 
-  (n :join       :recall  [:root] :hello)
+  (n :join       :recall  [:root] :db/intro)
 
-  (n :op-2-final :reason  [:join :project :sigma] :hello)
-  (n :op-3-final :reason  [:join :project :sigma] :hello)
-  (n :op-4-final :reason  [:join :project :sigma] :hello)
+  (n :op-2-final :reason  [:join :project :sigma] :db/intro)
+  (n :op-3-final :reason  [:join :project :sigma] :db/intro)
+  (n :op-4-final :reason  [:join :project :sigma] :db/intro)
   
-  (n :goal :goal  [:op-4-final] :hello)
+  (n :goal :goal  [:op-4-final] :db/intro)
 ]
