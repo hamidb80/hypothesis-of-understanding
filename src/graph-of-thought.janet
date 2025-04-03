@@ -325,6 +325,10 @@
         up.history.replace(window.location.pathname + "?" + u.toString(), {})
       }
 
+      function clamp(n, max, min){
+        return Math.min(max, Math.max(n, min))
+      }
+
       // ----------------------------------------      
 
       up.compiler('[got]', _ => {
@@ -381,7 +385,7 @@
         }
 
         function setCursor(c){
-          c = parseInt(c)
+          c = clamp(parseInt(c), events.length - 1, -1)
           setParam('n', c)
           return cursor = c
         }
@@ -393,10 +397,10 @@
           unversalStep(setCursor(events.length))
         }
         function nextStep(){
-          unversalStep(setCursor(Math.min(events.length - 1, cursor + 1)))
+          unversalStep(setCursor(cursor + 1))
         }
         function prevStep(){
-          unversalStep(setCursor(Math.max(-1, cursor - 1)))
+          unversalStep(setCursor(cursor - 1))
         }
 
         function prepare(){
