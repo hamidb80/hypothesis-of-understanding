@@ -332,6 +332,8 @@
       // ----------------------------------------      
 
       up.compiler('[got]', _ => {
+        const cursorName = 'c' 
+
         const events     = `(to-js (got :events))`
         const nodes      = `(to-js (got :nodes))`
         const anscestors = `(to-js (got :anscestors))`
@@ -386,7 +388,7 @@
 
         function setCursor(c){
           c = clamp(parseInt(c), events.length - 1, -1)
-          setParam('n', c)
+          setParam(cursorName, c)
           return cursor = c
         }
 
@@ -453,7 +455,7 @@
           unversalStep(cursor)
         }
         function init () {
-          setCursor(parseInt(getParam('n', 0)))
+          setCursor(parseInt(getParam(cursorName, 0)))
           prepare()
           run()
         }
