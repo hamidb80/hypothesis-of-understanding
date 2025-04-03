@@ -315,8 +315,19 @@
         el.removeAttribute("stroke-width")
       }
 
-      up.compiler('[got]', _ => {
+      function getParam(key, dflt) {
+        const  l = new URLSearchParams(window.location.search)
+        return l.get(key) || dflt
+      }
+      function setParam(key, val) {
+        let u = new URLSearchParams(window.location.search)
+        u.set(key, val)
+        up.history.replace(window.location.pathname + "?" + u.toString(), {})
+      }
 
+      // ----------------------------------------      
+
+      up.compiler('[got]', _ => {
         const events     = `(to-js (got :events))`
         const nodes      = `(to-js (got :nodes))`
         const anscestors = `(to-js (got :anscestors))`
@@ -369,21 +380,23 @@
           }
         }
 
+        function setCursor(c){
+          c = parseInt(c)
+          setParam('n', c)
+          return cursor = c
+        }
+
         function resetProgress(){
-          cursor = -1
-          unversalStep(cursor)
+          unversalStep(setCursor(-1))
         }
         function skipTillEnd(){
-          cursor = events.length
-          unversalStep(cursor)
+          unversalStep(setCursor(events.length))
         }
         function nextStep(){
-          cursor = Math.min(events.length - 1, cursor + 1)
-          unversalStep(cursor)
+          unversalStep(setCursor(Math.min(events.length - 1, cursor + 1)))
         }
         function prevStep(){
-          cursor = Math.max(-1, cursor - 1)
-          unversalStep(cursor)
+          unversalStep(setCursor(Math.max(-1, cursor - 1)))
         }
 
         function prepare(){
@@ -418,23 +431,37 @@
             }
           })
 
-          resetProgress()
+          q('#reset-progress-action').onclick = resetProgress
+          q("#skip-till-end-action").onclick = skipTillEnd
+          q("#prev-step-action").onclick = prevStep
+          q("#next-step-action").onclick = nextStep
         }
 
-        // -----------------------
-        
-        prepare()
-
-        window.addEventListener("keyup", (e) => {
+        function keyboardEvent(e) {
           if (e.key == "ArrowRight") nextStep()
           if (e.key == "ArrowLeft")  prevStep()
-        }) 
+        }
 
-        q('#reset-progress-action').onclick = resetProgress
-        q("#skip-till-end-action").onclick = skipTillEnd
-        q("#prev-step-action").onclick = prevStep
-        q("#next-step-action").onclick = nextStep
-      
+        function delayedInit () {
+          window.addEventListener("keyup", keyboardEvent)
+        }
+        function run () {
+          unversalStep(cursor)
+        }
+        function init () {
+          setCursor(parseInt(getParam('n', 0)))
+          prepare()
+          run()
+        }
+        function destructor () {
+          window.removeEventListener("keyup", keyboardEvent)
+        }
+
+        // -----------------------------
+
+        init()
+        setTimeout(delayedInit, 150)
+        return destructor
       })
 
       up.compiler('.latex', el => {
