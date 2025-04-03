@@ -16,32 +16,42 @@
 
 # ------------------------------------------------------
 
-(defn finalize-article (db resolvers article)
+(defn finalize-article (db resolvers article ref-count)
   (map 
     (fn [vv]
       (match (type/reduced vv)
         :keyword  (let [ref (db vv)]
                     (assert (not (nil? ref)) (string "the key :" vv " has failed to reference."))
+                    (put+ ref-count vv)
                     (ref :content))
         
         :struct   (match (vv :node)
                     :local-ref (do 
                       (assert (not (nil? (db (vv :data)))) " reference does not exists")
+                      (put+ ref-count (vv :data))
                       vv)
                     vv)
 
-        :tuple    (finalize-article db resolvers vv)
+        :tuple    (finalize-article db resolvers vv ref-count)
                      vv))
     (article :content)))
 
 
-(defn finalize-db (db resolvers)
-  (let-acc @{}
+(defn finalize-db (db resolvers index-key)
+  (let [acc @{} 
+        ref-count (zipcoll (keys db) (array/new-filled (length db) 0))]
     (eachp [id entity] db
       (put acc id (put entity :content 
         (match (entity :kind)
-          :note (finalize-article db resolvers entity)
-          :got                                 (entity :content)))))))
+          :note (finalize-article db resolvers entity ref-count)
+          :got                                (entity  :content)))))
+
+    (if index-key (do 
+      (put+ ref-count index-key)
+      (let [zero-refs (map |($ 0) (filter (fn [[k c]] (= 0 c)) (pairs ref-count)))]
+        (assert (empty? zero-refs) (string "there are notes that are not referenced at all: " (string/join zero-refs ", "))))))
+
+    acc))
 
 
 # ------------------------------------------------------

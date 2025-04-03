@@ -1,4 +1,5 @@
 (use ./macros)
+(use ./number)
 
 # (defn assoc (tab & new-key-vals)
 #   (let-acc @{}
@@ -8,6 +9,9 @@
 #     (each i (range 0 (length new-key-vals) 2)
 #       (let [[k v] (slice new-key-vals i (+ 2 i))]
 #         (put acc k v)))))
+
+(defn put+ (tab key) 
+  (put tab key (+ 1 (int-val (tab key)))))
 
 (defn to-table (lst key-gen val-gen)
   (let-acc @{}
@@ -21,6 +25,8 @@
   
   since there can be multiple As pointing to the 
   same B, the result is saved as an array
+
+  similar to Janet built-in `invert` function but keeps duplicated keys.
   "
 
   (let-acc @{}

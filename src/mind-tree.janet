@@ -7,6 +7,7 @@ tiny mind-tree creator.
 (use ./helper/random)
 (use ./helper/system)
 (use ./helper/js)
+(use ./helper/tab)
 
 # props
 
@@ -37,11 +38,6 @@ tiny mind-tree creator.
 )
 
 # ------------------
-
-(defn int-val (d) (if (number? d) d 0))
-
-(defn put+ (tab key) 
-  (put tab key (+ 1 (int-val (tab key)))))
 
 (defn mind-map/preprocess (data)
   (eachp [id node] (data :ids)
