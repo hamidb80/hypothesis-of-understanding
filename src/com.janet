@@ -12,14 +12,17 @@
 `))
 
 
+# TODO add app info for nav bar title
+(def app-title "navbar")
+
 (defn nav-bar (home-page) (string `
   <nav class="navbar navbar-light bg-light px-3 d-flex justify-content-between">
     <div>
     </div>
     
-    <a class="navbar-brand" up-follow href="` home-page `">
-      nav bar
-    </a>
+    <a class="navbar-brand" up-follow href="` home-page `">`
+      app-title
+   `</a>
     
     <div>
     </div>
