@@ -172,7 +172,7 @@
          :width           (length (grid 0))}))
 
 # HTML Conversion ------------------------
-(defn  GoT/to-html (got svg db router)
+(defn  GoT/to-html (got svg db router app-config)
   (def title "graph of thought")
 
   (flat-string `
@@ -184,7 +184,7 @@
     </head>
     <body>
     
-    ` (nav-bar (router "")) `
+    ` (nav-bar (router "") (app-config :title)) `
 
     <main class="row gx-2 m-3" got>
       <aside class="col col-5 pt-2">

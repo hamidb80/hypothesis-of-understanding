@@ -163,7 +163,7 @@
     {:node :wrap 
      :body content}))
 
-(defn mu/wrap-html (key str router)
+(defn mu/wrap-html (key str router app-config)
   (flat-string `
     <!DOCTYPE html>
     <html lang="en">
@@ -173,7 +173,7 @@
     `</head>
     <body>
 
-    ` (nav-bar (router "")) `
+    ` (nav-bar (router "") (app-config :title)) `
     
     <div class="container my-4">
 

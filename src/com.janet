@@ -11,11 +11,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.css">
 `))
 
-
-# TODO add app info for nav bar title
-(def app-title "navbar")
-
-(defn nav-bar (home-page) (string `
+(defn nav-bar (home-page app-title) (string `
   <nav class="navbar navbar-light bg-light px-3 d-flex justify-content-between">
     <div>
     </div>

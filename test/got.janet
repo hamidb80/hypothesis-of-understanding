@@ -11,6 +11,9 @@
 (def  output-dir  "./dist/")
 (def  notes-dir   "./notes")
 
+(def app-config {
+  :title "Theory Of Understanding"})
+
 (def got-style-config {
   :radius   16
   :spacex  100
@@ -49,8 +52,9 @@
       (match (entity :kind)
         :got 
           (let [ggg       (GoT/init (entity :content))
-                html-repr (GoT/to-html ggg (GoT/to-svg  ggg got-style-config) db router)]
+                html-repr (GoT/to-html ggg (GoT/to-svg  ggg got-style-config) db router app-config)]
             (file/put new-path html-repr))
             
         :note
-          (file/put new-path (mu/wrap-html id (mu/to-html (entity :content) router) router))))))
+          (let [content (mu/to-html (entity :content) router)]
+            (file/put new-path (mu/wrap-html id content router app-config)))))))
