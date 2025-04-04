@@ -53,4 +53,4 @@
             (file/put new-path html-repr))
             
         :note
-          (file/put new-path (mu/wrap-html id (mu/to-html (entity :content) router)))))))
+          (file/put new-path (mu/wrap-html id (mu/to-html (entity :content) router) router))))))

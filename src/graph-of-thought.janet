@@ -169,7 +169,7 @@
     </head>
     <body>
     
-    ` navv `
+    ` (nav-bar (router "")) `
 
     <main class="row gx-2 m-3" got>
       <aside class="col col-5 pt-2">
