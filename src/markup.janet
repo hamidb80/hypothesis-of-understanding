@@ -184,11 +184,13 @@
           (let [p (dirname/split key)] 
             (map
               (fn [n i]
-                (string
-                  `<li class="breadcrumb-item ` (if (= i (dec (length p))) `active`) `">` 
-                    n 
-                  `</li>`))
-              p (range (length p))))
+                (let [is-last (= i (dec (length p)))]
+                  (string
+                    `<li class="breadcrumb-item ` (if is-last `active`) `">` 
+                      n
+                    `</li>`)))
+              p 
+              (range (length p))))
         `</ol>
       </nav>
 

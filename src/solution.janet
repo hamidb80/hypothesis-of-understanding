@@ -16,6 +16,9 @@ integration of GoT and Notes
 
 (def partial-file-name-suffix "_")
 
+# TODO add tests
+# TODO add asset manager and keep track of unreferenced assets
+
 (defn load-deep (root)
   "
   find all markup/GoT files in the `dir` and load them.
@@ -35,5 +38,8 @@ integration of GoT and Notes
             @{:path    p
               :kind    kind
               :partial (string/has-suffix? partial-file-name-suffix (pparts :name))
-              :content (eval-string (slurp p))}))))
+              :content (let [file-content (try (slurp p)            ([e] (error (string "error while reading from file: " p))))
+                             lisp-code    (try (parse file-content) ([e] (error (string "error while parseing lisp code from file: " p))))
+                             result       (try (eval  lisp-code)    ([e] (error (string "error while evaluating parseing lisp code from file: " p))))]
+                          result)}))))
     acc))

@@ -16,15 +16,28 @@
 (use ./locales)
 (use ./markup)
 
-# ------------------------
+# defs ------------------------
 
 (def got-ext ".got.janet") # graph of thought representation in Janet lisp format
 
-# ------------------------
+# public interface ------------------------
+(defn n [id class parents content] # [n]ode
+  # :problem :recall :reason :calculate
+  {:kind     :node 
+   :id       id
+   :class    class 
+   :parents  parents
+   :content  content})
+
+(defn m [id content] # [m]essge, question or hint
+  {:kind    :message 
+   :id       id
+   :content content})
+
+# SVG Convertsion ------------------------
 (defn- node-class (id)
   (string "node-" id))
 
-# ------------------------
 (defn- positioned-item (n r c rng rw) {
    :node      n 
    :row       r 
@@ -75,6 +88,7 @@
     
       acc)))
 
+# extract visual infos ------------------------
 (defn- GoT/build-levels [events]
   (def  levels @{})
   (each e events 
@@ -157,6 +171,7 @@
          :height          (length grid) 
          :width           (length (grid 0))}))
 
+# HTML Conversion ------------------------
 (defn  GoT/to-html (got svg db router)
   (def title "graph of thought")
 
@@ -486,18 +501,3 @@
 
     </style>
     </html>`))
-
-# ----------------------- 
-
-(defn n [id class parents content] # [n]ode
-  # :problem :recall :reason :calculate
-  {:kind     :node 
-   :id       id
-   :class    class 
-   :parents  parents
-   :content  content})
-
-(defn m [id content] # [m]essge, question or hint
-  {:kind    :message 
-   :id       id
-   :content content})
