@@ -30,7 +30,7 @@
 (def raw-db (load-deep notes-dir))
 # (pp raw-db)
 
-(def  db (finalize-db raw-db nil :index))
+(def  db (finalize-db raw-db :index))
 # (pp db)
 
 (defn router (n) 
