@@ -193,7 +193,9 @@
 
 
       <div class="card">
-        <div class="card-body"> ` str ` </div>
+        <article class="card-body"> 
+          ` str `
+        </article>
       </div>
       
     </main>

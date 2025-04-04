@@ -234,7 +234,7 @@
                     summ     (dict (or c :thoughts))
                     has-link (not (article :partial))]
                 [
-                `<div class="pb-3 content" content="` key `" for="` (e :id)`">
+                `<article class="pb-3 content" content="` key `" for="` (e :id)`">
                   <div class="card">`
                     `<div class="card-header d-flex justify-content-between pe-2">
                         <div>`
@@ -257,7 +257,7 @@
                     `</div>`
 
                   `</div>
-                </div>`])))
+                </article>`])))
         `</div>
       </aside>
     </main>
