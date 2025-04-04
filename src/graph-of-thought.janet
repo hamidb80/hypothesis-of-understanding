@@ -200,19 +200,19 @@
         </center>
 
         <div class="my-3 d-flex justify-content-center">
-          <button class="mx-1 btn btn-primary" id="reset-progress-action">
+          <button class="mx-1 btn btn-outline-primary" id="reset-progress-action">
             ` (dict :reset) `
             <i class="bi bi-arrow-clockwise"></i>
           </button>
-          <button class="mx-1 btn btn-primary" id="skip-till-end-action">   
+          <button class="mx-1 btn btn-outline-primary" id="skip-till-end-action">   
             ` (dict :skip) `
             <i class="bi bi-skip-forward"></i>
           </button>
-          <button class="mx-1 btn btn-primary" id="prev-step-action"> 
+          <button class="mx-1 btn btn-outline-primary" id="prev-step-action"> 
             ` (dict :prev) `
             <i class="bi bi-arrow-left"></i>
           </button>
-          <button class="mx-1 btn btn-primary" id="next-step-action"> 
+          <button class="mx-1 btn btn-outline-primary" id="next-step-action"> 
             ` (dict :next) `
             <i class="bi bi-arrow-right"></i>
           </button>
