@@ -11,9 +11,7 @@
 (def  output-dir  "./dist/")
 (def  notes-dir   "./notes")
 
-(def app-config {
-  :title "Theory Of Understanding"})
-
+(def       app-config {:title "Theory Of Understanding"})
 (def got-style-config {
   :radius   16
   :spacex  100
@@ -30,19 +28,11 @@
               :calculate    "#E85C0D"
               :reason       "#5CB338" }})
 
-(def raw-db (load-deep notes-dir))
-# (pp raw-db)
+(def raw-db  (load-deep notes-dir))
+(def     db  (finalize-db raw-db :index))
+(defn router (n) (string "/dist/" n))
 
-(def  db (finalize-db raw-db :index))
-# (pp db)
-
-(defn router (n) 
-  (string "/dist/" n))
-
-# (defn reff (k)
-#   (assert (not (nil? (db k))) (string "the reference " k " is invalid"))
-#   (mu/to-html ((db k) :content) router))
-
+# main ----------------------------------
 (eachp [id entity] db
   (let [
     path-parts (path/split (entity :path))
@@ -52,7 +42,8 @@
       (match (entity :kind)
         :got 
           (let [ggg       (GoT/init (entity :content))
-                html-repr (GoT/to-html ggg (GoT/to-svg ggg got-style-config) got-style-config db router app-config)]
+                svg-repr  (GoT/to-svg ggg got-style-config)
+                html-repr (GoT/to-html ggg svg-repr got-style-config db router app-config)]
             (file/put new-path html-repr))
             
         :note
