@@ -172,7 +172,7 @@
          :width           (length (grid 0))}))
 
 # HTML Conversion ------------------------
-(defn  GoT/to-html (got svg db router app-config)
+(defn  GoT/to-html (got svg svg-theme db router app-config)
   (def title "graph of thought")
 
   (flat-string `
@@ -322,7 +322,7 @@
       }
 
       function highlightNode(el){
-        el.setAttribute("stroke", "black")
+        el.setAttribute("stroke", "`(svg-theme :stroke-color)`")
         el.setAttribute("stroke-width", "4")
       }
       function blurNode(el){

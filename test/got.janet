@@ -23,12 +23,12 @@
   :stroke    4
   :node-pad  6
   :background nil
-  :stroke-color          "#212121"
-  :color-map {:problem   "#212121"
-              :goal      "#212121"
-              :recall    "#864AF9"
-              :calculate "#E85C0D"
-              :reason    "#5CB338" }})
+  :stroke-color             "#212121"
+  :color-map {:problem      "#212121"
+              :goal         "#212121"
+              :recall       "#864AF9"
+              :calculate    "#E85C0D"
+              :reason       "#5CB338" }})
 
 (def raw-db (load-deep notes-dir))
 # (pp raw-db)
@@ -52,7 +52,7 @@
       (match (entity :kind)
         :got 
           (let [ggg       (GoT/init (entity :content))
-                html-repr (GoT/to-html ggg (GoT/to-svg  ggg got-style-config) db router app-config)]
+                html-repr (GoT/to-html ggg (GoT/to-svg ggg got-style-config) got-style-config db router app-config)]
             (file/put new-path html-repr))
             
         :note
