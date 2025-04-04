@@ -49,3 +49,5 @@
         :note
           (let [content (mu/to-html (entity :content) router)]
             (file/put new-path (mu/html-page id content router app-config)))))))
+
+(req-files router)
