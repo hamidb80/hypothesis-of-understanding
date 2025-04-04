@@ -221,7 +221,7 @@
                 [
                 `<div class="pb-3 content" content="` key `" for="` (e :id)`">
                   <div class="card">`
-                    `<div class="card-header d-flex justify-content-between">
+                    `<div class="card-header d-flex justify-content-between pe-2">
                         <div>`
                           (if summ [
                             `<small class="text-muted">` 
@@ -232,7 +232,7 @@
                           (if has-link [
                             `<a class="text-muted" up-follow href="` (router key) `.html">`
                               key
-                              `<i class="bi bi-pin mx-1"></i>`
+                              `<i class="bi bi-hash"></i>`
                             `</a>`])
                         `</div>
                       </div>`

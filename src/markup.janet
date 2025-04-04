@@ -28,7 +28,11 @@
         :struct   (do 
           (match (vv :node)
             :local-ref (do 
-              (assert (not (nil? (db (vv :data)))) " reference does not exists")
+              (let [key (vv :data)
+                    ref (db key)]
+                (assert (not (nil? ref)) " reference does not exists")
+                (assert (not (ref :partial)) (string "the linked doc cannot be partial :" key)))
+
               (put+ ref-count (vv :data)))
 
             (finalize-content db resolvers (vv :body) ref-count))
@@ -79,7 +83,7 @@
 (def- h/underline      (simple-wrapper (const1 `<u>`)                (const1 `</u>`)        no-str          no-str))
 (def- h/strikethrough  (simple-wrapper (const1 `<s>`)                (const1 `</s>`)        no-str          no-str))
 (def- h/latex          (simple-wrapper (const1 `<math>`)             (const1 `</math>`)     no-str          no-str))
-(def- h/header         (simple-wrapper |(string "<h" $ ">")          |(string "</h" $ ">")  no-str          no-str))
+(def- h/header         (simple-wrapper |(string `<h` $ ` dir="auto">`)          |(string `</h` $ `>`)  no-str          no-str))
 (def- h/link           (simple-wrapper |(string `<a href="` $ `">`)  (const1 `</a>`)        no-str          no-str))
 (def- h/ul             (simple-wrapper (const1 `<ul>`)               (const1 `</ul>`)       (const1 `<li>`) (const1 `</li>`)))
 (def- h/ol             (simple-wrapper (const1 `<ol>`)               (const1 `</ol>`)       (const1 `<li>`) (const1 `</li>`)))
@@ -148,7 +152,9 @@
     <div class="container my-4">
 
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">`
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"></li>`
+
           (let [p (dirname/split key)] 
             (map
               (fn [n i]
