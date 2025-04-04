@@ -8,11 +8,10 @@
   (= (path/mode path) :directory))
 
 (defn path/join (& chunks)
-  (inspect 
-    (reduce
-      (fn [a b] (if (or (empty? a) (is-dir a)) (string a b) (string a "/" b))) 
-      "" 
-      chunks)))
+  (reduce
+    (fn [a b] (if (or (empty? a) (is-dir a)) (string a b) (string a "/" b))) 
+    "" 
+    chunks))
 
 (defn path/dir (p)
   (if (string/has-suffix? "/" p) p (string p "/")))
