@@ -76,13 +76,13 @@ function clamp(n, max, min) {
   return Math.min(max, Math.max(n, min))
 }
 
-// ----------------------------------------      
-
 function parseShallowJSON(json){
   for (const key in json)
     json[key] = JSON.parse(json[key])
   return json
 }
+
+// ----------------------------------------      
 
 up.compiler('[got]', (_, data) => {
   const cursorName = 'c'

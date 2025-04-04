@@ -49,9 +49,6 @@ integration of GoT and Notes
     acc))
 
 # HTML Conversion ------------------------
-(defn req-files (router)
-  (file/put "./dist/page.js"  (slurp "./src/page.js"))
-  (file/put "./dist/style.css" (slurp "./src/style.css")))
 (defn  mu/html-page (key str router app-config)
   (flat-string `
     <!DOCTYPE html>
@@ -190,3 +187,10 @@ integration of GoT and Notes
 
     </body>
     </html>`))
+
+# ------------------------ final
+
+(defn req-files (output-dir)
+  (let [current-dir ((path/split (dyn *current-file*)) :dir)]
+  (file/put (path/join output-dir "page.js")   (slurp  (path/join current-dir "./src/page.js")))
+  (file/put (path/join output-dir "style.css") (slurp  (path/join current-dir "./src/style.css")))))

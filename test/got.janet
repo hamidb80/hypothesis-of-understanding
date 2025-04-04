@@ -33,6 +33,7 @@
 (defn router (n) (string "/dist/" n))
 
 # main ----------------------------------
+(req-files output-dir)
 (eachp [id entity] db
   (let [
     path-parts (path/split (entity :path))
@@ -49,5 +50,3 @@
         :note
           (let [content (mu/to-html (entity :content) router)]
             (file/put new-path (mu/html-page id content router app-config)))))))
-
-(req-files router)
