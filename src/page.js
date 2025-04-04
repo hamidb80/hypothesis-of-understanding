@@ -220,6 +220,6 @@ up.compiler('[got]', (_, data) => {
   return destructor
 })
 
-up.compiler('.latex', el => {
+up.compiler('.latex', (el, data) => {
   katex.render(el.innerText, el, { displayMode: true })
 })
