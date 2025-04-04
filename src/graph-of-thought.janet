@@ -225,7 +225,7 @@
           ` (dict :steps) `
         </div>
 
-        <div class="my-3">`
+        <article class="my-3">`
           (map- (got :events) 
             (fn [e] 
               (let [key      (e     :content)
@@ -234,7 +234,7 @@
                     summ     (dict (or c :thoughts))
                     has-link (not (article :partial))]
                 [
-                `<article class="pb-3 content" content="` key `" for="` (e :id)`">
+                `<div class="pb-3 content" content="` key `" for="` (e :id)`">
                   <div class="card">`
                     `<div class="card-header d-flex justify-content-between pe-2">
                         <div>`
@@ -257,8 +257,8 @@
                     `</div>`
 
                   `</div>
-                </article>`])))
-        `</div>
+                </div>`])))
+        `</article>
       </aside>
     </main>
 
