@@ -78,12 +78,12 @@ integration of GoT and Notes
   </nav>`))
 
 # HTML Conversion ------------------------
-(defn  mu/html-page (key str router app-config)
+(defn  mu/html-page (key title content router app-config)
   (flat-string `
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <title>` key `</title>` 
+        <title>` title `</title>` 
         (common-head router)
     `</head>
     <body>
@@ -112,7 +112,7 @@ integration of GoT and Notes
 
       <div class="card">
         <article class="card-body"> 
-          ` str `
+          ` content `
         </article>
       </div>
       

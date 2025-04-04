@@ -44,9 +44,9 @@
         :got 
           (let [ggg       (GoT/init (entity :content))
                 svg-repr  (GoT/to-svg ggg got-style-config)
-                html-repr (GoT/html-page ggg "title" svg-repr got-style-config db router app-config)]
+                html-repr (GoT/html-page ggg "GoT of ..." svg-repr got-style-config db router app-config)]
             (file/put new-path html-repr))
             
         :note
           (let [content (mu/to-html (entity :content) router)]
-            (file/put new-path (mu/html-page id content router app-config)))))))
+            (file/put new-path (mu/html-page id "some note" content router app-config)))))))
