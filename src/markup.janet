@@ -93,7 +93,7 @@
 
 
 # HTML ------------------------------------------------------
-
+(def no-str (const1 ""))
 (defn- h/wrapper (start-wrap-fn end-wrap-fn start-item-fn end-item-fn)
   (fn [resolver router ctx data args] 
     (let-acc @""
@@ -101,27 +101,25 @@
       (each c args (buffer/push acc (start-item-fn data) (resolver router ctx c) (end-item-fn data)))
       (buffer/push acc (end-wrap-fn data)))))
 
-
-(def no-str (const1 ""))
-
-(def- h/wrap           (h/wrapper no-str                             no-str                 no-str           no-str))
-(def- h/paragraph      (h/wrapper (const1 `<p dir="auto">`)          (const1 `</p>`)        no-str           no-str))
-(def- h/italic         (h/wrapper (const1 `<i>`)                     (const1 `</i>`)        no-str           no-str))
-(def- h/bold           (h/wrapper (const1 `<b>`)                     (const1 `</b>`)        no-str           no-str))
-(def- h/underline      (h/wrapper (const1 `<u>`)                     (const1 `</u>`)        no-str           no-str))
-(def- h/strikethrough  (h/wrapper (const1 `<s>`)                     (const1 `</s>`)        no-str           no-str))
-(def- h/latex          (h/wrapper (const1 `<math>`)                  (const1 `</math>`)     no-str           no-str))
-(def- h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)    |(string `</h` $ `>`)  no-str           no-str))
-(def- h/link           (h/wrapper |(string `<a href="` $ `">`)       (const1 `</a>`)        no-str           no-str))
-(def- h/ul             (h/wrapper (const1 `<ul>`)                    (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))
-(def- h/ol             (h/wrapper (const1 `<ol>`)                    (const1 `</ol>`)       (const1 `<li>`)  (const1 `</li>`)))
+# micro view --------
+(def-  h/wrap           (h/wrapper no-str                             no-str                 no-str           no-str))
+(def-  h/paragraph      (h/wrapper (const1 `<p dir="auto">`)          (const1 `</p>`)        no-str           no-str))
+(def-  h/italic         (h/wrapper (const1 `<i>`)                     (const1 `</i>`)        no-str           no-str))
+(def-  h/bold           (h/wrapper (const1 `<b>`)                     (const1 `</b>`)        no-str           no-str))
+(def-  h/underline      (h/wrapper (const1 `<u>`)                     (const1 `</u>`)        no-str           no-str))
+(def-  h/strikethrough  (h/wrapper (const1 `<s>`)                     (const1 `</s>`)        no-str           no-str))
+(def-  h/latex          (h/wrapper (const1 `<math>`)                  (const1 `</math>`)     no-str           no-str))
+(def-  h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)    |(string `</h` $ `>`)  no-str           no-str))
+(def-  h/link           (h/wrapper |(string `<a href="` $ `">`)       (const1 `</a>`)        no-str           no-str))
+(def-  h/ul             (h/wrapper (const1 `<ul>`)                    (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))
+(def-  h/ol             (h/wrapper (const1 `<ol>`)                    (const1 `</ol>`)       (const1 `<li>`)  (const1 `</li>`)))
 (defn- h/local-ref [resolver router ctx data args] 
   (string
     `<a up-follow href="` (router data) `.html">` 
       (resolver router ctx args)
     `</a>`))
 
-(def- html-resolvers {
+(def-  html-resolvers {
   :wrap              h/wrap
 
   :bold              h/bold
@@ -143,9 +141,8 @@
   # :image           h/image
   # :video           h/video
   })
-
-
-(defn mu/to-html (content router)
+# macro view --------
+(defn  mu/to-html (content router)
   (defn resolver (router ctx node)
     # (pp node)
     (match (type/reduced node)
@@ -163,7 +160,7 @@
     {:node :wrap 
      :body content}))
 
-(defn mu/wrap-html (key str router app-config)
+(defn  mu/wrap-html (key str router app-config)
   (flat-string `
     <!DOCTYPE html>
     <html lang="en">
@@ -175,7 +172,7 @@
 
     ` (nav-bar (router "") (app-config :title)) `
     
-    <div class="container my-4">
+    <main class="container my-4">
 
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -199,6 +196,6 @@
         <div class="card-body"> ` str ` </div>
       </div>
       
-    </div>
+    </main>
     </body>
     </html>`))
