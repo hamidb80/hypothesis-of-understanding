@@ -77,21 +77,23 @@ integration of GoT and Notes
     </div>
   </nav>`))
 
-# HTML Conversion ------------------------
-(defn  mu/html-page (key title content router app-config)
-  (flat-string `
-    <!DOCTYPE html>
+(defn html5 (router title app-config & body)
+  (flat-string `<!DOCTYPE html>
     <html lang="en">
     <head>
-        <title>` title `</title>` 
-        (common-head router)
+      <title>` title `</title>` 
+      (common-head router)
     `</head>
-    <body>
+    <body>`
+    (nav-bar (router "") (app-config :title))
+    `<main>` body `</main>
+    </body>
+    </html>`))
 
-    ` (nav-bar (router "") (app-config :title)) `
-    
-    <main class="container my-4">
-
+# HTML Conversion ------------------------
+(defn  mu/html-page (key title content router app-config)
+  (html5 router title app-config `
+    <div class="container my-4">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"></li>`
@@ -109,113 +111,94 @@ integration of GoT and Notes
         `</ol>
       </nav>
 
-
       <div class="card">
         <article class="card-body"> 
           ` content `
         </article>
       </div>
-      
-    </main>
-    </body>
-    </html>`))
+    </div>`))
 
 (defn  GoT/html-page (got page-title svg svg-theme db router app-config)
-  (flat-string `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>` page-title `</title>
-        ` (common-head router) `
-    </head>
-    <body>
-    
-    ` (nav-bar (router "") (app-config :title)) `
+  (html5 router page-title app-config `
+    <div class="row gx-2 m-3" got 
+      data-events='`(to-js (got :events))`'
+      data-nodes='`(to-js (got :nodes))`'
+      data-anscestors='`(to-js (got :anscestors))`'
+    >
+      <aside class="col col-5 pt-2">
+        <div class="fs-6 mb-3">
+          <i class="bi bi-share-fill"></i>
+          ` (dict :graph-of-thought) `
+        </div>
 
-    <main>
-      <div class="row gx-2 m-3" got 
-        data-events='`(to-js (got :events))`'
-        data-nodes='`(to-js (got :nodes))`'
-        data-anscestors='`(to-js (got :anscestors))`'
-      >
-        <aside class="col col-5 pt-2">
-          <div class="fs-6 mb-3">
-            <i class="bi bi-share-fill"></i>
-            ` (dict :graph-of-thought) `
+        <center>
+          <div class="d-inline-block bg-light border rounded">
+          ` svg `
           </div>
+        </center>
 
-          <center>
-            <div class="d-inline-block bg-light border rounded">
-            ` svg `
-            </div>
-          </center>
+        <div class="my-3 d-flex justify-content-center">
+          <button class="mx-1 btn btn-outline-primary" id="reset-progress-action">
+            ` (dict :reset) `
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+          <button class="mx-1 btn btn-outline-primary" id="skip-till-end-action">   
+            ` (dict :skip) `
+            <i class="bi bi-skip-forward"></i>
+          </button>
+          <button class="mx-1 btn btn-outline-primary" id="prev-step-action"> 
+            ` (dict :prev) `
+            <i class="bi bi-arrow-left"></i>
+          </button>
+          <button class="mx-1 btn btn-outline-primary" id="next-step-action"> 
+            ` (dict :next) `
+            <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </aside>
 
-          <div class="my-3 d-flex justify-content-center">
-            <button class="mx-1 btn btn-outline-primary" id="reset-progress-action">
-              ` (dict :reset) `
-              <i class="bi bi-arrow-clockwise"></i>
-            </button>
-            <button class="mx-1 btn btn-outline-primary" id="skip-till-end-action">   
-              ` (dict :skip) `
-              <i class="bi bi-skip-forward"></i>
-            </button>
-            <button class="mx-1 btn btn-outline-primary" id="prev-step-action"> 
-              ` (dict :prev) `
-              <i class="bi bi-arrow-left"></i>
-            </button>
-            <button class="mx-1 btn btn-outline-primary" id="next-step-action"> 
-              ` (dict :next) `
-              <i class="bi bi-arrow-right"></i>
-            </button>
-          </div>
-        </aside>
+      <aside class="col col-7 pt-2 overflow-y-scroll content-bar" style="height: calc(100vh - 40px)">
+        <div class="fs-6">
+          <i class="bi bi-person-walking"></i>
+          ` (dict :steps) `
+        </div>
 
-        <aside class="col col-7 pt-2 overflow-y-scroll content-bar" style="height: calc(100vh - 40px)">
-          <div class="fs-6">
-            <i class="bi bi-person-walking"></i>
-            ` (dict :steps) `
-          </div>
+        <article class="my-3">`
+          (map- (got :events) 
+            (fn [e] 
+              (let [key      (e     :content)
+                    c        (e     :class)
+                    article  (db key)
+                    summ     (dict (or c :thoughts))
+                    has-link (not (article :partial))]
+                [
+                `<div class="pb-3 content" content="` key `" for="` (e :id)`">
+                  <div class="card">`
+                    `<div class="card-header d-flex justify-content-between pe-2">
+                        <div>`
+                          (if summ [
+                            `<small class="text-muted">` 
+                              summ 
+                            `</small>`])
+                        `</div>
+                        <div>`
+                          (if has-link [
+                            `<a class="text-muted" up-follow href="` (router key) `.html">`
+                              key
+                              `<i class="bi bi-hash"></i>`
+                            `</a>`])
+                        `</div>
+                      </div>`
 
-          <article class="my-3">`
-            (map- (got :events) 
-              (fn [e] 
-                (let [key      (e     :content)
-                      c        (e     :class)
-                      article  (db key)
-                      summ     (dict (or c :thoughts))
-                      has-link (not (article :partial))]
-                  [
-                  `<div class="pb-3 content" content="` key `" for="` (e :id)`">
-                    <div class="card">`
-                      `<div class="card-header d-flex justify-content-between pe-2">
-                          <div>`
-                            (if summ [
-                              `<small class="text-muted">` 
-                                summ 
-                              `</small>`])
-                          `</div>
-                          <div>`
-                            (if has-link [
-                              `<a class="text-muted" up-follow href="` (router key) `.html">`
-                                key
-                                `<i class="bi bi-hash"></i>`
-                              `</a>`])
-                          `</div>
-                        </div>`
+                    `<div class="card-body" dir="auto">`
+                        (mu/to-html (article :content) router)
+                    `</div>`
 
-                      `<div class="card-body" dir="auto">`
-                          (mu/to-html (article :content) router)
-                      `</div>`
-
-                    `</div>
-                  </div>`])))
-          `</article>
-        </aside>
-      </div>
-    </main>
-
-    </body>
-    </html>`))
+                  `</div>
+                </div>`])))
+        `</article>
+      </aside>
+    </div>`))
 
 # ------------------------ final
 (defn req-files (output-dir)
