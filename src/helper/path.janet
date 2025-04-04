@@ -1,4 +1,5 @@
 (use ./debug)
+(use ./bool)
 (use ./iter)
 
 (defn path/mode (path)
@@ -7,11 +8,19 @@
 (defn is-dir (path) 
   (= (path/mode path) :directory))
 
+(defn is-root (path)
+  (string/has-prefix? "/" path))
+
+(defn- path/join-impl [a b]
+  (if (empty? a) b
+      (match [(is-dir a) (is-root b)]
+        [T T] (string a (slice b 1))
+        [T F] (string a b)
+        [F T] (string a b)
+        [F F] (string a "/" b))))
+
 (defn path/join (& chunks)
-  (reduce
-    (fn [a b] (if (or (empty? a) (is-dir a)) (string a b) (string a "/" b))) 
-    "" 
-    chunks))
+  (reduce path/join-impl "" chunks))
 
 (defn path/dir (p)
   (if (string/has-suffix? "/" p) p (string p "/")))

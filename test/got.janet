@@ -8,8 +8,8 @@
 
 # -------------------------------
 
-(def  output-dir  (path/dir "./dist/"))
-(def  notes-dir   (path/dir "./notes"))
+(def  output-dir  "./dist/")
+(def  notes-dir   "./notes")
 
 (def       app-config {:title "Theory Of Understanding"})
 (def got-style-config {
