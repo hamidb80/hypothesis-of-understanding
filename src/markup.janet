@@ -8,13 +8,6 @@
 (use ./helper/path)
 (use ./helper/macros)
 
-(use ./com)
-
-
-# def ------------------------------------------------------
-
-(def markup-ext ".mu.janet") # markup language in Janet lisp format
-
 # Core elements ------------------------------------------------------
 
 (defn h      (size & args) {:node :header            :body args :data size })

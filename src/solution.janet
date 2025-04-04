@@ -19,8 +19,9 @@ integration of GoT and Notes
 
 # TODO add tests
 # TODO add asset manager and keep track of unreferenced assets
-# FIXME cannot load specifit page script
 
+(def markup-ext ".mu.janet") # markup language in Janet lisp format
+(def got-ext    ".got.janet") # graph of thought representation in Janet lisp format
 (def partial-file-name-suffix "_")
 
 (defn load-deep (root)
@@ -189,7 +190,6 @@ integration of GoT and Notes
     </html>`))
 
 # ------------------------ final
-
 (defn req-files (output-dir)
   (let [current-dir ((path/split (dyn *current-file*)) :dir)]
   (file/put (path/join output-dir "page.js")   (slurp  (path/join current-dir "./src/page.js")))

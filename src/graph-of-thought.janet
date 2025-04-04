@@ -12,14 +12,6 @@
 (use ./helper/svg)
 (use ./helper/macros)
 
-(use ./com)
-(use ./locales)
-(use ./markup)
-
-# defs ------------------------
-
-(def got-ext ".got.janet") # graph of thought representation in Janet lisp format
-
 # public interface ------------------------
 (defn n [id class parents content] # [n]ode
   # :problem :recall :reason :calculate
