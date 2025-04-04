@@ -23,9 +23,9 @@
   :stroke    4
   :node-pad  6
   :background nil
-  :stroke-color             "#212121"
-  :color-map {:problem      "#212121"
-              :goal         "#212121"
+  :stroke-color             "#424242"
+  :color-map {:problem      "#545454"
+              :goal         "#545454"
               :recall       "#864AF9"
               :calculate    "#E85C0D"
               :reason       "#5CB338" }})
