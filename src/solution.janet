@@ -17,6 +17,7 @@ integration of GoT and Notes
 # ------------------------------------------------------
 
 # TODO add tests
+# TODO nested include
 # TODO add asset manager and keep track of unreferenced assets
 
 (def markup-ext ".mu.janet") # markup language in Janet lisp format
