@@ -9,6 +9,7 @@ integration of GoT and Notes
 (use ./helper/macros)
 (use ./helper/iter)
 (use ./helper/js)
+(use ./helper/debug)
 
 (use ./locales)
 (use ./markup)

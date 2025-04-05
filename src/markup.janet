@@ -40,15 +40,19 @@
 
 # Resolvation -------------------------------------
 
-(defn finalize-content (db content ref-count)
+(defn finalize-content (db content ref-count seen?)
   (map 
     (fn [vv]
       (match (type/reduced vv)
-        :keyword  (let [ref (db vv)]
-                    (assert (not (nil? ref)) (string "the key :" vv " has failed to reference."))
+        :keyword  (do 
+                    (unless (seen? vv) 
+                      (put-in db [vv :content] (finalize-content db ((db vv) :content) ref-count seen?))
+                      (put seen? vv true))
+
+                    (assert (not (nil? (db vv))) (string "the key :" vv " has failed to reference."))
                     (put+ ref-count vv)
-                    (ref :content))
-        
+                    ((db vv) :content))
+      
         :struct   (do 
           (match (vv :node)
             :local-ref (do 
@@ -59,22 +63,23 @@
 
               (put+ ref-count (vv :data)))
 
-            (finalize-content db (vv :body) ref-count))
+            (finalize-content db (vv :body) ref-count seen?))
           vv)
 
-        :tuple    (finalize-content db vv ref-count)
+        :tuple    (finalize-content db vv ref-count seen?)
         :string    vv))
     content))
 
 
 (defn finalize-db (db index-key)
-  (let [acc @{} 
+  (let [acc       @{} 
+        seen?     @{}
         ref-count (zipcoll (keys db) (array/new-filled (length db) 0))]
     
     (eachp [id entity] db
       (put acc id (put entity :content 
         (match (entity :kind)
-          :note (finalize-content db (entity :content) ref-count)
+          :note (finalize-content db (entity :content) ref-count seen?)
           :got                                 (entity  :content)))))
 
     (if index-key (do 
@@ -138,7 +143,6 @@
 # macro view --------
 (defn  mu/to-html (content router)
   (defn resolver (router ctx node)
-    # (pp node)
     (match (type/reduced node)
       :string         node
       :number (string node)
