@@ -40,14 +40,18 @@
 
 # Resolvation -------------------------------------
 
-(defn finalize-content (db content ref-count seen?)
+(defn finalize-content (db content ref-count resolved?)
   (map 
     (fn [vv]
       (match (type/reduced vv)
         :keyword  (do 
-                    (unless (seen? vv) 
-                      (put-in db [vv :content] (finalize-content db ((db vv) :content) ref-count seen?))
-                      (put seen? vv true))
+                    (match (resolved? vv) 
+                      :done       nil # do nothing
+                      :processing (error (string "circular dependency detected in path of "  (string/join (filter |(= :processing (resolved? $)) (keys resolved?)) ", ")))
+                      nil   (do 
+                              (put resolved? vv :processing)
+                              (put-in db [vv :content] (finalize-content db ((db vv) :content) ref-count resolved?))
+                              (put resolved? vv true)))
 
                     (assert (not (nil? (db vv))) (string "the key :" vv " has failed to reference."))
                     (put+ ref-count vv)
@@ -63,23 +67,23 @@
 
               (put+ ref-count (vv :data)))
 
-            (finalize-content db (vv :body) ref-count seen?))
+            (finalize-content db (vv :body) ref-count resolved?))
           vv)
 
-        :tuple    (finalize-content db vv ref-count seen?)
+        :tuple    (finalize-content db vv ref-count resolved?)
         :string    vv))
     content))
 
 
 (defn finalize-db (db index-key)
   (let [acc       @{} 
-        seen?     @{}
+        resolved?     @{}
         ref-count (zipcoll (keys db) (array/new-filled (length db) 0))]
     
     (eachp [id entity] db
       (put acc id (put entity :content 
         (match (entity :kind)
-          :note (finalize-content db (entity :content) ref-count seen?)
+          :note (finalize-content db (entity :content) ref-count resolved?)
           :got                                 (entity  :content)))))
 
     (if index-key (do 
