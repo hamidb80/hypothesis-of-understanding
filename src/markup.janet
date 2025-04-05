@@ -47,11 +47,11 @@
         :keyword  (do 
                     (match (resolved? vv) 
                       :done       nil # do nothing
-                      :processing (error (string "circular dependency detected in path of "  (string/join (filter |(= :processing (resolved? $)) (keys resolved?)) ", ")))
+                      :processing (error (string "circular dependency detected, articles involved: "  (string/join (filter |(= :processing (resolved? $)) (keys resolved?)) ", ")))
                       nil   (do 
                               (put resolved? vv :processing)
-                              (put-in db [vv :content] (finalize-content db ((db vv) :content) ref-count resolved?))
-                              (put resolved? vv true)))
+                              (put-in db    [vv :content] (finalize-content db ((db vv) :content) ref-count resolved?))
+                              (put resolved? vv :done)))
 
                     (assert (not (nil? (db vv))) (string "the key :" vv " has failed to reference."))
                     (put+ ref-count vv)
