@@ -144,7 +144,7 @@ integration of GoT and Notes
                                :reason    `bi bi-lightbulb`
                                :recall    `bi bi-geo`
                                :calculate `bi bi-calculator`
-                               :thoughts  `bi bi-chat-left-dots`
+                               :thoughts  `bi bi-chat`
                               } t)
                     has-link (not (article :partial))]
                 [

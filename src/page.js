@@ -221,5 +221,5 @@ up.compiler('[got]', (_, data) => {
 })
 
 up.compiler('.latex', (el, data) => {
-  katex.render(el.innerText, el, { displayMode: true })
+  katex.render(el.innerText, el, { displayMode: data.display == "true" })
 })
