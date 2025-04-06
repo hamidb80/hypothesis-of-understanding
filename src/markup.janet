@@ -18,10 +18,7 @@
 (defn h5     (& args)      (h 5 ;args))
 (defn h6     (& args)      (h 6 ;args))
 
-(defn alias  (& args)      {:node :alias             :body args}) # assign name to document, ignored at HTML compilation
-(defn tags   (& args)      {:node :tags              :body args}) # 
 (defn sec    (& args)      {:node :section           :body args})
-(defn abs    (& args)      {:node :abstract          :body args})
 (defn cnt    (& args)      {:node :center            :body args})
 (defn b      (& args)      {:node :bold              :body args})
 (defn i      (& args)      {:node :italic            :body args})
@@ -38,6 +35,7 @@
 
 (defn img    (src & body)  {:node :image             :body body  :data src})
 (defn tags   (& kws)       {:node :tags              :body []    :data kws})
+(defn abs    (body)        {:node :abstract          :body body  :data body})
 
 (def _ " ")
 
@@ -75,7 +73,8 @@
               (put+ assets-db (vv :data))
               vv)
             
-            :tags (put (parent-article :meta) :tags (vv :data))
+            :tags     (put (parent-article :meta) :tags     (vv :data))
+            :abstract (put (parent-article :meta) :abstract (vv :data))
               
             (finalize-content db (vv :body) parent-article assets-db ref-count resolved?))
           vv)
@@ -164,6 +163,7 @@
   # :video           h/video
   
   :tags              h/empty
+  :abstract          h/empty
   })
 # macro view --------
 (defn  mu/to-html (content router)
