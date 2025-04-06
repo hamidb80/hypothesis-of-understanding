@@ -28,7 +28,8 @@
 (defn p      (& args)      {:node :paragraph         :body args})
 (defn ul     (& body)      {:node :unnumbered-list   :body body})
 (defn ol     (& body)      {:node :numbered-list     :body body})
-(defn ltx    (& body)      {:node :latex             :body body })
+(defn ltx    (& body)      {:node :latex             :body body :data true })
+(defn ltxi   (& body)      {:node :latex             :body body :data false })
 
 (defn ref    (kw & body)   {:node :local-ref         :body body  :data kw})
 (defn a      (url & body)  {:node :link              :body body  :data url})
@@ -123,7 +124,7 @@
 (def-  h/bold           (h/wrapper (const1 `<b>`)                     (const1 `</b>`)        no-str           no-str))
 (def-  h/underline      (h/wrapper (const1 `<u>`)                     (const1 `</u>`)        no-str           no-str))
 (def-  h/strikethrough  (h/wrapper (const1 `<s>`)                     (const1 `</s>`)        no-str           no-str))
-(def-  h/latex          (h/wrapper (const1 `<span class="latex">`)    (const1 `</span>`)     no-str           no-str))
+(def-  h/latex          (h/wrapper |(string `<span class="latex" data-display="`$`">`)       (const1 `</span>`)     no-str           no-str))
 (def-  h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)    |(string `</h` $ `>`)  no-str           no-str))
 (def-  h/link           (h/wrapper |(string `<a href="` $ `">`)       (const1 `</a>`)        no-str           no-str))
 (def-  h/ul             (h/wrapper (const1 `<ul>`)                    (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))

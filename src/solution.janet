@@ -136,7 +136,7 @@ integration of GoT and Notes
             (fn [e] 
               (let [key      (e     :content)
                     c        (e     :class)
-                    article  (db key)
+                    article  (assert (db key) (string "invalid reference: " key))
                     summ     (dict (or c :thoughts))
                     has-link (not (article :partial))]
                 [
@@ -188,7 +188,6 @@ integration of GoT and Notes
   (let [acc @{}
         root-dir (path/dir root)]
     
-    (pp root-dir)
     (each p (os/list-files-rec root-dir)
       (let [pparts    (path/split p)
             kind (cond 
@@ -222,8 +221,6 @@ integration of GoT and Notes
   (defn router (n) (string "/dist/" n))
 
   (req-files (solution-paths :output-dir))
-
-  (pp db)
 
   (eachp [id entity] db
     (let [
