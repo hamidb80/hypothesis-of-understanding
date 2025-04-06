@@ -5,8 +5,8 @@
 # -------------------------------
 
 (let [
-    app-config {:title "Theory Of Understanding"}
-    s-conf     (solution-paths "./test/notes/gate" "./test/assets/" "./dist/")
+    app-config {:title "2 simple docs"}
+    s-conf     (solution-paths "./test/docs/simple-pack" nil "./dist/")
     got-style-config {
       :radius   16
       :spacex  100

@@ -224,7 +224,7 @@ integration of GoT and Notes
 
 (defn solution (solution-paths app-config got-style-config)
   (def    raw-db  (load-deep   (solution-paths :notes-dir)))
-  (def assets-db  (load-assets (solution-paths :assets-dir)))
+  (def assets-db  (let [d (solution-paths :assets-dir)] (if d (load-assets d) {})))
   (def        db  (finalize-db raw-db :index assets-db))
   (defn router (n) (string "/dist/" n))
 
