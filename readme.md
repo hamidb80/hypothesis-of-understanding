@@ -6,7 +6,7 @@
 > If you find something hard to understand, _BLAME YOUR OWN LACK OF KNOWLEDGE!_ since you were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
 
 lets pray: 
-> O God, whose wisdom has no limits and whose power transcends all imagination— I ask You to shine Your ceaseless light of knowledge into the shadows of my mind, dispelling the darkness of ignorance, so that I may know more and understand deeper
+> O God, whose wisdom has no limits and whose power transcends all imagination— I ask You to shine Your ceaseless light of knowledge into the shadows of my mind, dispelling the darkness of ignorance, so that **I may know more and understand deeper**
 
 ## Goals
 > Transmit Understanding, not just knowledge
@@ -24,6 +24,7 @@ lets pray:
 - [Brilliant](https://brilliant.org/) | Learning by doing
 - [makandra cards](https://makandracards.com/)
 - Networks of the Brain by Olaf Sporns
+- [Proof Wiki](https://proofwiki.org/?ref=cybrhome)
 
 ## terms
 - GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
