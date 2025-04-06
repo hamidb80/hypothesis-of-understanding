@@ -146,7 +146,7 @@ integration of GoT and Notes
                                :calculate `bi bi-calculator`
                                :thoughts  `bi bi-chat`
                               } t)
-                    has-link (not (article :partial))]
+                    has-link (not (article :private))]
                 [
                 `<div class="pb-3 content" content="` key `" for="` (e :id)`">
                   <div class="card">`
@@ -183,7 +183,7 @@ integration of GoT and Notes
 # ------------------------------------------------------
 (def markup-ext ".mu.janet") # markup language in Janet lisp format
 (def got-ext    ".got.janet") # graph of thought representation in Janet lisp format
-(def partial-suffix "_")
+(def private-suffix "_")
 
 (defn req-files (output-dir)
   (let [current-dir ((path/split (dyn *current-file*)) :dir)]
@@ -208,7 +208,7 @@ integration of GoT and Notes
             (keyword (string/remove-prefix root-dir (pparts :dir)) (pparts :name)) 
             @{:path    p
               :kind    kind
-              :partial (string/has-suffix? partial-suffix (pparts :name))
+              :private (string/has-suffix? private-suffix (pparts :name))
               :meta    @{} # attributes that are computed after initial preprocessing
               :content (let [file-content (try (slurp p)            ([e] (error (string "error while reading from file: " p))))
                              lisp-code    (try (parse file-content) ([e] (error (string "error while parseing lisp code from file: " p))))
@@ -235,7 +235,7 @@ integration of GoT and Notes
       path-parts (path/split (entity :path))
       new-path   (path/join (solution-paths :output-dir) (string (string/remove-prefix (solution-paths :notes-dir) (path-parts :dir)) (path-parts :name) ".html"))]
 
-      (if-not (entity :partial)
+      (if-not (entity :private)
         (match (entity :kind)
           :got 
             (let [ggg       (GoT/init (entity :content))

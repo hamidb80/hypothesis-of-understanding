@@ -65,7 +65,7 @@
               (let [key (vv :data)
                     ref (db key)]
                 (assert (not (nil? ref)) " reference does not exists")
-                (assert (not (ref :partial)) (string "the linked doc cannot be partial :" key)))
+                (assert (not (ref :private)) (string "the linked doc cannot be partial :" key)))
 
               (put+ ref-count (vv :data)))
 
