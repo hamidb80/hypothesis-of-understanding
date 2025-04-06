@@ -25,6 +25,7 @@
 (defn ul     (& args)      {:node :list              :body args})
 (defn sm     (& args)      {:node :small             :body args})
 (defn lg     (& args)      {:node :large             :body args})
+(defn sp      (& args)     {:node :span              :body args})
 (defn p      (& args)      {:node :paragraph         :body args})
 (defn ul     (& body)      {:node :unnumbered-list   :body body})
 (defn ol     (& body)      {:node :numbered-list     :body body})
@@ -35,8 +36,10 @@
 (defn a      (url & body)  {:node :link              :body body  :data url})
 
 (defn img    (src & body)  {:node :image             :body body  :data src})
+
 (defn tags   (& kws)       {:node :tags              :body []    :data kws})
 (defn abs    (body)        {:node :abstract          :body body  :data body})
+(defn title  (body)        {:node :title             :body []    :data body})
 
 (def _ " ")
 
@@ -73,7 +76,8 @@
               (assert (in assets-db (vv :data)) (string `referenced asset does not exists: ` (vv :data)))
               (put+ assets-db (vv :data))
               vv)
-            
+
+            :title    (put (parent-article :meta) :title    (vv :data))
             :tags     (put (parent-article :meta) :tags     (vv :data))
             :abstract (put (parent-article :meta) :abstract (vv :data))
               
@@ -99,7 +103,7 @@
     (if index-key (do 
       (put+ ref-count index-key)
       (pp ref-count)
-      (let [zero-refs (map |($ 0) (filter (fn [[k c]] (= 0 c)) (pairs ref-count)))]
+      (let [zero-refs (map |($ 0) (filter (fn [[k c]] (and (not ((db k) :private)) (= 0 c))) (pairs ref-count)))]
         (assert (empty? zero-refs) (string "there are notes that are not referenced at all: " (string/join zero-refs ", "))))))
 
     acc))
@@ -120,15 +124,16 @@
 (def-  h/empty          (h/wrapper no-str                             no-str                 no-str           no-str))
 (def-  h/wrap           (h/wrapper no-str                             no-str                 no-str           no-str))
 (def-  h/paragraph      (h/wrapper (const1 `<p dir="auto">`)          (const1 `</p>`)        no-str           no-str))
+(def-  h/span           (h/wrapper (const1 `<span>`)                  (const1 `</span>`)     no-str           no-str))
 (def-  h/italic         (h/wrapper (const1 `<i>`)                     (const1 `</i>`)        no-str           no-str))
 (def-  h/bold           (h/wrapper (const1 `<b>`)                     (const1 `</b>`)        no-str           no-str))
 (def-  h/underline      (h/wrapper (const1 `<u>`)                     (const1 `</u>`)        no-str           no-str))
 (def-  h/strikethrough  (h/wrapper (const1 `<s>`)                     (const1 `</s>`)        no-str           no-str))
-(def-  h/latex          (h/wrapper |(string `<span class="latex" data-display="`$`">`)       (const1 `</span>`)     no-str           no-str))
+(def-  h/latex          (h/wrapper |(string ` <span class="latex" data-display="`$`">`)       (const1 `</span> `)     no-str           no-str))
 (def-  h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)    |(string `</h` $ `>`)  no-str           no-str))
 (def-  h/link           (h/wrapper |(string `<a href="` $ `">`)       (const1 `</a>`)        no-str           no-str))
 (def-  h/ul             (h/wrapper (const1 `<ul>`)                    (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))
-(def-  h/ol             (h/wrapper (const1 `<ol>`)                    (const1 `</ol>`)       (const1 `<li>`)  (const1 `</li>`)))
+(def-  h/ol             (h/wrapper (const1 `<ol>`)                    (const1 `</ol>`)       (const1 `<li class="mb-2">`)  (const1 `</li>`)))
 (defn- h/local-ref [resolver router ctx data args] 
   (string
     `<a up-follow href="` (router data) `.html">` 
@@ -144,13 +149,14 @@
 (def-  html-resolvers {
   :wrap              h/wrap
 
+  :paragraph         h/paragraph
+  :span              h/span
+  :header            h/header
+
   :bold              h/bold
   :italic            h/italic
   :underline         h/underline
   :strikethrough     h/strikethrough
-
-  :header            h/header
-  :paragraph         h/paragraph
 
   :local-ref         h/local-ref
   :link              h/link
@@ -163,6 +169,7 @@
   :image             h/image
   # :video           h/video
   
+  :title             h/empty
   :tags              h/empty
   :abstract          h/empty
   })
