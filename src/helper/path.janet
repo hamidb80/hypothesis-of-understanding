@@ -23,7 +23,10 @@
   (reduce path/join-impl "" chunks))
 
 (defn  path/dir (p)
-  (if (string/has-suffix? "/" p) p (string p "/")))
+  (cond
+    (nil? p)                   nil
+    (string/has-suffix? "/" p) p 
+                               (string p "/")))
 
 (defn  filename/split (path)
   "convert file.long.ext -> file, .long.ext"

@@ -188,6 +188,7 @@ integration of GoT and Notes
   (let [acc @{}
         root-dir (path/dir root)]
     
+    (pp root-dir)
     (each p (os/list-files-rec root-dir)
       (let [pparts    (path/split p)
             kind (cond 
@@ -207,5 +208,33 @@ integration of GoT and Notes
     acc))
 
 # TODO
-(defn solution (notes-dir assets-dir output-dir)
-  1)
+
+(defn solution-paths (notes-dir assets-dir output-dir)
+  {:notes-dir   (path/dir notes-dir)
+   :assets-dir  (path/dir assets-dir)
+   :output-dir  (path/dir output-dir)})
+
+(defn solution (solution-paths app-config got-style-config)
+  (def    raw-db  (load-deep   (solution-paths :notes-dir)))
+  (def assets-db  (load-assets (solution-paths :assets-dir)))
+  (def        db  (finalize-db raw-db :index assets-db))
+  (defn router (n) (string "/dist/" n))
+
+  (req-files (solution-paths :output-dir))
+
+  (eachp [id entity] db
+    (let [
+      path-parts (path/split (entity :path))
+      new-path   (path/join (solution-paths :output-dir) (string (string/remove-prefix (solution-paths :notes-dir) (path-parts :dir)) (path-parts :name) ".html"))]
+
+      (if-not (entity :partial)
+        (match (entity :kind)
+          :got 
+            (let [ggg       (GoT/init (entity :content))
+                  svg-repr  (GoT/to-svg ggg got-style-config)
+                  html-repr (GoT/html-page ggg "GoT of ..." svg-repr got-style-config db router app-config)]
+              (file/put new-path html-repr))
+              
+          :note
+            (let [content (mu/to-html (entity :content) router)]
+              (file/put new-path (mu/html-page id "some note" content router app-config))))))))
