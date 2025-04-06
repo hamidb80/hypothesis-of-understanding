@@ -111,4 +111,4 @@ well in my opinion the only benefit of using GoK or Mind maps is that you kinda 
 
 ## notes for myself
 - add citations if possible
-- chain of thought: زنچیزه افکار
+- chain of thought: رشته افکار
