@@ -17,13 +17,11 @@ integration of GoT and Notes
 
 # ------------------------------------------------------
 
-# TODO add tests
-# TODO nested include
-# TODO add asset manager and keep track of unreferenced assets
+# TODO keep track of unreferenced assets
 
 (def markup-ext ".mu.janet") # markup language in Janet lisp format
 (def got-ext    ".got.janet") # graph of thought representation in Janet lisp format
-(def partial-file-name-suffix "_")
+(def partial-suffix "_")
 
 (defn load-deep (root)
   "
@@ -43,7 +41,7 @@ integration of GoT and Notes
             (keyword (string/remove-prefix root-dir (pparts :dir)) (pparts :name)) 
             @{:path    p
               :kind    kind
-              :partial (string/has-suffix? partial-file-name-suffix (pparts :name))
+              :partial (string/has-suffix? partial-suffix (pparts :name))
               :content (let [file-content (try (slurp p)            ([e] (error (string "error while reading from file: " p))))
                              lisp-code    (try (parse file-content) ([e] (error (string "error while parseing lisp code from file: " p))))
                              result       (try (eval  lisp-code)    ([e] (error (string "error while evaluating parseing lisp code from file: " p))))]
