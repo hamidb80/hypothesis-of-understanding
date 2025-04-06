@@ -2,6 +2,7 @@
 integration of GoT and Notes
 "
 
+(use ./helper/debug)
 (use ./helper/io)
 (use ./helper/path)
 (use ./helper/tab)
@@ -9,46 +10,12 @@ integration of GoT and Notes
 (use ./helper/macros)
 (use ./helper/iter)
 (use ./helper/js)
-(use ./helper/debug)
 
 (use ./locales)
 (use ./markup)
 (use ./graph-of-thought)
 
 # ------------------------------------------------------
-
-# TODO keep track of unreferenced assets
-
-(def markup-ext ".mu.janet") # markup language in Janet lisp format
-(def got-ext    ".got.janet") # graph of thought representation in Janet lisp format
-(def partial-suffix "_")
-
-(defn load-deep (root)
-  "
-  find all markup/GoT files in the `dir` and load them.
-  "
-  (let [acc @{}
-        root-dir (path/dir root)]
-    
-    (each p (os/list-files-rec root-dir)
-      (let [pparts    (path/split p)
-            kind (cond 
-                  (string/has-suffix? markup-ext p) :note
-                  (string/has-suffix?    got-ext p) :got
-                  nil)]
-        (if kind 
-          (put acc 
-            (keyword (string/remove-prefix root-dir (pparts :dir)) (pparts :name)) 
-            @{:path    p
-              :kind    kind
-              :partial (string/has-suffix? partial-suffix (pparts :name))
-              :content (let [file-content (try (slurp p)            ([e] (error (string "error while reading from file: " p))))
-                             lisp-code    (try (parse file-content) ([e] (error (string "error while parseing lisp code from file: " p))))
-                             result       (try (eval  lisp-code)    ([e] (error (string "error while evaluating parseing lisp code from file: " p))))]
-                          result)}))))
-    acc))
-
-# HTML Components ------------------------
 (defn common-head (router) (string `
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,7 +57,6 @@ integration of GoT and Notes
     </body>
     </html>`))
 
-# HTML Conversion ------------------------
 (defn  mu/html-page (key title content router app-config)
   (html5 router title app-config `
     <div class="container my-4">
@@ -200,8 +166,44 @@ integration of GoT and Notes
       </aside>
     </div>`))
 
-# ------------------------ final
+
+
+# TODO keep track of unreferenced assets
+# ------------------------------------------------------
+(def markup-ext ".mu.janet") # markup language in Janet lisp format
+(def got-ext    ".got.janet") # graph of thought representation in Janet lisp format
+(def partial-suffix "_")
+
 (defn req-files (output-dir)
   (let [current-dir ((path/split (dyn *current-file*)) :dir)]
   (file/put (path/join output-dir "page.js")   (slurp  (path/join current-dir "./src/page.js")))
   (file/put (path/join output-dir "style.css") (slurp  (path/join current-dir "./src/style.css")))))
+
+(defn load-deep (root)
+  "
+  find all markup/GoT files in the `dir` and load them.
+  "
+  (let [acc @{}
+        root-dir (path/dir root)]
+    
+    (each p (os/list-files-rec root-dir)
+      (let [pparts    (path/split p)
+            kind (cond 
+                  (string/has-suffix? markup-ext p) :note
+                  (string/has-suffix?    got-ext p) :got
+                  nil)]
+        (if kind 
+          (put acc 
+            (keyword (string/remove-prefix root-dir (pparts :dir)) (pparts :name)) 
+            @{:path    p
+              :kind    kind
+              :partial (string/has-suffix? partial-suffix (pparts :name))
+              :content (let [file-content (try (slurp p)            ([e] (error (string "error while reading from file: " p))))
+                             lisp-code    (try (parse file-content) ([e] (error (string "error while parseing lisp code from file: " p))))
+                             result       (try (eval  lisp-code)    ([e] (error (string "error while evaluating parseing lisp code from file: " p))))]
+                          result)}))))
+    acc))
+
+# TODO
+(defn solution (notes-dir assets-dir output-dir)
+  1)
