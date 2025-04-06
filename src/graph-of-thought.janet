@@ -14,7 +14,7 @@
 
 # public interface ------------------------
 (defn n [id class parents content] # [n]ode
-  # :problem :recall :reason :calculate
+  # :problem :goal :recall :reason :calculate
   {:kind     :node 
    :id       id
    :class    class 

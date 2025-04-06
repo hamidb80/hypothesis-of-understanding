@@ -137,15 +137,24 @@ integration of GoT and Notes
               (let [key      (e     :content)
                     c        (e     :class)
                     article  (assert (db key) (string "invalid reference: " key))
-                    summ     (dict (or c :thoughts))
+                    t        (or c :thoughts)
+                    summ     (dict t)
+                    icon     ({:problem   `bi bi-question-circle`
+                               :goal      `bi bi-crosshair`
+                               :reason    `bi bi-lightbulb`
+                               :recall    `bi bi-geo`
+                               :calculate `bi bi-calculator`
+                               :thoughts  `bi bi-chat-left-dots`
+                              } t)
                     has-link (not (article :partial))]
                 [
                 `<div class="pb-3 content" content="` key `" for="` (e :id)`">
                   <div class="card">`
-                    `<div class="card-header d-flex justify-content-between pe-2">
+                    `<div class="card-header d-flex justify-content-between px-2">
                         <div>`
                           (if summ [
                             `<small class="text-muted">` 
+                              `<i class="mx-1 ` icon `"></i>`
                               summ 
                             `</small>`])
                         `</div>
@@ -207,7 +216,6 @@ integration of GoT and Notes
                           result)}))))
     acc))
 
-# TODO add icons after message headers in GoT
 
 (defn solution-paths (notes-dir assets-dir output-dir)
   {:notes-dir   (path/dir notes-dir)
