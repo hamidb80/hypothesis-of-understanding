@@ -19,6 +19,9 @@
       (let [k (key-gen n)]
         (put acc k (val-gen n))))))
 
+(defn const-table (lst val)
+  (zipcoll lst (array/new-filled (length lst) val)))
+
 (defn rev-table [tab]
   "
   reveses a table from A->B to B->[A]

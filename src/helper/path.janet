@@ -2,13 +2,13 @@
 (use ./bool)
 (use ./iter)
 
-(defn path/mode (path)
+(defn  path/mode (path)
   (if (string/has-suffix? "/" path) :directory :file))
 
-(defn is-dir (path) 
+(defn  is-dir (path) 
   (= (path/mode path) :directory))
 
-(defn is-root (path)
+(defn  is-root (path)
   (string/has-prefix? "/" path))
 
 (defn- path/join-impl [a b]
@@ -19,24 +19,24 @@
         [F T] (string a b)
         [F F] (string a "/" b))))
 
-(defn path/join (& chunks)
+(defn  path/join (& chunks)
   (reduce path/join-impl "" chunks))
 
-(defn path/dir (p)
+(defn  path/dir (p)
   (if (string/has-suffix? "/" p) p (string p "/")))
 
-(defn filename/split (path)
+(defn  filename/split (path)
   "convert file.long.ext -> file, .long.ext"
 
   (let [i (find-index |(= (chr ".") $) path (length path))]
     [(slice path 0 i) (slice path i (length path))]))
 
-(defn dirname/split (path)
+(defn  dirname/split (path)
   "normal path split: a/b/c -> [a, b, c]"
   
   (string/split "/" path))
 
-(defn dirname/split-rec (path)
+(defn  dirname/split-rec (path)
   "canonical split a/b/c -> ./a, ./a/b, ./a/b/c"
 
   (var cur "")
@@ -47,7 +47,7 @@
     @[] 
     (dirname/split path)))
 
-(defn path/split (path)
+(defn  path/split (path)
   "converts a/b/c.d -> {:dir a/b/ :name c :ext d}"
 
   (let [i          (find-last-index |(= (chr "/") $) path 0)

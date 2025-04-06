@@ -12,6 +12,6 @@
 (def  notes-dir   "./test/notes/circular-deps")
 (def app-config {:title "Theory Of Understanding"})
 (def raw-db  (load-deep notes-dir))
-(def     db  (finalize-db raw-db :root))
+(def     db  (finalize-db raw-db :root @{}))
 (defn router (n) (string "/dist/" n))
 (print (mu/to-html ((db :root) :content) router))

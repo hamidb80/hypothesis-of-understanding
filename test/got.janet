@@ -10,6 +10,7 @@
 
 (def  output-dir  "./dist/")
 (def  notes-dir   "./notes")
+(def  assets-dir   "./assets/")
 
 (def       app-config {:title "Theory Of Understanding"})
 (def got-style-config {
@@ -28,8 +29,11 @@
               :calculate    "#E85C0D"
               :reason       "#5CB338" }})
 
-(def raw-db  (load-deep notes-dir))
-(def     db  (finalize-db raw-db :index))
+(def    raw-db  (load-deep notes-dir))
+(def assets-db  (load-assets assets-dir))
+(pp assets-db)
+
+(def        db  (finalize-db raw-db :index assets-db))
 (defn router (n) (string "/dist/" n))
 
 # main ----------------------------------

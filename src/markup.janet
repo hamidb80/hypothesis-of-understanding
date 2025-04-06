@@ -31,26 +31,28 @@
 (defn p      (& args)      {:node :paragraph         :body args})
 (defn ul     (& body)      {:node :unnumbered-list   :body body})
 (defn ol     (& body)      {:node :numbered-list     :body body})
-(defn latex  (& body)      {:node :latex             :body body })
+(defn ltx    (& body)      {:node :latex             :body body })
 
 (defn ref    (kw & body)   {:node :local-ref         :body body  :data kw})
 (defn a      (url & body)  {:node :link              :body body  :data url})
+
+(defn img    (src & body)  {:node :image             :body body  :data src})
 
 (def _ " ")
 
 # Resolvation -------------------------------------
 
-(defn finalize-content (db content ref-count resolved?)
+(defn finalize-content (db content assets-db ref-count resolved?)
   (map 
     (fn [vv]
       (match (type/reduced vv)
         :keyword  (do 
                     (match (resolved? vv) 
                       :done       nil # do nothing
-                      :processing (error (string "circular dependency detected, articles involved: "  (string/join (filter |(= :processing (resolved? $)) (keys resolved?)) ", ")))
+                      :processing (error (string `circular dependency detected, articles involved: ` vv `, `  (string/join (filter |(= :processing (resolved? $)) (keys resolved?)) ", ")))
                       nil   (do 
                               (put resolved? vv :processing)
-                              (put-in db    [vv :content] (finalize-content db ((db vv) :content) ref-count resolved?))
+                              (put-in db    [vv :content] (finalize-content db ((db vv) :content) assets-db ref-count resolved?))
                               (put resolved? vv :done)))
 
                     (assert (not (nil? (db vv))) (string "the key :" vv " has failed to reference."))
@@ -67,24 +69,30 @@
 
               (put+ ref-count (vv :data)))
 
-            (finalize-content db (vv :body) ref-count resolved?))
+            :image (do
+              (assert (in assets-db (vv :data)) (string `referenced asset does not exists: ` (vv :data)))
+              (put+ assets-db (vv :data))
+              vv)
+
+            (finalize-content db (vv :body) assets-db ref-count resolved?))
           vv)
 
-        :tuple    (finalize-content db vv ref-count resolved?)
+        :tuple    (finalize-content db vv assets-db ref-count resolved?)
         :string    vv))
     content))
 
-
-(defn finalize-db (db index-key)
-  (let [acc       @{} 
-        resolved?     @{}
+(defn finalize-db (db index-key assets-db)
+  (let [acc        @{}
+        resolved?  @{}
         ref-count (zipcoll (keys db) (array/new-filled (length db) 0))]
     
     (eachp [id entity] db
-      (put acc id (put entity :content 
-        (match (entity :kind)
-          :note (finalize-content db (entity :content) ref-count resolved?)
-          :got                                 (entity  :content)))))
+      (put acc id 
+        (put
+          entity 
+          :content (match (entity :kind)
+                      :note (finalize-content db (entity :content) assets-db ref-count resolved?)
+                      :got                       (entity :content)))))
 
     (if index-key (do 
       (put+ ref-count index-key)
@@ -94,7 +102,9 @@
 
     acc))
 
-
+(defn load-assets (assets-dir)
+  (const-table 
+    (map |(string/remove-prefix assets-dir $) (os/list-files-rec assets-dir)) -1))
 # HTML ------------------------------------------------------
 (def no-str (const1 ""))
 (defn- h/wrapper (start-wrap-fn end-wrap-fn start-item-fn end-item-fn)
@@ -122,6 +132,12 @@
       (resolver router ctx args)
     `</a>`))
 
+(defn- h/image [resolver router ctx data args] 
+  (string
+    `<img src="` (router (string "assets/" data)) `.html">` 
+      (resolver router ctx args)
+    `</a>`))
+
 (def-  html-resolvers {
   :wrap              h/wrap
 
@@ -141,7 +157,7 @@
 
   :latex             h/latex
 
-  # :image           h/image
+  :image             h/image
   # :video           h/video
   })
 # macro view --------

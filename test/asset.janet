@@ -7,9 +7,9 @@
 
 # --------------------------------------------
 
-(let [subdir "./test/notes/simple-doc/"
+(let [subdir "./test/notes/asset-load"
       raw-db   (load-deep subdir)
-      db       (finalize-db raw-db nil @{})
+      db       (finalize-db raw-db nil (load-assets "./test/assets/"))
       id       :root
       article  ((db id) :content)
       res      (mu/to-html article |(string "/dist/" $))]
