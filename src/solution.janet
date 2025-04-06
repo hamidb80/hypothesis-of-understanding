@@ -207,7 +207,7 @@ integration of GoT and Notes
                           result)}))))
     acc))
 
-# TODO
+# TODO add icons after message headers in GoT
 
 (defn solution-paths (notes-dir assets-dir output-dir)
   {:notes-dir   (path/dir notes-dir)
