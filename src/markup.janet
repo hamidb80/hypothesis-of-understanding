@@ -17,18 +17,19 @@
 (defn h4     (& args)      (h 4 ;args))
 (defn h5     (& args)      (h 5 ;args))
 (defn h6     (& args)      (h 6 ;args))
+(defn hr     ()            {:node :horizontal_line    :body []    :data nil})
 
-(defn sec    (& args)      {:node :section           :body args})
-(defn cnt    (& args)      {:node :center            :body args})
-(defn b      (& args)      {:node :bold              :body args})
-(defn i      (& args)      {:node :italic            :body args})
-(defn ul     (& args)      {:node :list              :body args})
-(defn sm     (& args)      {:node :small             :body args})
-(defn lg     (& args)      {:node :large             :body args})
-(defn sp      (& args)     {:node :span              :body args})
-(defn p      (& args)      {:node :paragraph         :body args})
-(defn ul     (& body)      {:node :unnumbered-list   :body body})
-(defn ol     (& body)      {:node :numbered-list     :body body})
+(defn sec    (& args)      {:node :section           :body args :data nil})
+(defn cnt    (& args)      {:node :center            :body args :data nil})
+(defn b      (& args)      {:node :bold              :body args :data nil})
+(defn i      (& args)      {:node :italic            :body args :data nil})
+(defn ul     (& args)      {:node :list              :body args :data nil})
+(defn sm     (& args)      {:node :small             :body args :data nil})
+(defn lg     (& args)      {:node :large             :body args :data nil})
+(defn sp      (& args)     {:node :span              :body args :data nil})
+(defn p      (& args)      {:node :paragraph         :body args :data nil})
+(defn ul     (& body)      {:node :unnumbered-list   :body body :data nil})
+(defn ol     (& body)      {:node :numbered-list     :body body :data nil})
 (defn ltx    (& body)      {:node :latex             :body body :data true })
 (defn ltxi   (& body)      {:node :latex             :body body :data false })
 
@@ -67,7 +68,7 @@
             :local-ref (do 
               (let [key (vv :data)
                     ref (db key)]
-                (assert (not (nil? ref)) " reference does not exists")
+                (assert (not (nil? ref)) (string `reference ` key ` does not exist`))
                 (assert (not (ref :private)) (string "the linked doc cannot be partial :" key)))
 
               (put+ ref-count (vv :data)))
@@ -85,7 +86,8 @@
           vv)
 
         :tuple    (finalize-content db vv parent-article assets-db ref-count resolved?)
-        :string    vv))
+        :string    vv
+        :number    vv))
     content))
 
 (defn finalize-db (db index-key assets-db)
@@ -129,11 +131,12 @@
 (def-  h/bold           (h/wrapper (const1 `<b>`)                     (const1 `</b>`)        no-str           no-str))
 (def-  h/underline      (h/wrapper (const1 `<u>`)                     (const1 `</u>`)        no-str           no-str))
 (def-  h/strikethrough  (h/wrapper (const1 `<s>`)                     (const1 `</s>`)        no-str           no-str))
-(def-  h/latex          (h/wrapper |(string ` <span class="latex" data-display="`$`">`)       (const1 `</span> `)     no-str           no-str))
+(def-  h/latex          (h/wrapper |(string `<span class="latex" dir="ltr" data-display="`$`">`)       (const1 `</span>`)     no-str           no-str))
 (def-  h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)    |(string `</h` $ `>`)  no-str           no-str))
 (def-  h/link           (h/wrapper |(string `<a href="` $ `">`)       (const1 `</a>`)        no-str           no-str))
 (def-  h/ul             (h/wrapper (const1 `<ul>`)                    (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))
 (def-  h/ol             (h/wrapper (const1 `<ol>`)                    (const1 `</ol>`)       (const1 `<li class="mb-2">`)  (const1 `</li>`)))
+(def-  h/hr             (h/wrapper (const1 `<hr/>`)                    no-str no-str no-str ))
 (defn- h/local-ref [resolver router ctx data args] 
   (string
     `<a up-follow href="` (router data) `.html">` 
@@ -172,6 +175,8 @@
   :title             h/empty
   :tags              h/empty
   :abstract          h/empty
+  
+  :horizontal_line   h/hr
   })
 # macro view --------
 (defn  mu/to-html (content router)

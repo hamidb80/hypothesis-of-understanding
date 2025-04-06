@@ -6,6 +6,7 @@
 (use ./helper/io)
 (use ./helper/js)
 (use ./helper/str)
+(use ./helper/random)
 (use ./helper/iter)
 (use ./helper/range)
 (use ./helper/tab)
@@ -14,12 +15,19 @@
 
 # public interface ------------------------
 (defn n [id class parents content] # [n]ode
-  # :problem :goal :recall :reason :calculate
+  # :problem :goal :recall :reason :calculate :quite
   {:kind     :node 
    :id       id
    :class    class 
    :parents  parents
    :content  content})
+
+# (defn q [parents] # [q]uite zone
+#   {:kind     :node 
+#    :id       (keyword "random-key-" (rand/int 0 1000000))
+#    :class    :quite
+#    :parents  parents
+#    :content  nil})
 
 (defn m [id content] # [m]essge, question or hint
   {:kind    :message 
