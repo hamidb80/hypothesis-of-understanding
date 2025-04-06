@@ -46,7 +46,7 @@
 
 # Resolvation -------------------------------------
 
-(defn finalize-content (db content parent-article assets-db ref-count resolved?)
+(defn mu/finalize-content (db content parent-article assets-db ref-count resolved?)
   (map 
     (fn [vv]
       (match (type/reduced vv)
@@ -56,7 +56,7 @@
                       :processing (error (string `circular dependency detected, articles involved: ` vv `, `  (string/join (filter |(= :processing (resolved? $)) (keys resolved?)) ", ")))
                       nil   (do 
                               (put resolved? vv :processing)
-                              (put-in db    [vv :content] (finalize-content db ((db vv) :content) (db vv) assets-db ref-count resolved?))
+                              (put-in db    [vv :content] (mu/finalize-content db ((db vv) :content) (db vv) assets-db ref-count resolved?))
                               (put resolved? vv :done)))
 
                     (assert (not (nil? (db vv))) (string "the key :" vv " has failed to reference."))
@@ -82,33 +82,13 @@
             :tags     (put (parent-article :meta) :tags     (vv :data))
             :abstract (put (parent-article :meta) :abstract (vv :data))
               
-            (finalize-content db (vv :body) parent-article assets-db ref-count resolved?))
+            (mu/finalize-content db (vv :body) parent-article assets-db ref-count resolved?))
           vv)
 
-        :tuple    (finalize-content db vv parent-article assets-db ref-count resolved?)
+        :tuple    (mu/finalize-content db vv parent-article assets-db ref-count resolved?)
         :string    vv
         :number    vv))
     content))
-
-(defn finalize-db (db index-key assets-db)
-  (let [acc        @{}
-        resolved?  @{}
-        ref-count (zipcoll (keys db) (array/new-filled (length db) 0))]
-    
-    (eachp [id entity] db
-      (put acc id 
-        (put entity :content 
-          (match (entity :kind)
-                  :note (finalize-content db (entity :content) entity assets-db ref-count resolved?)
-                  :got                       (entity :content)))))
-
-    (if index-key (do 
-      (put+ ref-count index-key)
-      (pp ref-count)
-      (let [zero-refs (map |($ 0) (filter (fn [[k c]] (and (not ((db k) :private)) (= 0 c))) (pairs ref-count)))]
-        (assert (empty? zero-refs) (string "there are notes that are not referenced at all: " (string/join zero-refs ", "))))))
-
-    acc))
 
 (defn load-assets (assets-dir)
   (const-table 

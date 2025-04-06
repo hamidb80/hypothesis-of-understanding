@@ -185,6 +185,32 @@ integration of GoT and Notes
 (def got-ext    ".got.janet") # graph of thought representation in Janet lisp format
 (def private-suffix "_")
 
+(defn got/scan-events (events ref-count)
+  (each e events
+    (put+ ref-count (e :content))))
+
+(defn finalize-db (db index-key assets-db)
+  (let [acc        @{}
+        resolved?  @{}
+        ref-count (zipcoll (keys db) (array/new-filled (length db) 0))]
+    
+    (eachp [id entity] db
+      (put acc id 
+        (put entity :content 
+          (match (entity :kind)
+                  :note (mu/finalize-content db (entity :content) entity assets-db ref-count resolved?)
+                  :got  (do
+                          (got/scan-events        (entity :content)                  ref-count)
+                          (entity :content))))))
+
+    (if index-key (do 
+      (put+ ref-count index-key)
+      (pp ref-count)
+      (let [zero-refs (map |($ 0) (filter (fn [[k c]] (= 0 c)) (pairs ref-count)))]
+        (assert (empty? zero-refs) (string "there are notes that are not referenced at all: " (string/join zero-refs ", "))))))
+
+    acc))
+
 (defn req-files (output-dir)
   (let [current-dir ((path/split (dyn *current-file*)) :dir)]
   (file/put (path/join output-dir "page.js")   (slurp  (path/join current-dir "./src/page.js")))
