@@ -7,4 +7,6 @@
     (ref :db/intro `DB intro`)
     (ref :db/ra/index `RA intro`)
     (ref :db/ra/q1 `Question 1`))
+
+  (tags :intro :preface :init)
 ]

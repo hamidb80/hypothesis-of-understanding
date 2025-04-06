@@ -37,12 +37,13 @@
 (defn a      (url & body)  {:node :link              :body body  :data url})
 
 (defn img    (src & body)  {:node :image             :body body  :data src})
+(defn tags   (& kws)       {:node :tags              :body []    :data kws})
 
 (def _ " ")
 
 # Resolvation -------------------------------------
 
-(defn finalize-content (db content assets-db ref-count resolved?)
+(defn finalize-content (db content parent-article assets-db ref-count resolved?)
   (map 
     (fn [vv]
       (match (type/reduced vv)
@@ -52,7 +53,7 @@
                       :processing (error (string `circular dependency detected, articles involved: ` vv `, `  (string/join (filter |(= :processing (resolved? $)) (keys resolved?)) ", ")))
                       nil   (do 
                               (put resolved? vv :processing)
-                              (put-in db    [vv :content] (finalize-content db ((db vv) :content) assets-db ref-count resolved?))
+                              (put-in db    [vv :content] (finalize-content db ((db vv) :content) (db vv) assets-db ref-count resolved?))
                               (put resolved? vv :done)))
 
                     (assert (not (nil? (db vv))) (string "the key :" vv " has failed to reference."))
@@ -73,11 +74,13 @@
               (assert (in assets-db (vv :data)) (string `referenced asset does not exists: ` (vv :data)))
               (put+ assets-db (vv :data))
               vv)
-
-            (finalize-content db (vv :body) assets-db ref-count resolved?))
+            
+            :tags (put (parent-article :meta) :tags (vv :data))
+              
+            (finalize-content db (vv :body) parent-article assets-db ref-count resolved?))
           vv)
 
-        :tuple    (finalize-content db vv assets-db ref-count resolved?)
+        :tuple    (finalize-content db vv parent-article assets-db ref-count resolved?)
         :string    vv))
     content))
 
@@ -88,11 +91,10 @@
     
     (eachp [id entity] db
       (put acc id 
-        (put
-          entity 
-          :content (match (entity :kind)
-                      :note (finalize-content db (entity :content) assets-db ref-count resolved?)
-                      :got                       (entity :content)))))
+        (put entity :content 
+          (match (entity :kind)
+                  :note (finalize-content db (entity :content) entity assets-db ref-count resolved?)
+                  :got                       (entity :content)))))
 
     (if index-key (do 
       (put+ ref-count index-key)
@@ -115,6 +117,7 @@
       (buffer/push acc (end-wrap-fn data)))))
 
 # micro view --------
+(def-  h/empty          (h/wrapper no-str                             no-str                 no-str           no-str))
 (def-  h/wrap           (h/wrapper no-str                             no-str                 no-str           no-str))
 (def-  h/paragraph      (h/wrapper (const1 `<p dir="auto">`)          (const1 `</p>`)        no-str           no-str))
 (def-  h/italic         (h/wrapper (const1 `<i>`)                     (const1 `</i>`)        no-str           no-str))
@@ -159,6 +162,8 @@
 
   :image             h/image
   # :video           h/video
+  
+  :tags              h/empty
   })
 # macro view --------
 (defn  mu/to-html (content router)

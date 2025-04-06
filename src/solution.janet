@@ -201,6 +201,7 @@ integration of GoT and Notes
             @{:path    p
               :kind    kind
               :partial (string/has-suffix? partial-suffix (pparts :name))
+              :meta    @{} # attributes that are computed after initial preprocessing
               :content (let [file-content (try (slurp p)            ([e] (error (string "error while reading from file: " p))))
                              lisp-code    (try (parse file-content) ([e] (error (string "error while parseing lisp code from file: " p))))
                              result       (try (eval  lisp-code)    ([e] (error (string "error while evaluating parseing lisp code from file: " p))))]
@@ -221,6 +222,8 @@ integration of GoT and Notes
   (defn router (n) (string "/dist/" n))
 
   (req-files (solution-paths :output-dir))
+
+  (pp db)
 
   (eachp [id entity] db
     (let [
