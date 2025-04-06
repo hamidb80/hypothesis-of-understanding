@@ -6,7 +6,7 @@
 
 (let [
     app-config {:title "Theory Of Understanding"}
-    s-conf     (solution-paths "./notes" "./assets/" "./dist/")
+    s-conf     (solution-paths "./test/notes/gate" "./test/assets/" "./dist/")
     got-style-config {
       :radius   16
       :spacex  100
