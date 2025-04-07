@@ -185,9 +185,11 @@ integration of GoT and Notes
 (def got-ext    ".got.janet") # graph of thought representation in Janet lisp format
 (def private-suffix "_")
 
-(defn got/scan-events (events ref-count)
+(defn got/scan-events (db events ref-count)
+  # count only private ones, because public notes must be accessible from root note somehow
   (each e events
-    (put+ ref-count (e :content))))
+    (if ((db (e :content)) :private) 
+      (put+ ref-count (e :content)))))
 
 (defn finalize-db (db index-key assets-db)
   (let [acc        @{}
@@ -200,7 +202,7 @@ integration of GoT and Notes
           (match (entity :kind)
                   :note (mu/finalize-content db (entity :content) entity assets-db ref-count resolved?)
                   :got  (do
-                          (got/scan-events        (entity :content)                  ref-count)
+                          (got/scan-events   db (entity :content)                  ref-count)
                           (entity :content))))))
 
     (if index-key (do 
