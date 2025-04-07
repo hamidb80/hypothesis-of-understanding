@@ -88,7 +88,31 @@ integration of GoT and Notes
 
 (defn  GoT/html-page (got page-title svg svg-theme db router app-config)
   (html5 router page-title app-config `
-    <div class="row gx-2 m-3" got 
+    
+    <nav class="d-flex justify-content-center mt-3">
+      <ul class="pagination">
+        <li class="page-item">
+          <span class="page-link active" role="button">
+            <i class="bi bi-layout-split"></i>
+            `(dict :both)`
+          </span>
+        </li>
+        <li class="page-item">
+          <span class="page-link" role="button">
+            <i class="bi bi-share"></i>
+            `(dict :graph-first)`
+          </span>
+        </li>
+        <li class="page-item">
+          <span class="page-link" role="button">
+            <i class="bi bi-card-text"></i>
+            `(dict :notes-first)`
+          </span>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="row gx-2 m-3 mt-0" got 
       data-events='`(to-js (got :events))`'
       data-nodes='`(to-js (got :nodes))`'
       data-anscestors='`(to-js (got :anscestors))`'
@@ -106,19 +130,19 @@ integration of GoT and Notes
         </center>
 
         <div class="my-3 d-flex justify-content-center">
-          <button class="mx-1 btn btn-outline-primary" id="reset-progress-action">
+          <button role="button" class="mx-1 btn btn-outline-primary" id="reset-progress-action">
             ` (dict :reset) `
             <i class="bi bi-arrow-clockwise"></i>
           </button>
-          <button class="mx-1 btn btn-outline-primary" id="skip-till-end-action">   
+          <button role="button" class="mx-1 btn btn-outline-primary" id="skip-till-end-action">   
             ` (dict :skip) `
             <i class="bi bi-skip-forward"></i>
           </button>
-          <button class="mx-1 btn btn-outline-primary" id="prev-step-action"> 
+          <button role="button" class="mx-1 btn btn-outline-primary" id="prev-step-action"> 
             ` (dict :prev) `
             <i class="bi bi-arrow-left"></i>
           </button>
-          <button class="mx-1 btn btn-outline-primary" id="next-step-action"> 
+          <button role="button" class="mx-1 btn btn-outline-primary" id="next-step-action"> 
             ` (dict :next) `
             <i class="bi bi-arrow-right"></i>
           </button>

@@ -1,0 +1,1 @@
+- `role="button"` in bootstrap is identical to `cursor: pointer`

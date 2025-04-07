@@ -14,10 +14,13 @@
 (use ./helper/macros)
 
 # public interface ------------------------
-(defn n [id class parents content] # [n]ode
+(defn n [id height class parents content] # [n]ode
   # :problem :goal :recall :reason :calculate :quite
   {:kind     :node 
    :id       id
+   :height   (do 
+              (assert (<= 1 height 10) "the height of a node must be in range of 1..10")
+              height)
    :class    class 
    :parents  parents
    :content  content})
@@ -72,7 +75,7 @@
       (each item (GoT/to-svg-impl got)
         (let [pos (GoT/svg-calc-pos item got cfg ctx)]
           (put locs   (item :node) pos)
-          (array/push acc (svg/circle (first pos) (last pos) (cfg :radius) ((cfg :color-map) (((got :nodes) (item :node)) :class)) {:node-id (item :node) :class (string/join ["node" (string "node-class-" (((got :nodes) (item :node)) :class)) (got-node-class (item :node))] " ")}))))
+          (array/push acc (svg/circle (first pos) (last pos) (cfg :radius) ((cfg :color-map) (((got :nodes) (item :node)) :class)) {:role "button" :node-id (item :node) :class (string/join ["node" (string "node-class-" (((got :nodes) (item :node)) :class)) (got-node-class (item :node))] " ")}))))
       
       (each e (got :edges)
         (let [from (first e)

@@ -16,7 +16,6 @@ lets pray:
 - The art of [note-"making"](https://mischavandenburg.substack.com/p/the-art-of-note-making).
 - [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295)
 - [What Good Is Learning If You Don’t Remember It?](https://files.eric.ed.gov/fulltext/EJ1055665.pdf)
-- [Simple made Easy :: Rich Hickey](https://paulrcook.com/blog/simple-made-easy)
 - [Unison](https://www.unison-lang.org/) programming language: database as source code
 - [Mint](https://github.com/mint-lang/mint) programming language: `import` less programming
 - [Hypermedia Systems Book](https://hypermedia.systems/) + [HTMX essays](https://htmx.org/essays/)
@@ -25,6 +24,25 @@ lets pray:
 - [makandra cards](https://makandracards.com/)
 - Networks of the Brain by Olaf Sporns
 - [Proof Wiki](https://proofwiki.org/?ref=cybrhome)
+
+### Simple Made Easy
+> an insightful talk by Rich Hickey - [link](https://paulrcook.com/blog/simple-made-easy)
+
+- simple and easy: 
+  - drinking water
+  
+- simple but hard: 
+  - converting date system in all images in a folder
+  - lifting heavy weight
+  - coding a graphical game in assembly
+
+- complex but easy:
+  - solving a quadradic equation ( has considarble amount of steps but once you get it, it's easy )
+  - coding in Python (sorry), you actually shoot your foot when coding python, happy debugging
+
+- complex and hard:
+  - building a 3D printer
+
 
 ## terms
 - GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
