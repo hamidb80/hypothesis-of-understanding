@@ -75,6 +75,9 @@ Note that just connecting 2 nodes are not important, the direction of the edge a
 
 In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
 
+## what is height of a node in GoT
+think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
+
 ## Bluri's idea about creativity
 > here what I mean by the word "create" is that makeing/producing something that the creator/author has not seen like it before.
 
