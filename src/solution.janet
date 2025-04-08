@@ -49,8 +49,8 @@ integration of GoT and Notes
 
 (defn req-files (output-dir)
   (let [current-dir ((path/split (dyn *current-file*)) :dir)]
-  (file/put (path/join output-dir "page.js")   (slurp  (path/join current-dir "./src/page.js")))
-  (file/put (path/join output-dir "style.css") (slurp  (path/join current-dir "./src/style.css")))))
+    (file/copy (path/join output-dir "page.js")   (path/join current-dir "./src/page.js"))
+    (file/copy (path/join output-dir "style.css") (path/join current-dir "./src/style.css"))))
 
 (defn load-deep (root)
   "

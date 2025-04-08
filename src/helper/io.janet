@@ -35,3 +35,6 @@
   (def        f (file/open path :w))
   (file/write f content)
   (file/close f))
+
+(defn file/copy (src dest)
+  (file/put src (slurp dest)))
