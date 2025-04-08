@@ -37,4 +37,4 @@
   (file/close f))
 
 (defn file/copy (src dest)
-  (file/put src (slurp dest)))
+  (file/put dest (slurp src)))

@@ -14,10 +14,10 @@
 (defn- path/join-impl [a b]
   (if (empty? a) b
       (match [(is-dir a) (is-root b)]
-        [T T] (string a (slice b 1))
+        [F F] (string a "/" b)
         [T F] (string a b)
         [F T] (string a b)
-        [F F] (string a "/" b))))
+        [T T] (string a (slice b 1)))))
 
 (defn  path/join (& chunks)
   (reduce path/join-impl "" chunks))

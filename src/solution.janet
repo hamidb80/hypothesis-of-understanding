@@ -47,11 +47,6 @@ integration of GoT and Notes
 
     acc))
 
-(defn req-files (output-dir)
-  (let [current-dir ((path/split (dyn *current-file*)) :dir)]
-    (file/copy (path/join output-dir "page.js")   (path/join current-dir "./src/page.js"))
-    (file/copy (path/join output-dir "style.css") (path/join current-dir "./src/style.css"))))
-
 (defn load-deep (root)
   "
   find all markup/GoT files in the `dir` and load them.
@@ -78,6 +73,10 @@ integration of GoT and Notes
                           result)}))))
     acc))
 
+(defn req-files (output-dir)
+  (let [current-dir ((path/split (dyn *current-file*)) :dir)]
+    (each f ["page.js" "style.css"]
+      (file/copy (path/join current-dir "src" f) (path/join output-dir f)))))
 
 (defn solution-paths (notes-dir assets-dir output-dir)
   {:notes-dir   (path/dir notes-dir)
@@ -89,8 +88,6 @@ integration of GoT and Notes
   (def assets-db  (let [d (solution-paths :assets-dir)] (if d (load-assets d) {})))
   (def        db  (finalize-db raw-db :index assets-db))
   (defn router (n) (string "/dist/" n))
-
-  (req-files (solution-paths :output-dir))
 
   (eachp [id entity] db
     (let [
@@ -107,4 +104,7 @@ integration of GoT and Notes
               
           :note
             (let [content (mu/to-html (entity :content) router)]
-              (file/put new-path (mu/html-page id "some note" content router app-config))))))))
+              (file/put new-path (mu/html-page id "some note" content router app-config)))))))
+  
+  (req-files (solution-paths :output-dir))
+  )
