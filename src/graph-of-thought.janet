@@ -1,17 +1,17 @@
-(use ./helper/debug)
-
-(use ./helper/stat)
-(use ./helper/vector)
-(use ./helper/matrix)
-(use ./helper/io)
-(use ./helper/js)
-(use ./helper/str)
-(use ./helper/random)
-(use ./helper/iter)
-(use ./helper/range)
-(use ./helper/tab)
-(use ./helper/svg)
-(use ./helper/macros)
+(use 
+  ./helper/debug
+  ./helper/stat
+  ./helper/vector
+  ./helper/matrix
+  ./helper/io
+  ./helper/js
+  ./helper/str
+  ./helper/random
+  ./helper/iter
+  ./helper/range
+  ./helper/tab
+  ./helper/svg
+  ./helper/macros)
 
 # public interface ------------------------
 (defn n [id height class parents content] # [n]ode

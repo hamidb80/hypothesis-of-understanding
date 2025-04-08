@@ -1,11 +1,13 @@
-(use ./helper/str)
-(use ./helper/path)
-(use ./helper/js)
-(use ./helper/iter)
+(use 
+  ./helper/str
+  ./helper/path
+  ./helper/js
+  ./helper/iter)
 
-(use ./markup)
-(use ./graph-of-thought)
-(use ./locales)
+(use 
+  ./markup
+  ./graph-of-thought
+  ./locales)
 
 
 (defn common-head (router) (string `

@@ -2,16 +2,18 @@
 integration of GoT and Notes
 "
 
-(use ./helper/debug)
-(use ./helper/io)
-(use ./helper/path)
-(use ./helper/tab)
-(use ./helper/str)
+(use 
+  ./helper/debug
+  ./helper/io
+  ./helper/path
+  ./helper/tab
+  ./helper/str)
 
-(use ./locales)
-(use ./markup)
-(use ./graph-of-thought)
-(use ./html-gen)
+(use
+  ./locales
+  ./markup
+  ./graph-of-thought
+  ./html-gen)
 
 # TODO keep track of unreferenced assets
 # ------------------------------------------------------

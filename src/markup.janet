@@ -1,12 +1,13 @@
-(use ./helper/debug)
-(use ./helper/types)
-(use ./helper/functions)
-(use ./helper/iter)
-(use ./helper/str)
-(use ./helper/tab)
-(use ./helper/io)
-(use ./helper/path)
-(use ./helper/macros)
+(use 
+  ./helper/debug
+  ./helper/types
+  ./helper/functions
+  ./helper/iter
+  ./helper/str
+  ./helper/tab
+  ./helper/io
+  ./helper/path
+  ./helper/macros)
 
 # Core elements ------------------------------------------------------
 

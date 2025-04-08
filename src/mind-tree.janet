@@ -2,12 +2,13 @@
 tiny mind-tree creator.
 "
 
-(use ./helper/iter)
-(use ./helper/io)
-(use ./helper/random)
-(use ./helper/system)
-(use ./helper/js)
-(use ./helper/tab)
+(use 
+  ./helper/iter
+  ./helper/io
+  ./helper/random
+  ./helper/system
+  ./helper/js
+  ./helper/tab)
 
 # props
 
