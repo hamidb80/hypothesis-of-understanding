@@ -86,27 +86,27 @@ integration of GoT and Notes
    :output-dir  (path/dir output-dir)})
 
 (defn solution (solution-paths app-config got-style-config)
-  (def    raw-db  (load-deep   (solution-paths :notes-dir)))
-  (def assets-db  (let [d (solution-paths :assets-dir)] (if d (load-assets d) {})))
-  (def        db  (finalize-db raw-db :index assets-db))
-  (defn router (n) (string "/dist/" n))
+  (let [ 
+         raw-db  (load-deep   (solution-paths :notes-dir))
+      assets-db  (let [d (solution-paths :assets-dir)] (if d (load-assets d) {}))
+             db  (finalize-db raw-db :index assets-db)
+         router  (fn  (n) (string "/dist/" n))]
+    
+    (eachp [id entity] db
+      (let [
+        path-parts (path/split (entity :path))
+        new-path   (path/join (solution-paths :output-dir) (string (string/remove-prefix (solution-paths :notes-dir) (path-parts :dir)) (path-parts :name) ".html"))]
 
-  (eachp [id entity] db
-    (let [
-      path-parts (path/split (entity :path))
-      new-path   (path/join (solution-paths :output-dir) (string (string/remove-prefix (solution-paths :notes-dir) (path-parts :dir)) (path-parts :name) ".html"))]
-
-      (if-not (entity :private)
-        (match (entity :kind)
-          :got 
-            (let [ggg       (GoT/init (entity :content))
-                  svg-repr  (GoT/to-svg ggg got-style-config)
-                  html-repr (GoT/html-page ggg "GoT of ..." svg-repr got-style-config db router app-config)]
-              (file/put new-path html-repr))
-              
-          :note
-            (let [content (mu/to-html (entity :content) router)]
-              (file/put new-path (mu/html-page id "some note" content router app-config)))))))
-  
-  (req-files (solution-paths :output-dir))
-  )
+        (if-not (entity :private)
+          (match (entity :kind)
+            :got 
+              (let [ggg       (GoT/init (entity :content))
+                    svg-repr  (GoT/to-svg ggg got-style-config)
+                    html-repr (GoT/html-page ggg "GoT of ..." svg-repr got-style-config db router app-config)]
+                (file/put new-path html-repr))
+                
+            :note
+              (let [content (mu/to-html (entity :content) router)]
+                (file/put new-path (mu/html-page id "some note" content router app-config)))))))
+      
+    (req-files (solution-paths :output-dir))))
