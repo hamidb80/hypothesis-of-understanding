@@ -15,7 +15,6 @@ integration of GoT and Notes
   ./graph-of-thought
   ./html-gen)
 
-# TODO keep track of unreferenced assets
 # ------------------------------------------------------
 (def markup-ext ".mu.janet") # markup language in Janet lisp format
 (def got-ext    ".got.janet") # graph of thought representation in Janet lisp format
@@ -44,8 +43,11 @@ integration of GoT and Notes
     (if index-key (do 
       (put+ ref-count index-key)
       (pp ref-count)
-      (let [zero-refs (map |($ 0) (filter (fn [[k c]] (= 0 c)) (pairs ref-count)))]
+      (let [zero-refs (count-tab/zeros ref-count)]
         (assert (empty? zero-refs) (string "there are notes that are not referenced at all: " (string/join zero-refs ", "))))))
+
+    (let [zero-refs (count-tab/zeros assets-db)]
+      (assert (empty? zero-refs) (string "there are assets that are not referenced at all: " (string/join zero-refs ", "))))
 
     acc))
 
@@ -87,8 +89,9 @@ integration of GoT and Notes
 
 (defn solution (solution-paths app-config got-style-config)
   (let [ 
-         raw-db  (load-deep   (solution-paths :notes-dir))
-      assets-db  (let [d (solution-paths :assets-dir)] (if d (load-assets d) {}))
+         raw-db  (load-deep (solution-paths :notes-dir))
+      assets-db  (let [d    (solution-paths :assets-dir)] 
+                   (if d (load-assets d) {}))
              db  (finalize-db raw-db :index assets-db)
          router  (fn  (n) (string "/dist/" n))]
     

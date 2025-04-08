@@ -13,6 +13,11 @@
 (defn put+ (tab key) 
   (put tab key (+ 1 (int-val (tab key)))))
 
+(defn count-tab/zeros (tab)
+  (let-acc @[]
+    (eachp [k v] tab
+      (if (= 0 v) (array/push k)))))
+
 (defn to-table (lst key-gen val-gen)
   (let-acc @{}
     (each n lst
