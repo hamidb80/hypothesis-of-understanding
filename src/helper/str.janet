@@ -11,6 +11,7 @@
     (match (type/reduced s)
       :string  (buffer/push acc s)
       :keyword (buffer/push acc s)
+      :number  (buffer/push acc (string s))
       :tuple   (flat-string-impl s acc)
       :nil     nil
                (error (string `invalid type :` (type/reduced (inspect s)))))))

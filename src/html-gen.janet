@@ -117,11 +117,11 @@
           ` (dict :graph-of-thought) `
         </div>
 
-        <center>
+        <div class="d-flex justify-content-center">
           <div class="d-inline-block bg-light border rounded">
           ` svg `
           </div>
-        </center>
+        </div>
 
         <div class="my-3 d-flex justify-content-center">
           <button role="button" class="mx-1 btn btn-outline-primary" id="reset-progress-action">
@@ -174,6 +174,11 @@
                             `<small class="text-muted">` 
                               `<i class="mx-1 ` icon `"></i>`
                               summ 
+
+                              
+                              (if (e :height) 
+                                [`<i class="bi bi-triangle ms-3 me-1"></i>`
+                                  (e :height)])
                             `</small>`])
                         `</div>
                         <div>`

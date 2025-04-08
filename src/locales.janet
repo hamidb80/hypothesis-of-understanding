@@ -1,6 +1,8 @@
 # dictionary of words
 
 (def dict {
+  :height            "height"
+  
   :both              "both"
   :graph-first       "graph first"
   :notes-first       "notes first"
