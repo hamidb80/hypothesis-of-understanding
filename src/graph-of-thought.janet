@@ -55,15 +55,15 @@
           (if n (array/push acc (positioned-item n l i (keep-ends idx) (range-len idx)))))))))
 
 (defn- GoT/svg-calc-pos (item got cfg ctx)
-    [(+ (cfg :padx) (* (cfg :spacex)    (got :width)  (* (/ 1 (+ 1 (item :row-width))) (+ 1 (- (item :col) (first (item :row-range))))) ) (* -1 (ctx :cutx))) 
-     (+ (cfg :pady) (* (cfg :spacey) (- (got :height) (item :row) 1)))])
+    [(+ (cfg :padx) (* (cfg :spacex)    (got :canvas-width)  (* (/ 1 (+ 1 (item :row-width))) (+ 1 (- (item :col) (first (item :row-range))))) ) (* -1 (ctx :cutx))) 
+     (+ (cfg :pady) (* (cfg :spacey) (- (got :canvas-height) (item :row) 1)))])
 
 (defn  GoT/to-svg [got cfg]
-  (def cutx (/ (* (got :width) (cfg :spacex)) (+ 1 (got :width))))
+  (def cutx (/ (* (got :canvas-width) (cfg :spacex)) (+ 1 (got :canvas-width))))
 
   (svg/wrap 0 0
-    (- (+ (* 2 (cfg :padx)) (* (+  0 (got :width))  (cfg :spacex))) (* 2 cutx))
-    (- (+ (* 2 (cfg :pady)) (* (+ -1 (got :height)) (cfg :spacey))) 0) 
+    (- (+ (* 2 (cfg :padx)) (* (+  0 (got :canvas-width))  (cfg :spacex))) (* 2 cutx))
+    (- (+ (* 2 (cfg :pady)) (* (+ -1 (got :canvas-height)) (cfg :spacey))) 0) 
 
     (cfg :background)
     
@@ -170,5 +170,7 @@
          :nodes           nodes
          :anscestors      (GoT/all-anscestors (filter identity (flatten grid)) nodes)
          :edges           (GoT/extract-edges events)
-         :height          (length grid) 
-         :width           (length (grid 0))}))
+         :height-range    (let [e (filter |(not (nil? $)) (map |($ :height) events))]
+                                [(min ;e) (max ;e)])
+         :canvas-height   (length grid) 
+         :canvas-width    (length (grid 0))}))
