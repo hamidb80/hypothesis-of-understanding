@@ -164,6 +164,7 @@
                                :calculate `bi bi-calculator`
                                :thoughts  `bi bi-chat`
                               } t)
+                    color     ((svg-theme :color-map) t)
                     has-link (not (article :private))]
                 [
                 `<div class="pb-3 content" content="` key `" for="` (e :id)`">
@@ -171,10 +172,12 @@
                     `<div class="card-header d-flex justify-content-between px-2">
                         <div>`
                           (if summ [
-                            `<small class="text-muted">` 
+                            `<small class="text-muted d-flex align-items-center">
+                              <div class="d-inline-block rounded-circle" style="width: 14px; height: 14px; background-color: ` color ` ;">
+                              </div>`
+
                               `<i class="mx-1 ` icon `"></i>`
                               summ 
-
                               
                               (if (e :height) 
                                 [`<i class="bi bi-triangle ms-3 me-1"></i>`

@@ -161,16 +161,16 @@
   (assert (= (length events) (length (distinct (map |($ :id) events))))
           "all events must have unique ids") 
 
-  (let [levels            (GoT/build-levels events)
-        grid              (GoT/fill-grid    events levels)
-        nodes             (to-table events (fn [e] (if (= :node (e :kind)) (e :id))) identity)]
-        {:events          events
-         :levels          levels
-         :grid            grid
-         :nodes           nodes
-         :anscestors      (GoT/all-anscestors (filter identity (flatten grid)) nodes)
-         :edges           (GoT/extract-edges events)
-         :height-range    (let [e (filter |(not (nil? $)) (map |($ :height) events))]
-                                [(min ;e) (max ;e)])
-         :canvas-height   (length grid) 
-         :canvas-width    (length (grid 0))}))
+  (let [levels                 (GoT/build-levels events)
+        grid                   (GoT/fill-grid    events levels)
+        nodes                  (to-table events (fn [e] (if (= :node (e :kind)) (e :id))) identity)]
+        {:events               events
+         :levels               levels
+         :grid                 grid
+         :nodes                nodes
+         :anscestors           (GoT/all-anscestors (filter identity (flatten grid)) nodes)
+         :edges                (GoT/extract-edges events)
+         :nodes-height-range   (let [e (filter |(not (nil? $)) (map |($ :height) events))]
+                                 [(min ;e) (max ;e)])
+         :canvas-height        (length grid) 
+         :canvas-width         (length (grid 0))}))
