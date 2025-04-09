@@ -158,9 +158,9 @@
                     t        (or c :thoughts)
                     summ     (dict t)
                     icon     ({:problem   `bi bi-question-circle`
-                               :goal      `bi bi-crosshair`
+                               :goal      `bi bi-bullseye`
                                :reason    `bi bi-lightbulb`
-                               :recall    `bi bi-geo`
+                               :recall    `bi bi-sd-card`
                                :calculate `bi bi-calculator`
                                :thoughts  `bi bi-chat`
                               } t)
