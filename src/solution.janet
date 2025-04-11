@@ -92,8 +92,10 @@ integration of GoT and Notes
 (defn solution (solution-paths app-config got-style-config)
   (let [ 
          raw-db  (load-deep (solution-paths :notes-dir))
-      assets-db  (let [d    (solution-paths :assets-dir)] 
-                   (if d (load-assets d) {}))
+     has-assets  (not (nil? (solution-paths :assets-dir)))
+      assets-db  (if has-assets 
+                    (load-assets (solution-paths :assets-dir)) 
+                    {})
              db  (finalize-db raw-db :index assets-db)
          router  (fn  (n) (string "/dist/" n))]
     
@@ -118,4 +120,7 @@ integration of GoT and Notes
             (error "invalid kind")))))
       
       
-    (req-files (solution-paths :output-dir))))
+    (req-files (solution-paths :output-dir))
+    
+    (if has-assets
+      (dir/copy (solution-paths :assets-dir) (path/join (solution-paths :output-dir) "/assets")))))

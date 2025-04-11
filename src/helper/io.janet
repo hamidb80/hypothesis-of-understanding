@@ -1,7 +1,9 @@
 # input/output utilities
 
-(use ./path)
-(use ./macros)
+(use 
+  ./path
+  ./str
+  ./macros)
 
 (defn file/exists (path) 
   (not (nil? (os/stat path))))
@@ -38,3 +40,7 @@
 
 (defn file/copy (src dest)
   (file/put dest (slurp src)))
+
+(defn dir/copy (src dest)
+  (each p (os/list-files-rec src)
+    (file/put (path/join dest (string/remove-prefix src p)) (slurp p))))

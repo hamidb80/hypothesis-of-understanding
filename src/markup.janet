@@ -42,7 +42,7 @@
 (defn ref    (kw & body)   @{:node :local-ref         :body body  :data kw})
 (defn a      (url & body)  @{:node :link              :body body  :data url})
 
-(defn img    (src & body)  @{:node :image             :body body  :data src})
+(defn img    (src styles & body)  @{:node :image      :body body  :data {:src src :styles styles}})
 
 (defn tags   (& kws)       @{:node :tags              :body []    :data kws})
 (defn abs    (body)        @{:node :abstract          :body body  :data body})
@@ -81,8 +81,8 @@
               (put+ ref-count (vv :data)))
 
             :image (do
-              (assert (in assets-db (vv :data)) (string `referenced asset does not exists: ` (vv :data)))
-              (put+ assets-db (vv :data))
+              (assert (in assets-db ((vv :data) :src)) (string `referenced asset does not exists: ` ((vv :data) :src)))
+              (put+ assets-db ((vv :data) :src))
               vv)
 
             :title    (put (parent-article :meta) :title    (vv :data))
@@ -100,7 +100,7 @@
 
 (defn load-assets (assets-dir)
   (const-table 
-    (map |(string/remove-prefix assets-dir $) (os/list-files-rec assets-dir)) -1))
+    (map |(string/remove-prefix assets-dir $) (os/list-files-rec assets-dir)) 0))
 # HTML ------------------------------------------------------
 (def no-str (const1 ""))
 (defn- h/wrapper (start-wrap-fn end-wrap-fn start-item-fn end-item-fn)
@@ -138,9 +138,12 @@
 
 (defn- h/image [resolver router ctx data args] 
   (string
-    `<img src="` (router (string "assets/" data)) `.html">` 
-      (resolver router ctx args)
-    `</a>`))
+    `<figure class="d-flex justify-content-center">
+      <img style="` (data :styles)`" src="` (router (string "assets/" (data :src))) `"/>
+      <caption>`
+        (resolver router ctx args)
+      `</caption>
+    </figure>`))
 
 (def-  html-resolvers {
   :wrap              h/wrap
