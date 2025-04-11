@@ -16,7 +16,7 @@
 (defn count-tab/zeros (tab)
   (let-acc @[]
     (eachp [k v] tab
-      (if (= 0 v) (array/push k)))))
+      (if (= 0 v) (array/push acc k)))))
 
 (defn to-table (lst key-gen val-gen)
   (let-acc @{}

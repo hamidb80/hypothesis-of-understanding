@@ -110,6 +110,6 @@ integration of GoT and Notes
                 
             :note
               (let [content (mu/to-html (entity :content) router)]
-                (file/put new-path (mu/html-page id "some note" content router app-config)))))))
+                (file/put new-path (mu/html-page db id "some note" content router app-config)))))))
       
     (req-files (solution-paths :output-dir))))

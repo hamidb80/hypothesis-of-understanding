@@ -53,23 +53,31 @@
     </body>
     </html>`))
 
-(defn  mu/html-page (key title content router app-config)
+(defn  mu/html-page (db key title content router app-config)
   (html5 router title app-config `
     <div class="container my-4">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"></li>`
 
-          (let [p (dirname/split key)] 
+          (let [paths (map tuple (dirname/split key) (dirname/split-rec key))] 
             (map
-              (fn [n i]
-                (let [is-last (= i (dec (length p)))]
+              (fn [[n k] i]
+                (let [is-last (= i (dec (length paths)))
+                      key     (keyword k "index")
+                      index   (in db key)]
                   (string
                     `<li class="breadcrumb-item ` (if is-last `active`) `">` 
-                      n
+                      (if index 
+                        (string
+                          `<a href="` (router key) `.html">`
+                            n
+                          `</a>`)
+                        n
+                    )
                     `</li>`)))
-              p 
-              (range (length p))))
+              paths 
+              (range (length paths))))
         `</ol>
       </nav>
 
