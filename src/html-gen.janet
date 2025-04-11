@@ -27,7 +27,38 @@
   <link  href="`(router "style.css")`" rel="stylesheet">
 `))
 
-(defn nav-bar (home-page app-title) (string `
+(defn nav-path (router app-config key db)
+  [`<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="` (router "") `">`
+          (app-config :root-title)
+        `</a>
+      </li>`
+
+      (let [paths (map tuple (dirname/split key) (dirname/split-rec key))] 
+        (map
+          (fn [[n k] i]
+            (let [is-last (= i (dec (length paths)))
+                  key     (keyword k "index")
+                  index   (in db key)]
+              (string
+                `<li class="breadcrumb-item ` (if is-last `active`) `">` 
+                  (if index 
+                    (string
+                      `<a href="` (router key) `.html">`
+                        n
+                      `</a>`)
+                    n
+                )
+                `</li>`)))
+          paths 
+          (range (length paths))))
+    `</ol>
+  </nav>`
+])
+
+(defn nav-bar (home-page app-title) [`
   <nav class="navbar navbar-light bg-light px-3 d-flex justify-content-between">
     <div>
     </div>
@@ -38,7 +69,7 @@
     
     <div>
     </div>
-  </nav>`))
+  </nav>`])
 
 (defn html5 (router title app-config & body)
   (flat-string `<!DOCTYPE html>
@@ -48,7 +79,7 @@
       (common-head router)
     `</head>
     <body>`
-    (nav-bar (router "") (app-config :title))
+      (nav-bar (router "") (app-config :title))
     `<main>` body `</main>
     </body>
     </html>`))
@@ -56,35 +87,7 @@
 (defn  mu/html-page (db key title content router app-config)
   (html5 router title app-config `
     <div class="container my-4">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="` (router "") `">`
-              (app-config :root-title)
-           `</a>
-          </li>`
-
-          (let [paths (map tuple (dirname/split key) (dirname/split-rec key))] 
-            (map
-              (fn [[n k] i]
-                (let [is-last (= i (dec (length paths)))
-                      key     (keyword k "index")
-                      index   (in db key)]
-                  (string
-                    `<li class="breadcrumb-item ` (if is-last `active`) `">` 
-                      (if index 
-                        (string
-                          `<a href="` (router key) `.html">`
-                            n
-                          `</a>`)
-                        n
-                    )
-                    `</li>`)))
-              paths 
-              (range (length paths))))
-        `</ol>
-      </nav>
-
+      ` (nav-path router app-config key db) `
       <div class="card">
         <article class="card-body"> 
           ` content `
@@ -92,10 +95,12 @@
       </div>
     </div>`))
 
-(defn  GoT/html-page (got page-title svg svg-theme db router app-config)
-  (html5 router page-title app-config `
-    
-    <nav class="d-flex justify-content-center mt-3">
+(defn  GoT/html-page (id got page-title svg svg-theme db router app-config)
+  (html5 router page-title app-config 
+    `<div class="container mt-4 mb-2 d-flex justify-content-center">
+    `(nav-path router app-config id db) `
+    </div>`
+    `<nav class="d-flex justify-content-center">
       <ul class="pagination">
         <li class="page-item">
           <span class="page-link active" role="button">

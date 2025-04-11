@@ -1,0 +1,7 @@
+a[up-follow]{
+  text-decoration: none;
+}
+
+a[up-follow]:hover{
+  text-decoration: underline;
+}

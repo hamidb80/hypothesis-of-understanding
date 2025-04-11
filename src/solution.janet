@@ -105,7 +105,7 @@ integration of GoT and Notes
             :got 
               (let [ggg       (GoT/init (entity :content))
                     svg-repr  (GoT/to-svg ggg got-style-config)
-                    html-repr (GoT/html-page ggg "GoT of ..." svg-repr got-style-config db router app-config)]
+                    html-repr (GoT/html-page id ggg "GoT of ..." svg-repr got-style-config db router app-config)]
                 (file/put new-path html-repr))
                 
             :note
