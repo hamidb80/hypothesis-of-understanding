@@ -116,8 +116,8 @@
 (def-  h/latex          (h/wrapper |(string `<span class="latex" dir="ltr" data-display="`$`">`)       (const1 `</span>`)     no-str           no-str))
 (def-  h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)    |(string `</h` $ `>`)  no-str           no-str))
 (def-  h/link           (h/wrapper |(string `<a href="` $ `">`)       (const1 `</a>`)        no-str           no-str))
-(def-  h/ul             (h/wrapper (const1 `<ul>`)                    (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))
-(def-  h/ol             (h/wrapper (const1 `<ol>`)                    (const1 `</ol>`)       (const1 `<li class="mb-2">`)  (const1 `</li>`)))
+(def-  h/ul             (h/wrapper (const1 `<ul dir="auto">`)         (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))
+(def-  h/ol             (h/wrapper (const1 `<ol dir="auto">`)         (const1 `</ol>`)       (const1 `<li class="mb-2">`)  (const1 `</li>`)))
 (def-  h/hr             (h/wrapper (const1 `<hr/>`)                    no-str no-str no-str ))
 (def-  h/center         (h/wrapper (const1 `<center>`)                (const1 `</center>`) no-str no-str ))
 (defn- h/local-ref [resolver router ctx data args] 

@@ -58,7 +58,11 @@
     <div class="container my-4">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"></li>`
+          <li class="breadcrumb-item">
+            <a href="` (router "") `">`
+              (app-config :root-title)
+           `</a>
+          </li>`
 
           (let [paths (map tuple (dirname/split key) (dirname/split-rec key))] 
             (map
