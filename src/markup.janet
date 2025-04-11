@@ -23,6 +23,7 @@
 (defn sec    (& args)      @{:node :section           :body args :data nil})
 (defn c      (& args)      @{:node :center            :body args :data nil})
 (defn b      (& args)      @{:node :bold              :body args :data nil})
+(defn u      (& args)      @{:node :underline         :body args :data nil})
 (defn i      (& args)      @{:node :italic            :body args :data nil})
 (defn ul     (& args)      @{:node :list              :body args :data nil})
 (defn sm     (& args)      @{:node :small             :body args :data nil})
