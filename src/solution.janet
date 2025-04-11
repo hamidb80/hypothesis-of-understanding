@@ -42,7 +42,6 @@ integration of GoT and Notes
 
     (if index-key (do 
       (put+ ref-count index-key)
-      (pp ref-count)
       (let [zero-refs (count-tab/zeros ref-count)]
         (assert (empty? zero-refs) (string "there are notes that are not referenced at all: " (string/join zero-refs ", "))))))
 
@@ -100,7 +99,8 @@ integration of GoT and Notes
         path-parts (path/split (entity :path))
         new-path   (path/join (solution-paths :output-dir) (string (string/remove-prefix (solution-paths :notes-dir) (path-parts :dir)) (path-parts :name) ".html"))]
 
-        (if-not (entity :private)
+        (unless (entity :private)
+          (print ">> " id)
           (match (entity :kind)
             :got 
               (let [ggg       (GoT/init (entity :content))
@@ -110,6 +110,9 @@ integration of GoT and Notes
                 
             :note
               (let [content (mu/to-html (entity :content) router)]
-                (file/put new-path (mu/html-page db id "some note" content router app-config)))))))
+                  (file/put new-path (mu/html-page db id "some note" content router app-config)))
+                  
+            (error "invalid kind")))))
+      
       
     (req-files (solution-paths :output-dir))))

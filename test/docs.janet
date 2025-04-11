@@ -24,12 +24,12 @@
 So, he'll `(i `probably`)` ask you for a straw.`
 `If a mouse eats all your cookies, put up a sign that says`)
 
-(cnt
+(c
   (b `Cookies Wanted`)_(i `Chocolate chip preferred!`))
 
 (p `and see if anyone brings you more.`)
 
-(cnt (b `Notice to Mice`))
+(c (b `Notice to Mice`))
 
 (ul 
   `We have cookies for you.`
@@ -40,14 +40,15 @@ So, he'll `(i `probably`)` ask you for a straw.`
 
 # -------------------------------------
 
-"./test/notes/circular-deps"
-"./test/notes/asset-load"
-"./test/notes/resolve-recursive"
-"./test/notes/simple-doc/"
+(each subdir [
+  "./test/docs/circular-deps/"
+  "./test/docs/asset-load/"
+  "./test/docs/resolve-recursive/"
+  "./test/docs/simple-doc/"]
 
-(let [raw-db   (load-deep subdir)
+  (let [raw-db   (load-deep subdir)
       db       (finalize-db raw-db nil @{})
       id       :root
       article  ((db id) :content)
       res      (mu/to-html article |(string "/dist/" $))]
-  (file/put "./play.html" res))
+  (file/put "./play.html" res)))

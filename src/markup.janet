@@ -11,37 +11,37 @@
 
 # Core elements ------------------------------------------------------
 
-(defn h      (size & args) {:node :header            :body args :data size })
+(defn h      (size & args) @{:node :header            :body args :data size })
 (defn h1     (& args)      (h 1 ;args))
 (defn h2     (& args)      (h 2 ;args))
 (defn h3     (& args)      (h 3 ;args))
 (defn h4     (& args)      (h 4 ;args))
 (defn h5     (& args)      (h 5 ;args))
 (defn h6     (& args)      (h 6 ;args))
-(defn hr     ()            {:node :horizontal_line    :body []    :data nil})
+(defn hr     ()            @{:node :horizontal_line    :body []    :data nil})
 
-(defn sec    (& args)      {:node :section           :body args :data nil})
-(defn c      (& args)      {:node :center            :body args :data nil})
-(defn b      (& args)      {:node :bold              :body args :data nil})
-(defn i      (& args)      {:node :italic            :body args :data nil})
-(defn ul     (& args)      {:node :list              :body args :data nil})
-(defn sm     (& args)      {:node :small             :body args :data nil})
-(defn lg     (& args)      {:node :large             :body args :data nil})
-(defn sp     (& args)      {:node :span              :body args :data nil})
-(defn p      (& args)      {:node :paragraph         :body args :data nil})
-(defn ul     (& body)      {:node :unnumbered-list   :body body :data nil})
-(defn ol     (& body)      {:node :numbered-list     :body body :data nil})
-(defn ltx    (& body)      {:node :latex             :body body :data true })
-(defn ltxi   (& body)      {:node :latex             :body body :data false })
+(defn sec    (& args)      @{:node :section           :body args :data nil})
+(defn c      (& args)      @{:node :center            :body args :data nil})
+(defn b      (& args)      @{:node :bold              :body args :data nil})
+(defn i      (& args)      @{:node :italic            :body args :data nil})
+(defn ul     (& args)      @{:node :list              :body args :data nil})
+(defn sm     (& args)      @{:node :small             :body args :data nil})
+(defn lg     (& args)      @{:node :large             :body args :data nil})
+(defn sp     (& args)      @{:node :span              :body args :data nil})
+(defn p      (& args)      @{:node :paragraph         :body args :data nil})
+(defn ul     (& body)      @{:node :unnumbered-list   :body body :data nil})
+(defn ol     (& body)      @{:node :numbered-list     :body body :data nil})
+(defn ltx    (& body)      @{:node :latex             :body body :data true })
+(defn ltxi   (& body)      @{:node :latex             :body body :data false })
 
-(defn ref    (kw & body)   {:node :local-ref         :body body  :data kw})
-(defn a      (url & body)  {:node :link              :body body  :data url})
+(defn ref    (kw & body)   @{:node :local-ref         :body body  :data kw})
+(defn a      (url & body)  @{:node :link              :body body  :data url})
 
-(defn img    (src & body)  {:node :image             :body body  :data src})
+(defn img    (src & body)  @{:node :image             :body body  :data src})
 
-(defn tags   (& kws)       {:node :tags              :body []    :data kws})
-(defn abs    (body)        {:node :abstract          :body body  :data body})
-(defn title  (body)        {:node :title             :body []    :data body})
+(defn tags   (& kws)       @{:node :tags              :body []    :data kws})
+(defn abs    (body)        @{:node :abstract          :body body  :data body})
+(defn title  (body)        @{:node :title             :body []    :data body})
 
 (def _ " ")
 
@@ -55,7 +55,8 @@
                     (match (resolved? vv) 
                       :done       nil # do nothing
                       :processing (error (string `circular dependency detected, articles involved: ` vv `, `  (string/join (filter |(= :processing (resolved? $)) (keys resolved?)) ", ")))
-                      nil   (do 
+                      nil   (let [r (db vv)]
+                              (assert r (string `key ` vv ` not found`))
                               (put resolved? vv :processing)
                               (put-in db    [vv :content] (mu/finalize-content db ((db vv) :content) (db vv) assets-db ref-count resolved?))
                               (put resolved? vv :done)))
@@ -81,10 +82,10 @@
 
             :title    (put (parent-article :meta) :title    (vv :data))
             :tags     (put (parent-article :meta) :tags     (vv :data))
-            :abstract (put (parent-article :meta) :abstract (vv :data))
+            :abstract (put (parent-article :meta) :abstract (vv :data)))
               
-            (mu/finalize-content db (vv :body) parent-article assets-db ref-count resolved?))
-          vv)
+            (put vv :body (mu/finalize-content db (vv :body) parent-article assets-db ref-count resolved?)))
+
 
         :tuple    (mu/finalize-content db vv parent-article assets-db ref-count resolved?)
         :string    vv
@@ -177,5 +178,5 @@
   
   (resolver router 
     {:inline false} 
-    {:node :wrap 
+    @{:node :wrap 
      :body content}))
