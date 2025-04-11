@@ -23,8 +23,11 @@ integration of GoT and Notes
 (defn got/scan-events (db events ref-count)
   # count only private ones, because public notes must be accessible from root note somehow
   (each e events
-    (if ((db (e :content)) :private) 
-      (put+ ref-count (e :content)))))
+    (let [id     (e :content)
+          entity (db id)]
+      (assert entity (string "the entity " id " does not exist"))
+      (if (entity :private) 
+        (put+ ref-count id)))))
 
 (defn finalize-db (db index-key assets-db)
   (let [acc        @{}

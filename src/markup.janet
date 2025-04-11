@@ -34,6 +34,10 @@
 (defn ltx    (& body)      @{:node :latex             :body body :data true })
 (defn ltxi   (& body)      @{:node :latex             :body body :data false })
 
+(defn tab    (style & body) @{:node :table            :body body :data style })
+(defn th     (& body)       @{:node :table-head       :body body :data nil })
+(defn tr     (& body)       @{:node :table-row        :body body :data nil })
+
 (defn ref    (kw & body)   @{:node :local-ref         :body body  :data kw})
 (defn a      (url & body)  @{:node :link              :body body  :data url})
 
@@ -105,21 +109,25 @@
       (buffer/push acc (end-wrap-fn data)))))
 
 # micro view --------
-(def-  h/empty          (h/wrapper no-str                             no-str                 no-str           no-str))
-(def-  h/wrap           (h/wrapper no-str                             no-str                 no-str           no-str))
-(def-  h/paragraph      (h/wrapper (const1 `<p dir="auto">`)          (const1 `</p>`)        no-str           no-str))
-(def-  h/span           (h/wrapper (const1 `<span>`)                  (const1 `</span>`)     no-str           no-str))
-(def-  h/italic         (h/wrapper (const1 `<i>`)                     (const1 `</i>`)        no-str           no-str))
-(def-  h/bold           (h/wrapper (const1 `<b>`)                     (const1 `</b>`)        no-str           no-str))
-(def-  h/underline      (h/wrapper (const1 `<u>`)                     (const1 `</u>`)        no-str           no-str))
-(def-  h/strikethrough  (h/wrapper (const1 `<s>`)                     (const1 `</s>`)        no-str           no-str))
+(def-  h/wrap           (h/wrapper no-str                                                              no-str                 no-str           no-str))
+(def-  h/empty          (h/wrapper no-str                                                              no-str                 no-str           no-str))
+(def-  h/paragraph      (h/wrapper (const1 `<p dir="auto">`)                                           (const1 `</p>`)        no-str           no-str))
+(def-  h/span           (h/wrapper (const1 `<span>`)                                                   (const1 `</span>`)     no-str           no-str))
+(def-  h/italic         (h/wrapper (const1 `<i>`)                                                      (const1 `</i>`)        no-str           no-str))
+(def-  h/bold           (h/wrapper (const1 `<b>`)                                                      (const1 `</b>`)        no-str           no-str))
+(def-  h/underline      (h/wrapper (const1 `<u>`)                                                      (const1 `</u>`)        no-str           no-str))
+(def-  h/strikethrough  (h/wrapper (const1 `<s>`)                                                      (const1 `</s>`)        no-str           no-str))
 (def-  h/latex          (h/wrapper |(string `<span class="latex" dir="ltr" data-display="`$`">`)       (const1 `</span>`)     no-str           no-str))
-(def-  h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)    |(string `</h` $ `>`)  no-str           no-str))
-(def-  h/link           (h/wrapper |(string `<a href="` $ `">`)       (const1 `</a>`)        no-str           no-str))
-(def-  h/ul             (h/wrapper (const1 `<ul dir="auto">`)         (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))
-(def-  h/ol             (h/wrapper (const1 `<ol dir="auto">`)         (const1 `</ol>`)       (const1 `<li class="mb-2">`)  (const1 `</li>`)))
-(def-  h/hr             (h/wrapper (const1 `<hr/>`)                    no-str no-str no-str ))
-(def-  h/center         (h/wrapper (const1 `<center>`)                (const1 `</center>`) no-str no-str ))
+(def-  h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)                                     |(string `</h` $ `>`)  no-str           no-str))
+(def-  h/link           (h/wrapper |(string `<a href="` $ `">`)                                        (const1 `</a>`)        no-str           no-str))
+(def-  h/table          (h/wrapper (const1 `<table class="table"><tbody>`)                             (const1 `</tbody></table>`)    no-str           no-str))
+(def-  h/table-head     (h/wrapper (const1 `<tr>`)                                                     (const1 `</tr>`)       (const1 `<th>`)  (const1 `</th>`)))
+(def-  h/table-row      (h/wrapper (const1 `<tr>`)                                                     (const1 `</tr>`)       (const1 `<td>`)  (const1 `</td>`)))
+(def-  h/ul             (h/wrapper (const1 `<ul dir="auto">`)                                          (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))
+(def-  h/ol             (h/wrapper (const1 `<ol dir="auto">`)                                          (const1 `</ol>`)       (const1 `<li class="mb-2">`)  (const1 `</li>`)))
+(def-  h/hr             (h/wrapper (const1 `<hr/>`)                                                     no-str no-str no-str ))
+(def-  h/center         (h/wrapper (const1 `<center>`)                                                 (const1 `</center>`) no-str no-str ))
+
 (defn- h/local-ref [resolver router ctx data args] 
   (string
     `<a up-follow href="` (router data) `.html">` 
@@ -162,6 +170,10 @@
   :center            h/center
   
   :horizontal_line   h/hr
+
+  :table             h/table
+  :table-row         h/table-row
+  :table-head        h/table-head
   })
 # macro view --------
 (defn  mu/to-html (content router)
