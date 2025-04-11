@@ -129,6 +129,7 @@ up.compiler('[got]', (_, data) => {
       if (e.kind == "node") {
         let n = q(nodeClass(e.id))
         clsx(n, step < i, "d-none")
+        if (step == i) focusNode(n)
 
         let ed = qa("[to-node-id='" + e.id + "']")
         if (ed.length) ed.forEach(el => clsx(el, step < i, "d-none"))
