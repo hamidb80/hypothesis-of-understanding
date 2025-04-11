@@ -31,7 +31,7 @@
   [`<nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="` (router "") `">`
+        <a up-follow href="` (router "") `">`
           (app-config :root-title)
         `</a>
       </li>`
@@ -46,7 +46,7 @@
                 `<li class="breadcrumb-item ` (if is-last `active`) `">` 
                   (if index 
                     (string
-                      `<a href="` (router key) `.html">`
+                      `<a up-follow href="` (router key) `.html">`
                         n
                       `</a>`)
                     n
