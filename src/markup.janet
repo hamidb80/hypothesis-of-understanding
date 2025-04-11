@@ -94,7 +94,8 @@
 
         :tuple    (mu/finalize-content db vv parent-article assets-db ref-count resolved?)
         :string    vv
-        :number    vv))
+        :number    vv
+                   (error (string "kind " (type/reduced vv) " is not defined"))))
     content))
 
 (defn load-assets (assets-dir)
