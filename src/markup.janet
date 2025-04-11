@@ -21,13 +21,13 @@
 (defn hr     ()            {:node :horizontal_line    :body []    :data nil})
 
 (defn sec    (& args)      {:node :section           :body args :data nil})
-(defn cnt    (& args)      {:node :center            :body args :data nil})
+(defn c      (& args)      {:node :center            :body args :data nil})
 (defn b      (& args)      {:node :bold              :body args :data nil})
 (defn i      (& args)      {:node :italic            :body args :data nil})
 (defn ul     (& args)      {:node :list              :body args :data nil})
 (defn sm     (& args)      {:node :small             :body args :data nil})
 (defn lg     (& args)      {:node :large             :body args :data nil})
-(defn sp      (& args)     {:node :span              :body args :data nil})
+(defn sp     (& args)      {:node :span              :body args :data nil})
 (defn p      (& args)      {:node :paragraph         :body args :data nil})
 (defn ul     (& body)      {:node :unnumbered-list   :body body :data nil})
 (defn ol     (& body)      {:node :numbered-list     :body body :data nil})
@@ -118,6 +118,7 @@
 (def-  h/ul             (h/wrapper (const1 `<ul>`)                    (const1 `</ul>`)       (const1 `<li>`)  (const1 `</li>`)))
 (def-  h/ol             (h/wrapper (const1 `<ol>`)                    (const1 `</ol>`)       (const1 `<li class="mb-2">`)  (const1 `</li>`)))
 (def-  h/hr             (h/wrapper (const1 `<hr/>`)                    no-str no-str no-str ))
+(def-  h/center         (h/wrapper (const1 `<center>`)                (const1 `</center>`) no-str no-str ))
 (defn- h/local-ref [resolver router ctx data args] 
   (string
     `<a up-follow href="` (router data) `.html">` 
@@ -156,6 +157,8 @@
   :title             h/empty
   :tags              h/empty
   :abstract          h/empty
+
+  :center            h/center
   
   :horizontal_line   h/hr
   })
@@ -165,7 +168,7 @@
     (match (type/reduced node)
       :string         node
       :number (string node)
-      :struct ((html-resolvers (node :node)) resolver router ctx (node :data) (node :body))
+      :struct ((assert (html-resolvers (node :node)) "corresponding element is not defined") resolver router ctx (node :data) (node :body))
       :tuple  (string/join (map |(mu/to-html $ router) [node])) # for imports [ imported content placed as list ]
               (do 
                 (pp node)

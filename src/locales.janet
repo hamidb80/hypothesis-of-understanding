@@ -11,6 +11,7 @@
   :goal              "goal"
   :reason            "reason"
   :recall            "recall"
+  :calculate         "calculate"
   :thoughts          "thoughts"
 
   :reset             "reset"
