@@ -84,10 +84,11 @@ integration of GoT and Notes
     (each f ["page.js" "style.css"]
       (file/copy (path/join current-dir "src" f) (path/join output-dir f)))))
 
-(defn solution-paths (notes-dir assets-dir output-dir)
+(defn solution-paths (notes-dir assets-dir output-dir base-route)
   {:notes-dir   (path/dir notes-dir)
    :assets-dir  (path/dir assets-dir)
-   :output-dir  (path/dir output-dir)})
+   :output-dir  (path/dir output-dir)
+   :base-route  base-route })
 
 (defn solution (solution-paths app-config got-style-config)
   (let [ 
@@ -97,7 +98,7 @@ integration of GoT and Notes
                     (load-assets (solution-paths :assets-dir)) 
                     {})
              db  (finalize-db raw-db :index assets-db)
-         router  (fn  (n) (string "/dist/" n))]
+         router  (fn  (n) (string (solution-paths :base-route) n))]
     
     (eachp [id entity] db
       (let [
