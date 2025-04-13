@@ -52,12 +52,11 @@ lets pray:
 ## Bluri's steps to solve a problem
 
 0. **Focus**: highlight important parts and figure out *what is wanted*.
-1. **Problem Differentiation**: determine related concepts involving in the problem.
-2. **Recall**: remember related information about the previos attempts.
-3. **Relate**: try to make connection between the previous attempts.
-4. **Reason/Calculate**: try to conclude or process previous attemps to extract new results.
-5. **Repeat**: repeat the process until you're done.
-6. **Doubt**: explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
+1. **Recall**: remember related information about the previos attempts.
+2. **Relate**: try to make connection between the previous attempts.
+3. **Reason/Calculate**: try to conclude or process previous attemps to extract new results.
+4. **Repeat**: repeat the process until you're done.
+5. **Doubt**: explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
 
 > Thanks to Eric Demaine for his SRTBOT method for formulating dynamic programming solution. see "introduction to algorithms" in MIT open course ware.
 
