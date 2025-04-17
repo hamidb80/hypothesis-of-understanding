@@ -24,6 +24,7 @@ lets pray:
 - [makandra cards](https://makandracards.com/)
 - Networks of the Brain by Olaf Sporns
 - [Proof Wiki](https://proofwiki.org/?ref=cybrhome)
+- [Interactive Theorem Proving: Isabelle/HOL](https://www.youtube.com/watch?v=AhybiY0JHvg)
 
 ### Simple Made Easy
 > an insightful talk by Rich Hickey - [link](https://paulrcook.com/blog/simple-made-easy)
