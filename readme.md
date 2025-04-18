@@ -1,4 +1,4 @@
-# Theory of Understanding
+## Theory of Understanding
 
 <div align="center"><a href="https://github.com/Safouene1/support-palestine-banner/blob/master/Markdown-pages/Support.md"><img src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg" alt="Support Palestine" style="width: 100%;"></a></div>
 
@@ -50,16 +50,49 @@ lets pray:
 - GoK (Graph of Knowledge) is a Directed Graph (may have cycles too)
 - SF: Straight-Forward
 
+## Understanding VS Learning VS Knowing
+<div style="text-align: center;">
+  <img src="./assets/KLU-ven.png" alt="ven diagram of Understanding VS Learning VS Knowing" style="height: 300px">
+</div>
+
+- **Knowing**: remembering
+- **Learning**: pattern matching (i.e. making particular neural connection between )
+- **Understanding**: ability to relate what you know and what you learnt
+
 ## Bluri's steps to solve a problem
 
 0. **Focus**: highlight important parts and figure out *what is wanted*.
-1. **Recall**: remember related information about the previos attempts.
-2. **Relate**: try to make connection between the previous attempts.
-3. **Reason/Calculate**: try to conclude or process previous attemps to extract new results.
+1. **Recall**: remember related information
+2. **Relate**: make connection
+3. **Reason/Calculate**: conclude or process
 4. **Repeat**: repeat the process until you're done.
 5. **Doubt**: explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
 
 > Thanks to Eric Demaine for his SRTBOT method for formulating dynamic programming solution. see "introduction to algorithms" in MIT open course ware.
+
+## Stages of Problem solving
+
+<div style="text-align: center;">
+  <img src="./assets/step-1.png" style="width: 240px">
+  <img src="./assets/step-2.png" style="width: 240px">
+  <img src="./assets/step-3.png" style="width: 240px">
+  <img src="./assets/step-4.png" style="width: 240px">
+  <img src="./assets/step-5.png" style="width: 240px">
+</div>
+
+
+the last step is too abstract, I felt that all of nodes are not the same, they seem different in nature and their purpose. so I categortized them as:
+
+- black ⚫: problem
+- purple 🟣: recall
+- green 🟢: reason
+- orange 🟠: calculate or compute
+
+<div style="text-align: center;">
+  <img src="./assets/abstract-color.png" style="width: 240px">
+</div>
+
+----------
 
 ## Bluri's theory to indicate complexity of a problem
 the height of GoT reperesents the complexity of the problem. the more the height of the GoT, means that solving it requires *more steps* and hence is more complex.
