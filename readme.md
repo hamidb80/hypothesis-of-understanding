@@ -84,7 +84,7 @@ lets pray:
 
 the last step is too abstract, I felt that all of nodes are not the same, they seem different in nature and their purpose. so I categortized them as:
 
-- ⚫ black: **problem** or **sub-problem**
+- ⚫ black: **problem** or **sub-problem** or **goal**
 - 🟣 purple: **recall**
 - 🟢 green: **reason**
 - 🟠 orange: **calculate** or **compute**
