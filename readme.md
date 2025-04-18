@@ -52,7 +52,7 @@ lets pray:
 
 ## Understanding VS Learning VS Knowing
 <div style="text-align: center;">
-  <img src="./assets/KLU-ven.png" alt="ven diagram of Understanding VS Learning VS Knowing" style="height: 300px">
+  <img src="./assets/compiled/KLU-ven.png" alt="ven diagram of Understanding VS Learning VS Knowing" style="height: 300px">
 </div>
 
 - **Knowing**: remembering
@@ -73,11 +73,11 @@ lets pray:
 ## Stages of Problem solving
 
 <div style="text-align: center;">
-  <img src="./assets/step-1.png" style="width: 240px">
-  <img src="./assets/step-2.png" style="width: 240px">
-  <img src="./assets/step-3.png" style="width: 240px">
-  <img src="./assets/step-4.png" style="width: 240px">
-  <img src="./assets/step-5.png" style="width: 240px">
+  <img src="./assets/compiled/step-1.png" style="width: 240px">
+  <img src="./assets/compiled/step-2.png" style="width: 240px">
+  <img src="./assets/compiled/step-3.png" style="width: 240px">
+  <img src="./assets/compiled/step-4.png" style="width: 240px">
+  <img src="./assets/compiled/step-5.png" style="width: 240px">
 </div>
 
 --------
@@ -90,7 +90,7 @@ the last step is too abstract, I felt that all of nodes are not the same, they s
 - 🟠 orange: **calculate** or **compute**
 
 <div style="text-align: center;">
-  <img src="./assets/abstract-color.png" style="width: 240px">
+  <img src="./assets/compiled/abstract-color.png" style="width: 240px">
 </div>
 
 ## Bluri's theory to indicate complexity of a problem
@@ -106,6 +106,10 @@ Thus the term straight-forward is subjective according to the learning material 
 Note that just connecting 2 nodes are not important, the direction of the edge also matters. for example a language learner first looks at the word e.g. "camera", then translates it to his mother tongue e.g. Persian ("دوربین") and then translating, he imagines the real camera in his mind. but he may have trouble to do it vice verse i.e. seeing a camera and then finding its English word. it is true that the person probably can find the word _after some time_ but it is not **obvious** i.e. it's not present _directly_ in his GoK.
 
 In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
+
+<div style="text-align: center;">
+  <img src="./assets/compiled/translate.png" style="height: 240px">
+</div>
 
 ## what is height of a node in GoT
 think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
@@ -156,12 +160,6 @@ I've asked DeepSeek AI to give opinion about mind maps if he were Richard Feyman
 
 ### Benefits
 well in my opinion the only benefit of using GoK or Mind maps is that you kinda see the structure of the content and gives a whole overview; but the benefits stops here...
-
-## Development
-- colors stolen from [ColorHunt](https://colorhunt.co/)
-
-### Versions
-- Janet: 1.38
 
 ## notes for myself
 - add citations if possible
