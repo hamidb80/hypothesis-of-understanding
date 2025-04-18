@@ -12,3 +12,9 @@ a[up-follow]:hover{
   font-weight: 400;
   font-style: normal;
 }
+
+
+pre {
+  line-height: 0.9;
+  overflow-y: clip;
+}

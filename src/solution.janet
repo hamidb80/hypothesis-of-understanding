@@ -73,9 +73,9 @@ integration of GoT and Notes
               :kind    kind
               :private (string/has-suffix? private-suffix (pparts :name))
               :meta    @{} # attributes that are computed after initial preprocessing
-              :content (let [file-content (try (slurp p)            ([e] (error (string "error while reading from file: " p))))
-                             lisp-code    (try (parse file-content) ([e] (error (string "error while parseing lisp code from file: " p))))
-                             result       (try (eval  lisp-code)    ([e] (error (string "error while evaluating parseing lisp code from file: " p))))]
+              :content (let [file-content (try (slurp p)            ([e] (error (string "error while reading from file: "                       p "\n >>> " e))))
+                             lisp-code    (try (parse file-content) ([e] (error (string "error while parseing lisp code from file: "            p "\n >>> " e))))
+                             result       (try (eval  lisp-code)    ([e] (error (string "error while evaluating parseing lisp code from file: " p "\n >>> " e))))]
                           result)}))))
     acc))
 

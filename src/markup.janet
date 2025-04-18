@@ -48,6 +48,8 @@
 (defn abs    (body)        @{:node :abstract          :body body  :data body})
 (defn title  (body)        @{:node :title             :body []    :data body})
 
+(defn code  (body)        @{:node :code               :body [body]  :data nil})
+
 (def _ " ")
 
 # Resolvation -------------------------------------
@@ -130,6 +132,8 @@
 (def-  h/hr             (h/wrapper (const1 `<hr/>`)                                                     no-str no-str no-str ))
 (def-  h/center         (h/wrapper (const1 `<center>`)                                                 (const1 `</center>`) no-str no-str ))
 
+(def-  h/code           (h/wrapper (const1 `<code><pre>`)                                              (const1 `</pre></code>`) no-str no-str ))
+
 (defn- h/local-ref [resolver router ctx data args] 
   (string
     `<a up-follow href="` (router data) `.html">` 
@@ -179,6 +183,8 @@
   :table             h/table
   :table-row         h/table-row
   :table-head        h/table-head
+
+  :code              h/code
   })
 # macro view --------
 (defn  mu/to-html (content router)
