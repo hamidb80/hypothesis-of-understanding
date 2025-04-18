@@ -5,3 +5,10 @@ a[up-follow]{
 a[up-follow]:hover{
   text-decoration: underline;
 }
+
+* {
+  font-family: "Vazirmatn", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
