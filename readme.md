@@ -80,19 +80,18 @@ lets pray:
   <img src="./assets/step-5.png" style="width: 240px">
 </div>
 
+--------
 
 the last step is too abstract, I felt that all of nodes are not the same, they seem different in nature and their purpose. so I categortized them as:
 
-- black ⚫: problem
-- purple 🟣: recall
-- green 🟢: reason
-- orange 🟠: calculate or compute
+- ⚫ black: **problem** or **sub-problem**
+- 🟣 purple: **recall**
+- 🟢 green: **reason**
+- 🟠 orange: **calculate** or **compute**
 
 <div style="text-align: center;">
   <img src="./assets/abstract-color.png" style="width: 240px">
 </div>
-
-----------
 
 ## Bluri's theory to indicate complexity of a problem
 the height of GoT reperesents the complexity of the problem. the more the height of the GoT, means that solving it requires *more steps* and hence is more complex.
