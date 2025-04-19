@@ -190,8 +190,8 @@
                     has-link (not (article :private))]
                 [
                 `<div class="pb-3 content" content="` key `" for="` (e :id)`">
-                  <div class="card">`
-                    `<div class="card-header d-flex justify-content-between px-2">
+                  <div class="card">
+                    <div class="card-header d-flex justify-content-between px-2">
                         <div>`
                           (if summ [
                             `<small class="text-muted d-flex align-items-center">
@@ -219,7 +219,9 @@
                     `</div>`
 
                     `<div class="card-footer d-flex justify-content-between py-1" dir="auto">
-                        <span></span>
+                        <span class="fold btn btn-sm btn-outline-dark">
+                          <i class="bi bi-chevron-double-up"></i>
+                        </span>
                         <small class="text-muted">`
                           ((article :meta) :title)
                        `</small>
