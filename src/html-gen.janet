@@ -195,8 +195,7 @@
                         <div>`
                           (if summ [
                             `<small class="text-muted d-flex align-items-center">
-                              <div class="d-inline-block rounded-circle" style="width: 14px; height: 14px; background-color: ` color ` ;">
-                              </div>`
+                              <span class="d-inline-block rounded-circle" style="width: 14px; height: 14px; background-color: ` color ` ;"></span>`
 
                               `<i class="mx-1 ` icon `"></i>`
                               summ 
@@ -218,6 +217,14 @@
                     `<div class="card-body" dir="auto">`
                         (mu/to-html (article :content) router)
                     `</div>`
+
+                    `<div class="card-footer d-flex justify-content-between py-1" dir="auto">
+                        <span></span>
+                        <small class="text-muted">`
+                          ((article :meta) :title)
+                       `</small>
+                        <span></span>
+                    </div>`
 
                   `</div>
                 </div>`])))
