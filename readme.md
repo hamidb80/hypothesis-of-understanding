@@ -129,7 +129,9 @@ Reference:
 ## Why GoK per se is not enough
 according to definition of straight-forward solution, one can implement a question that the GoK be completly useless (i.e. the connection between concepts not be present). 
 
-In order to mitigate the above problem, one might suggest that adding a lots of edges between nodes (cross referencing) and this surely solves the problem. that is correct in one aspect, but it will arise a worse problem; nobody can understand a super dense GoK, by looking at it!
+In order to mitigate the above problem, one might suggest that adding a lots of edges between nodes (cross referencing) and this surely solves the problem but it will arise a worse problem; nobody can understand a super dense GoK, by looking at it!
+
+In my experience a lot of problems have their own GoK.
 
 Another solution would be to create different versions of GoK based on different aspects e.g. most important nodes be people, most important nodes be time-line, most important be based on specific features and so on ...
 
