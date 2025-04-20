@@ -218,7 +218,7 @@
                     `</div>`
 
                     `<div class="card-footer d-flex justify-content-between py-1" dir="auto">
-                        <button role="button" class="fold btn btn-sm btn-outline-dark">
+                        <button role="button" class="fold btn btn-sm btn-outline-dark toggle-graph-message-btn">
                           <i class="bi bi-chevron-double-up"></i>
                         </button>
                         <small class="text-muted">`

@@ -6,8 +6,8 @@ function qa(sel) {
   return [...document.querySelectorAll(sel)]
 }
 
-function q(sel) {
-  return document.querySelector(sel)
+function q(sel, parent = document) {
+  return parent.querySelector(sel)
 }
 
 function clsx(el, cond, cls) {
@@ -76,13 +76,25 @@ function clamp(n, max, min) {
   return Math.min(max, Math.max(n, min))
 }
 
-function parseShallowJSON(json){
+function parseShallowJSON(json) {
   for (const key in json)
     json[key] = JSON.parse(json[key])
   return json
 }
 
 // ----------------------------------------      
+
+function someParent(el, pred) {
+  let p = el.parentElement
+  return p && (pred(p) ? p : someParent(p, pred))
+}
+
+function toggleClass(el, cls) {
+  if (el.classList.contains(cls))
+    el.classList.remove(cls)
+  else
+    el.classList.add(cls)
+}
 
 up.compiler('[got]', (_, data) => {
   const cursorName = 'c'
@@ -223,4 +235,15 @@ up.compiler('[got]', (_, data) => {
 
 up.compiler('.latex', (el, data) => {
   katex.render(el.innerText, el, { displayMode: data.display == "true" })
+})
+
+
+
+up.compiler('.toggle-graph-message-btn', el => {
+  console.log("wrf")
+  el.onclick = () => {
+    let p = someParent(el, p => p.classList.contains('card'))
+    let target = q(`.card-body`, p)
+    toggleClass(target, 'd-none')
+  }
 })
