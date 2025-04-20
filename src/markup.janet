@@ -123,7 +123,7 @@
 (def-  h/strikethrough  (h/wrapper (const1 `<s>`)                                                      (const1 `</s>`)        no-str           no-str))
 (def-  h/latex          (h/wrapper |(string `<span class="latex" dir="ltr" data-display="`$`">`)       (const1 `</span>`)     no-str           no-str))
 (def-  h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)                                     |(string `</h` $ `>`)  no-str           no-str))
-(def-  h/link           (h/wrapper |(string `<a href="` $ `">`)                                        (const1 `</a>`)        no-str           no-str))
+(def-  h/link           (h/wrapper |(string `<a target="_blank" href="` $ `">`)                                        (const1 `</a>`)        no-str           no-str))
 (def-  h/table          (h/wrapper (const1 `<table class="table"><tbody>`)                             (const1 `</tbody></table>`)    no-str           no-str))
 (def-  h/table-head     (h/wrapper (const1 `<tr>`)                                                     (const1 `</tr>`)       (const1 `<th>`)  (const1 `</th>`)))
 (def-  h/table-row      (h/wrapper (const1 `<tr>`)                                                     (const1 `</tr>`)       (const1 `<td>`)  (const1 `</td>`)))

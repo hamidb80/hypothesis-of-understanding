@@ -16,8 +16,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"          rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -182,7 +181,7 @@
                     icon     ({:problem   `bi bi-question-circle`
                                :goal      `bi bi-bullseye`
                                :reason    `bi bi-lightbulb`
-                               :recall    `bi bi-sd-card`
+                               :recall    `bi bi-floppy`
                                :calculate `bi bi-calculator`
                                :thoughts  `bi bi-chat`
                               } t)
@@ -208,8 +207,8 @@
                         <div>`
                           (if has-link [
                             `<a class="text-muted" up-follow href="` (router key) `.html">`
-                              key
                               `<i class="bi bi-hash"></i>`
+                              key
                             `</a>`])
                         `</div>
                       </div>`
@@ -219,9 +218,9 @@
                     `</div>`
 
                     `<div class="card-footer d-flex justify-content-between py-1" dir="auto">
-                        <span class="fold btn btn-sm btn-outline-dark">
+                        <button role="button" class="fold btn btn-sm btn-outline-dark">
                           <i class="bi bi-chevron-double-up"></i>
-                        </span>
+                        </button>
                         <small class="text-muted">`
                           ((article :meta) :title)
                        `</small>
