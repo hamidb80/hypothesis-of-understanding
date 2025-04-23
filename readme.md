@@ -56,7 +56,7 @@ lets pray:
 </div>
 
 - **Knowing**: remembering
-- **Learning**: pattern matching (i.e. making particular neural connection between )
+- **Learning**: pattern matching (i.e. making particular neural connection between or in other words, "shortcuts")
 - **Understanding**: ability to relate what you know and what you learnt
 
 ## Bluri's steps to solve a problem
