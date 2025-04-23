@@ -79,13 +79,13 @@ integration of GoT and Notes
                           result)}))))
     acc))
 
-(defn req-files (output-dir)
-  (let [current-dir ((path/split (dyn *current-file*)) :dir)]
-    (each f ["page.js" "style.css"]
-      (file/copy (path/join current-dir "src" f) (path/join output-dir f)))))
+(defn req-files (project-dir output-dir)
+  (each f ["page.js" "style.css"]
+    (file/copy (path/join project-dir "src" f) (path/join output-dir f))))
 
-(defn solution-paths (notes-dir assets-dir output-dir base-route)
-  {:notes-dir   (path/dir notes-dir)
+(defn solution-paths (project-dir notes-dir assets-dir output-dir base-route)
+  {:project-dir (path/dir project-dir)
+   :notes-dir   (path/dir notes-dir)
    :assets-dir  (path/dir assets-dir)
    :output-dir  (path/dir output-dir)
    :base-route  base-route })
@@ -121,7 +121,7 @@ integration of GoT and Notes
             (error "invalid kind")))))
       
       
-    (req-files (solution-paths :output-dir))
+    (req-files (solution-paths :project-dir) (solution-paths :output-dir))
     
     (if has-assets
-      (dir/copy (solution-paths :assets-dir) (path/join (solution-paths :output-dir) "/assets")))))
+      (dir/copy (solution-paths :assets-dir) (path/join (solution-paths :output-dir) "assets")))))

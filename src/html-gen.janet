@@ -40,7 +40,7 @@
         `</a>
       </li>`
 
-      (let [paths (map tuple (dirname/split key) (dirname/split-rec key))] 
+      (let [paths (zip (dirname/split key) (dirname/split-rec key))] 
         (map
           (fn [[n k] i]
             (let [is-last (= i (dec (length paths)))

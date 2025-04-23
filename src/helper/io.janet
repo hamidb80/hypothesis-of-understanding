@@ -3,6 +3,8 @@
 (use 
   ./path
   ./str
+  ./debug
+  ./system
   ./macros)
 
 (defn file/exists (path) 
@@ -39,8 +41,8 @@
   (file/close f))
 
 (defn file/copy (src dest)
-  (file/put dest (slurp src)))
+  (exec ["powershell.exe"  "-Command"  "Copy-Item"  "-Path"  src  "-Destination"  dest]))
 
 (defn dir/copy (src dest)
   (each p (os/list-files-rec src)
-    (file/put (path/join dest (string/remove-prefix src p)) (slurp p))))
+    (file/copy p (path/join dest (string/remove-prefix src p)))))

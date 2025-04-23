@@ -20,3 +20,6 @@
       (break (set j i))
       (set i (dec i))))
   j)
+
+(defn zip (& args)
+  (map tuple ;args))
