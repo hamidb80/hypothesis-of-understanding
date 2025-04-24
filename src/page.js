@@ -84,11 +84,6 @@ function parseShallowJSON(json) {
 
 // ----------------------------------------      
 
-function someParent(el, pred) {
-  let p = el.parentElement
-  return p && (pred(p) ? p : someParent(p, pred))
-}
-
 function toggleClass(el, cls) {
   if (el.classList.contains(cls))
     el.classList.remove(cls)
@@ -240,9 +235,8 @@ up.compiler('.latex', (el, data) => {
 
 
 up.compiler('.toggle-graph-message-btn', el => {
-  console.log("wrf")
   el.onclick = () => {
-    let p = someParent(el, p => p.classList.contains('card'))
+    let p = el.closest('.card')
     let target = q(`.card-body`, p)
     toggleClass(target, 'd-none')
   }

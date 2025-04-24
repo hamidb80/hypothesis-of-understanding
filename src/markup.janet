@@ -48,7 +48,13 @@
 (defn abs    (body)        @{:node :abstract          :body body  :data body})
 (defn title  (body)        @{:node :title             :body []    :data body})
 
-(defn code  (body)        @{:node :code               :body [body]  :data nil})
+(defn code  (body)         @{:node :code               :body [body]  :data nil})
+
+(defn m     (color & body) @{:node :mark               :body body    :data color})
+(defn m1    (& body)        (m "#ffff8a" ;body))
+(defn m2    (& body)        (m "mistyrose"   ;body))
+(defn m3    (& body)        (m "greenyellow"  ;body))
+(defn m4    (& body)        (m "aquamarine"   ;body))
 
 (def _ " ")
 
@@ -117,8 +123,10 @@
 (def-  h/empty          (h/wrapper no-str                                                              no-str                 no-str           no-str))
 (def-  h/paragraph      (h/wrapper (const1 `<p dir="auto">`)                                           (const1 `</p>`)        no-str           no-str))
 (def-  h/span           (h/wrapper (const1 `<span>`)                                                   (const1 `</span>`)     no-str           no-str))
+(def-  h/mark           (h/wrapper |(string `<mark style="background-color:`$`">`)                      (const1 `</mark>`)     no-str           no-str))
 (def-  h/italic         (h/wrapper (const1 `<i>`)                                                      (const1 `</i>`)        no-str           no-str))
 (def-  h/bold           (h/wrapper (const1 `<b>`)                                                      (const1 `</b>`)        no-str           no-str))
+(def-  h/small          (h/wrapper (const1 `<small>`)                                                  (const1 `</small>`)    no-str           no-str))
 (def-  h/underline      (h/wrapper (const1 `<u>`)                                                      (const1 `</u>`)        no-str           no-str))
 (def-  h/strikethrough  (h/wrapper (const1 `<s>`)                                                      (const1 `</s>`)        no-str           no-str))
 (def-  h/latex          (h/wrapper |(string `<span class="latex" dir="ltr" data-display="`$`">`)       (const1 `</span>`)     no-str           no-str))
@@ -156,6 +164,8 @@
   :span              h/span
   :header            h/header
 
+  :mark              h/mark
+  :small             h/small
   :bold              h/bold
   :italic            h/italic
   :underline         h/underline
@@ -192,7 +202,7 @@
     (match (type/reduced node)
       :string         node
       :number (string node)
-      :struct ((assert (html-resolvers (node :node)) "corresponding element is not defined") resolver router ctx (node :data) (node :body))
+      :struct ((assert (html-resolvers (node :node)) (string "corresponding element is not defined: " (node :node))) resolver router ctx (node :data) (node :body))
       :tuple  (string/join (map |(mu/to-html $ router) [node])) # for imports [ imported content placed as list ]
               (do 
                 (pp node)
