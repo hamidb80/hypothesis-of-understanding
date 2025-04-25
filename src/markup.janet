@@ -51,6 +51,8 @@
 (defn code  (body)         @{:node :code               :body [body]  :data nil})
 (defn qoute (& body) @{:node :quote               :body body    :data nil})
 
+(defn br  ()         @{:node :breakline               :body []  :data nil})
+
 (defn m     (color & body) @{:node :mark               :body body    :data color})
 (defn m1    (& body)        (m "#ffff003d" ;body))
 (defn m2    (& body)        (m "mistyrose"   ;body))
@@ -142,6 +144,7 @@
 (def-  h/center         (h/wrapper (const1 `<center>`)                                                 (const1 `</center>`) no-str no-str ))
 (def-  h/quote        (h/wrapper (const1 `<blockquote dir="auto">`)                                                 (const1 `</blockquote>`) no-str no-str ))
 (def-  h/code           (h/wrapper (const1 `<code><pre>`)                                              (const1 `</pre></code>`) no-str no-str ))
+(def-  h/br             (h/wrapper (const1 `<br/>`)                                               no-str no-str no-str ))
 
 (defn- h/local-ref [resolver router ctx data args] 
   (string
@@ -197,6 +200,7 @@
 
   :code              h/code
   :quote              h/quote
+  :breakline              h/br
   })
 # macro view --------
 (defn  mu/to-html (content router)
