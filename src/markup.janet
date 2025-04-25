@@ -49,9 +49,10 @@
 (defn title  (body)        @{:node :title             :body []    :data body})
 
 (defn code  (body)         @{:node :code               :body [body]  :data nil})
+(defn qoute (& body) @{:node :quote               :body body    :data nil})
 
 (defn m     (color & body) @{:node :mark               :body body    :data color})
-(defn m1    (& body)        (m "#ffff8a" ;body))
+(defn m1    (& body)        (m "#ffff003d" ;body))
 (defn m2    (& body)        (m "mistyrose"   ;body))
 (defn m3    (& body)        (m "greenyellow"  ;body))
 (defn m4    (& body)        (m "aquamarine"   ;body))
@@ -131,7 +132,7 @@
 (def-  h/strikethrough  (h/wrapper (const1 `<s>`)                                                      (const1 `</s>`)        no-str           no-str))
 (def-  h/latex          (h/wrapper |(string `<span class="latex" dir="ltr" data-display="`$`">`)       (const1 `</span>`)     no-str           no-str))
 (def-  h/header         (h/wrapper |(string `<h` $ ` dir="auto">`)                                     |(string `</h` $ `>`)  no-str           no-str))
-(def-  h/link           (h/wrapper |(string `<a target="_blank" href="` $ `">`)                                        (const1 `</a>`)        no-str           no-str))
+(def-  h/link           (h/wrapper |(string `<a target="_blank" dir="auto" href="` $ `">`)                                        (const1 `</a>`)        no-str           no-str))
 (def-  h/table          (h/wrapper (const1 `<table class="table"><tbody>`)                             (const1 `</tbody></table>`)    no-str           no-str))
 (def-  h/table-head     (h/wrapper (const1 `<tr>`)                                                     (const1 `</tr>`)       (const1 `<th>`)  (const1 `</th>`)))
 (def-  h/table-row      (h/wrapper (const1 `<tr>`)                                                     (const1 `</tr>`)       (const1 `<td>`)  (const1 `</td>`)))
@@ -139,7 +140,7 @@
 (def-  h/ol             (h/wrapper (const1 `<ol dir="auto">`)                                          (const1 `</ol>`)       (const1 `<li class="mb-2">`)  (const1 `</li>`)))
 (def-  h/hr             (h/wrapper (const1 `<hr/>`)                                                     no-str no-str no-str ))
 (def-  h/center         (h/wrapper (const1 `<center>`)                                                 (const1 `</center>`) no-str no-str ))
-
+(def-  h/quote        (h/wrapper (const1 `<blockquote dir="auto">`)                                                 (const1 `</blockquote>`) no-str no-str ))
 (def-  h/code           (h/wrapper (const1 `<code><pre>`)                                              (const1 `</pre></code>`) no-str no-str ))
 
 (defn- h/local-ref [resolver router ctx data args] 
@@ -150,11 +151,11 @@
 
 (defn- h/image [resolver router ctx data args] 
   (string
-    `<figure class="d-flex justify-content-center">
+    `<figure class="text-center">
       <img style="` (data :styles)`" src="` (router (string "assets/" (data :src))) `"/>
-      <caption>`
+      <figcaption dir="auto">`
         (resolver router ctx args)
-      `</caption>
+      `</figcaption>
     </figure>`))
 
 (def-  html-resolvers {
@@ -195,6 +196,7 @@
   :table-head        h/table-head
 
   :code              h/code
+  :quote              h/quote
   })
 # macro view --------
 (defn  mu/to-html (content router)

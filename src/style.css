@@ -7,12 +7,15 @@ a[up-follow]:hover{
 }
 
 * {
-  font-family: "Titillium Web", "Vazirmatn", sans-serif;
+  font-family: "Noto Sans Arabic", sans-serif !important;
   font-optical-sizing: auto;
   font-weight: 400;
-  font-style: normal;
 }
 
+figure img {
+  max-width: 100%;
+  object-fit: contain;
+}
 
 pre {
   line-height: 0.9;

@@ -18,7 +18,7 @@
   # :problem :goal :recall :reason :calculate :quite
   {:kind     :node 
    :id       id
-   :height   (do (assert (<= 1 height 5) "the height of a node must be in range of 1..5")
+   :height   (do (assert (<= 1 height 4) "the height of a node must be in range of 1..4")
                  height)
    :class    class 
    :parents  parents
