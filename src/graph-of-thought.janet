@@ -85,8 +85,10 @@
               nv   (v-norm vec)
               diff (v* (+ (cfg :node-pad) (cfg :radius)) nv)
               h    (v+ head diff)
-              t    (v- tail diff)]
-          (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) {:from-node-id from :to-node-id to :class (string "edge " (got-node-class to))}))))
+              t    (v- tail diff)
+              len  (v-mag (v- h t))
+              lvl  (((got :nodes) to) :height)]
+          (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) (v* (/ len 12) [(- 5 lvl) (match lvl 1 0 1)])  {:from-node-id from :to-node-id to :class (string "edge " (got-node-class to))}))))
     
       acc)))
 

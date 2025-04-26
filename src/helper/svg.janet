@@ -48,7 +48,7 @@
       (if attrs (to-xml-attrs attrs))
       `/>`))
 
-(defn svg/line [p g w fill &opt attrs]
+(defn svg/line [p g w fill dashed-array &opt attrs]
   (string 
     `<line 
       x1="` (first p) `" 
@@ -57,4 +57,5 @@
       y2="` (last  g) `" 
       stroke-width="` w `"
       stroke="` fill `"
+      stroke-dasharray="` (string/join (map string dashed-array) " ") `"
       ` (if attrs (to-xml-attrs attrs)) `/>`))
