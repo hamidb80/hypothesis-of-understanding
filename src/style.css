@@ -21,3 +21,7 @@ pre {
   line-height: 0.9;
   overflow-y: clip;
 }
+
+.opacity-12 {
+  opacity: 0.12;
+}

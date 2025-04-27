@@ -108,14 +108,14 @@ up.compiler('[got]', (_, data) => {
     })
     qa(".edge").forEach(e => {
       let pid = e.getAttribute("to-node-id")
-      clsx(e, id != pid && !ans.includes(pid), "opacity-25")
+      clsx(e, id != pid && !ans.includes(pid), "opacity-12")
     })
   }
 
   function unfocusAll() {
     qa(".content").forEach(e => clsx(e, false, "opacity-25"))
     qa(".node").forEach(e => { clsx(e, false, "opacity-25"); blurNode(e) })
-    qa(".edge").forEach(e => clsx(e, false, "opacity-25"))
+    qa(".edge").forEach(e => clsx(e, false, "opacity-12"))
   }
 
   function unversalStep(step) {

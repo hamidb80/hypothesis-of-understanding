@@ -58,6 +58,16 @@
     [(+ (cfg :padx) (* (cfg :spacex)    (got :canvas-width)  (* (/ 1 (+ 1 (item :row-width))) (+ 1 (- (item :col) (first (item :row-range))))) ) (* -1 (ctx :cutx))) 
      (+ (cfg :pady) (* (cfg :spacey) (- (got :canvas-height) (item :row) 1)))])
 
+(defn- chop-into (len slices max)
+  (let [m (- max slices)
+        a (match slices
+            1 [m]
+            2 [m 1 m]
+            3 [m 1 m 1 m]
+            4 [m 1 m 1 m 1 m])] 
+    (v* (/ len (sum a)) a))
+  )
+
 (defn  GoT/to-svg [got cfg]
   (def cutx (/ (* (got :canvas-width) (cfg :spacex)) (+ 1 (got :canvas-width))))
 
@@ -88,7 +98,7 @@
               t    (v- tail diff)
               len  (v-mag (v- h t))
               lvl  (((got :nodes) to) :height)]
-          (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) (v* (/ len 12) [(- 5 lvl) (match lvl 1 0 1)])  {:from-node-id from :to-node-id to :class (string "edge " (got-node-class to))}))))
+          (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) (chop-into len lvl 5) {:from-node-id from :to-node-id to :class (string "edge " (got-node-class to))}))))
     
       acc)))
 
