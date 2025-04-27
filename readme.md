@@ -108,11 +108,13 @@ In the above case we say that the person "knows" that word, but he must think mo
   <img src="./assets/compiled/translate.png" style="height: 240px">
 </div>
 
+***we say that height of the node English "Camera" from Persian "دوربین" is high but not vice versa.***
+
 ## what is height of a node in GoT
 think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
 
 ### easy-ness and hard-ness of a problem
-the easy-ness and hard-ness of a problem is indicated by height of its node.
+the easy-ness and hard-ness of a problem is indicated by height of its node. so the hard-ness of a problem has direct relationship with straigh-forward ness.
 
 ## Bluri's idea about creativity
 > here what I mean by the word "create" is that makeing/producing something that the creator/author has not seen like it before.
