@@ -110,13 +110,13 @@ integration of GoT and Notes
           (match (entity :kind)
             :got 
               (let [ggg       (GoT/init (entity :content))
-                    svg-repr  (GoT/to-svg ggg got-style-config)
-                    html-repr (GoT/html-page id ggg "GoT of ..." svg-repr got-style-config db router app-config)]
+                    svg-repr  (GoT/to-svg       ggg                       got-style-config)
+                    html-repr (GoT/html-page id ggg (string "GoT of " (path-parts :name)) svg-repr got-style-config db router app-config)]
                 (file/put new-path html-repr))
                 
             :note
-              (let [content (mu/to-html (entity :content) router)]
-                  (file/put new-path (mu/html-page db id "some note" content router app-config)))
+              (let [compiled (mu/to-html (entity :content) router)]
+                  (file/put new-path (mu/html-page db id |(string "note " $) entity compiled router app-config)))
                   
             (error "invalid kind")))))
       

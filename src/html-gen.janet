@@ -88,8 +88,8 @@
     </body>
     </html>`))
 
-(defn  mu/html-page (db key title content router app-config)
-  (html5 router title app-config `
+(defn  mu/html-page (db key title-gen article content router app-config)
+  (html5 router (title-gen ((article :meta) :title)) app-config `
     <div class="container my-4">
       ` (nav-path router app-config key db) `
       <div class="card">
