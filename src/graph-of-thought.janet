@@ -14,11 +14,13 @@
   ./helper/macros)
 
 # public interface ------------------------
+
+(def max-height 4)
 (defn n [id height class parents content] # [n]ode
   # :problem :goal :recall :reason :calculate :quite
   {:kind     :node 
    :id       id
-   :height   (do (assert (<= 1 height 4) "the height of a node must be in range of 1..4")
+   :height   (do (assert (<= 1 height max-height) (string "the height of a node must be in range of 1.." max-height))
                  height)
    :class    class 
    :parents  parents
@@ -59,7 +61,7 @@
      (+ (cfg :pady) (* (cfg :spacey) (- (got :canvas-height) (item :row) 1)))])
 
 (defn- chop-into (len slices max)
-  (let [m (- max slices)
+  (let [m (- max slices -1)
         a (flatten [m (dup [1 m] (- slices 1))])] 
     (v* (/ len (sum a)) a))
   )
@@ -94,7 +96,7 @@
               t    (v- tail diff)
               len  (v-mag (v- h t))
               lvl  (((got :nodes) to) :height)]
-          (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) (chop-into len lvl 5) {:from-node-id from :to-node-id to :class (string "edge " (got-node-class to))}))))
+          (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) (chop-into len lvl max-height) {:from-node-id from :to-node-id to :class (string "edge " (got-node-class to))}))))
     
       acc)))
 
