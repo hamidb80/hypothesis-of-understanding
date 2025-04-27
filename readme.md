@@ -63,7 +63,7 @@
 2. **Relate**: make connection
 3. **Reason/Calculate**: conclude or process
 4. **Repeat**: repeat the process until you're done.
-5. **Doubt**: explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
+**5**. **Doubt**: explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
 
 > Thanks to Eric Demaine for his SRTBOT method for formulating dynamic programming solution. see "introduction to algorithms" in MIT open course ware.
 
@@ -110,6 +110,9 @@ In the above case we say that the person "knows" that word, but he must think mo
 
 ## what is height of a node in GoT
 think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
+
+### easy-ness and hard-ness of a problem
+the easy-ness and hard-ness of a problem is indicated by height of its node.
 
 ## Bluri's idea about creativity
 > here what I mean by the word "create" is that makeing/producing something that the creator/author has not seen like it before.
