@@ -60,11 +60,7 @@
 
 (defn- chop-into (len slices max)
   (let [m (- max slices)
-        a (match slices
-            1 [m]
-            2 [m 1 m]
-            3 [m 1 m 1 m]
-            4 [m 1 m 1 m 1 m])] 
+        a (flatten [m (dup [1 m] (- slices 1))])] 
     (v* (/ len (sum a)) a))
   )
 

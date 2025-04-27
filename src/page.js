@@ -84,17 +84,24 @@ function parseShallowJSON(json) {
 
 // ----------------------------------------      
 
-function toggleClass(el, cls) {
-  if (el.classList.contains(cls))
-    el.classList.remove(cls)
-  else
+function toggleClassImpl(el, cls, state) {
+  if (state)
     el.classList.add(cls)
+  else
+    el.classList.remove(cls)
+
+  return !state
+}
+
+function toggleClass(el, cls, cond) {
+  return toggleClassImpl(el, cls, cond === undefined ? el.classList.contains(cls) : cond)
 }
 
 up.compiler('[got]', (_, data) => {
   const cursorName = 'c'
   const { events, nodes, anscestors } = parseShallowJSON(data)
   let cursor
+  let messageShouldHiddenByDefault
 
   function focusNode(el) {
     let id = el ? el.getAttribute("node-id") : ""
@@ -232,12 +239,10 @@ up.compiler('.latex', (el, data) => {
   katex.render(el.innerText, el, { displayMode: data.display == "true" })
 })
 
-
-
 up.compiler('.toggle-graph-message-btn', el => {
   el.onclick = () => {
     let p = el.closest('.card')
     let target = q(`.card-body`, p)
-    toggleClass(target, 'd-none')
+    toggleClass(target, 'd-none', !target.classList.contains('d-none'))
   }
 })

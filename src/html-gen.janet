@@ -127,6 +127,7 @@
       </ul>
     </nav>
 
+    
     <div class="row gx-2 m-3 mt-0" got 
       data-events='`(to-js (got :events))`'
       data-nodes='`(to-js (got :nodes))`'
@@ -162,6 +163,7 @@
             <i class="bi bi-arrow-right"></i>
           </button>
         </div>
+
       </aside>
 
       <aside class="col col-7 pt-2 overflow-y-scroll content-bar" style="height: calc(100vh - 40px)">
@@ -217,7 +219,7 @@
                         (mu/to-html (article :content) router)
                     `</div>`
 
-                    `<div class="card-footer d-flex justify-content-between py-1" dir="auto">
+                    `<div class="card-footer d-flex justify-content-between py-1">
                         <button role="button" class="fold btn btn-sm btn-outline-dark toggle-graph-message-btn">
                           <i class="bi bi-chevron-double-up"></i>
                         </button>

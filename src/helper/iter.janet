@@ -23,3 +23,6 @@
 
 (defn zip (& args)
   (map tuple ;args))
+
+(defn dup (val times)
+  (array/new-filled times val))
