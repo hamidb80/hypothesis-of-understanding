@@ -40,9 +40,8 @@
   (file/write f content)
   (file/close f))
 
-(defn file/copy (src dest)
-  (exec ["powershell.exe"  "-Command"  "Copy-Item"  "-Path"  src  "-Destination"  dest]))
-
-(defn dir/copy (src dest)
-  (each p (os/list-files-rec src)
-    (file/copy p (path/join dest (string/remove-prefix src p)))))
+(defn os/copy 
+  "copies both file and directory"
+  (src dest)
+  
+  (exec ["powershell.exe"  "-Command"  "Copy-Item"  "-Path"  src  "-Destination"  dest "-Recurse"]))

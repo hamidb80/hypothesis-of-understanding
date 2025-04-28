@@ -81,7 +81,7 @@ integration of GoT and Notes
 
 (defn req-files (project-dir output-dir)
   (each f ["page.js" "style.css"]
-    (file/copy (path/join project-dir "src" f) (path/join output-dir f))))
+    (os/copy (path/join project-dir "src" f) (path/join output-dir f))))
 
 (defn solution-paths (project-dir notes-dir assets-dir output-dir base-route)
   {:project-dir (path/dir project-dir)
@@ -99,8 +99,18 @@ integration of GoT and Notes
                     {})
              db  (finalize-db raw-db :index assets-db)
 
-        # TODO locator is file router, router is web router
-        #  locator (fn  ())
+         locator (fn  [solution-paths entity] 
+          (let [
+            path-parts (path/split (entity :path))
+            new-path   (path/join 
+                          (solution-paths :output-dir) 
+                          (string 
+                            (string/remove-prefix 
+                              (solution-paths :notes-dir) 
+                              (path-parts :dir)) 
+                            (path-parts :name) 
+                            ".html"))]))
+
          router  (fn  (file-path kind) (string 
                                   (solution-paths :base-route) 
                                   file-path 
@@ -108,29 +118,26 @@ integration of GoT and Notes
                                     :file ""
                                     :page ""
                                     :html ".html")))]
-    
-    (eachp [id entity] db
-      (let [
-        path-parts (path/split (entity :path))
-        new-path   (path/join (solution-paths :output-dir) (string (string/remove-prefix (solution-paths :notes-dir) (path-parts :dir)) (path-parts :name) ".html"))]
 
-        (unless (entity :private)
-          (print ">> " id)
-          (match (entity :kind)
-            :got 
-              (let [ggg       (GoT/init (entity :content))
-                    svg-repr  (GoT/to-svg       ggg                       got-style-config)
-                    html-repr (GoT/html-page id ggg (string "GoT of " (path-parts :name)) svg-repr got-style-config db router app-config)]
-                (file/put new-path html-repr))
+    (eachp [id entity] db
+      (unless (entity :private)
+        (print ">> " id)
+        (match (entity :kind)
+          :got 
+            (let [ggg       (GoT/init (entity :content))
+                  svg-repr  (GoT/to-svg       ggg                         got-style-config)
+                  html-repr (GoT/html-page id ggg (string "GoT") svg-repr got-style-config db router app-config)]
+              (file/put (locator solution-paths entity) html-repr))
+              
+          :note
+            (let [compiled (mu/to-html (entity :content) router)]
+                (file/put (locator solution-paths entity) (mu/html-page db id |(string "note " $) entity compiled router app-config)))
                 
-            :note
-              (let [compiled (mu/to-html (entity :content) router)]
-                  (file/put new-path (mu/html-page db id |(string "note " $) entity compiled router app-config)))
-                  
-            (error "invalid kind")))))
-      
+          (error "invalid kind"))))
+
+
       
     (req-files (solution-paths :project-dir) (solution-paths :output-dir))
     
     (if has-assets
-      (dir/copy (solution-paths :assets-dir) (path/join (solution-paths :output-dir) "assets")))))
+      (os/copy (solution-paths :assets-dir) (path/join (solution-paths :output-dir) "assets")))))
