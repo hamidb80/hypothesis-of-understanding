@@ -88,7 +88,7 @@ integration of GoT and Notes
    :notes-dir   (path/dir notes-dir)
    :assets-dir  (path/dir assets-dir)
    :output-dir  (path/dir output-dir)
-   :base-route  base-route })
+   :base-route  (path/dir base-route) })
 
 (defn solution (solution-paths app-config got-style-config)
   (let [ 
@@ -98,7 +98,16 @@ integration of GoT and Notes
                     (load-assets (solution-paths :assets-dir)) 
                     {})
              db  (finalize-db raw-db :index assets-db)
-         router  (fn  (n) (string (solution-paths :base-route) n))]
+
+        # TODO locator is file router, router is web router
+        #  locator (fn  ())
+         router  (fn  (file-path kind) (string 
+                                  (solution-paths :base-route) 
+                                  file-path 
+                                  (match kind
+                                    :file ""
+                                    :page ""
+                                    :html ".html")))]
     
     (eachp [id entity] db
       (let [

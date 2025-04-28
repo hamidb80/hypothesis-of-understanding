@@ -148,14 +148,14 @@
 
 (defn- h/local-ref [resolver router ctx data args] 
   (string
-    `<a up-follow href="` (router data) `.html">` 
+    `<a up-follow href="` (router data :html) `">` 
       (resolver router ctx args)
     `</a>`))
 
 (defn- h/image [resolver router ctx data args] 
   (string
     `<figure class="text-center">
-      <img style="` (data :styles)`" src="` (router (string "assets/" (data :src))) `"/>
+      <img style="` (data :styles)`" src="` (router (string "assets/" (data :src)) :file) `"/>
       <figcaption dir="auto">`
         (resolver router ctx args)
       `</figcaption>

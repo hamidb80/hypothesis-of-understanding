@@ -8,7 +8,7 @@
   (error "invalid number of arguments, required at least 2")
   (let [
     app-config {:title "Konkur Computer" :root-title "home"}
-    # s-conf     (solution-paths "./play/notes/" "./play/assets/" "./konkur-comp/" "/konkur-comp/")
+    # s-conf     (solution-paths :project_root_dir: "./play/notes/" "./play/assets/" "./konkur-comp/" "/konkur-comp/")
     s-conf     (solution-paths ;(slice (dyn *args*) 1))
     got-style-config {
       :radius   16

@@ -27,15 +27,15 @@
   <script src="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.js"></script>
   <link  href="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.css" rel="stylesheet">
 
-  <script src="`(router "page.js")`"></script>
-  <link  href="`(router "style.css")`" rel="stylesheet">
+  <script src="`(router "page.js" :file)`"></script>
+  <link  href="`(router "style.css" :file)`" rel="stylesheet">
 `))
 
 (defn nav-path (router app-config key db)
   [`<nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a up-follow href="` (router "") `">`
+        <a up-follow href="` (router "" :page) `">`
           (app-config :root-title)
         `</a>
       </li>`
@@ -50,7 +50,7 @@
                 `<li class="breadcrumb-item ` (if is-last `active`) `">` 
                   (if index 
                     (string
-                      `<a up-follow href="` (router key) `.html">`
+                      `<a up-follow href="` (router key :html) `">`
                         n
                       `</a>`)
                     n
@@ -83,7 +83,7 @@
       (common-head router)
     `</head>
     <body>`
-      (nav-bar (router "") (app-config :title))
+      (nav-bar (router "" :page) (app-config :title))
     `<main>` body `</main>
     </body>
     </html>`))
@@ -208,7 +208,7 @@
                         `</div>
                         <div>`
                           (if has-link [
-                            `<a class="text-muted" up-follow href="` (router key) `.html">`
+                            `<a class="text-muted" up-follow href="` (router key :html) `">`
                               `<i class="bi bi-hash"></i>`
                               key
                             `</a>`])
