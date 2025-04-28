@@ -91,6 +91,9 @@ integration of GoT and Notes
    :base-route  (path/dir base-route) })
 
 (defn solution (solution-paths app-config got-style-config)
+  (if (file/exists (solution-paths :output-dir))
+    (os/rmdir-rec (solution-paths :output-dir)))
+
   (let [ 
          raw-db  (load-deep (solution-paths :notes-dir))
      has-assets  (not (nil? (solution-paths :assets-dir)))

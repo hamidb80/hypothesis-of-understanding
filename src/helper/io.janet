@@ -7,7 +7,9 @@
   ./system
   ./macros)
 
-(defn file/exists (path) 
+(defn file/exists 
+  "checks whether file/dir exist"
+  (path) 
   (not (nil? (os/stat path))))
 
 (defn os/diri (root)
@@ -45,3 +47,10 @@
   (src dest)
   
   (exec ["powershell.exe"  "-Command"  "Copy-Item"  "-Path"  src  "-Destination"  dest "-Recurse"]))
+
+
+(defn os/rmdir-rec
+  "removes both file and directory"
+  (src)
+  
+  (exec ["powershell.exe"  "-Command"  "Remove-Item"  "-Path"  src  "-Recurse"]))
