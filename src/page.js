@@ -99,6 +99,14 @@ function toggleClass(el, cls, cond) {
 
 // ----------------------------------------
 
+function isElementDisplayed(element) {
+  return window.getComputedStyle(element).getPropertyValue('display') !== 'none'
+}
+
+function detectBreakpoint(br) {
+  return isElementDisplayed(q(`.breakpoints .d-${br}-block`))
+}
+
 up.compiler('.latex', (el, data) => {
   katex.render(el.innerText, el, { displayMode: data.display == "true" })
 })
@@ -139,7 +147,7 @@ up.compiler('[got]', (_, data) => {
     qa(".edge").forEach(e => clsx(e, false, "opacity-12"))
   }
 
-  function unversalStep(step) {
+  function unversalStep(step, shouldJumpToContent) {
     let sel
     let c
 
@@ -151,7 +159,7 @@ up.compiler('[got]', (_, data) => {
       clsx(c, step < i, "d-none")
       clsx(c, step != i, "opacity-25")
 
-      if (step == i)
+      if (step == i && shouldJumpToContent)
         scrollToElement(q(".content-bar"), c)
 
       if (e.kind == "node") {
@@ -172,16 +180,16 @@ up.compiler('[got]', (_, data) => {
   }
 
   function resetProgress() {
-    unversalStep(setCursor(-1))
+    unversalStep(setCursor(-1), true)
   }
   function skipTillEnd() {
-    unversalStep(setCursor(events.length))
+    unversalStep(setCursor(events.length), true)
   }
   function nextStep() {
-    unversalStep(setCursor(cursor + 1))
+    unversalStep(setCursor(cursor + 1), detectBreakpoint('lg'))
   }
   function prevStep() {
-    unversalStep(setCursor(cursor - 1))
+    unversalStep(setCursor(cursor - 1), detectBreakpoint('lg'))
   }
 
   function prepare() {

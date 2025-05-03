@@ -82,7 +82,15 @@
       <title>` title `</title>` 
       (common-head router)
     `</head>
-    <body>`
+    <body>
+      <div class="breakpoints">
+        <div id="" class="d-none d-sm-block"></div>
+        <div id="" class="d-none d-md-block"></div>
+        <div id="" class="d-none d-lg-block"></div>
+        <div id="" class="d-none d-xl-block"></div>
+        <div id="" class="d-none d-xxl-block"></div>
+      </div>
+      `
       (nav-bar (router "" :page) (app-config :title))
     `<main>` body `</main>
     </body>
