@@ -147,7 +147,7 @@ up.compiler('[got]', (_, data) => {
     qa(".edge").forEach(e => clsx(e, false, "opacity-12"))
   }
 
-  function unversalStep(step, shouldJumpToContent) {
+  function unversalStep(step) {
     let sel
     let c
 
@@ -159,8 +159,9 @@ up.compiler('[got]', (_, data) => {
       clsx(c, step < i, "d-none")
       clsx(c, step != i, "opacity-25")
 
-      if (step == i && shouldJumpToContent)
+      if (step == i) {
         scrollToElement(q(".content-bar"), c)
+      }
 
       if (e.kind == "node") {
         let n = q(nodeClass(e.id))
@@ -180,16 +181,16 @@ up.compiler('[got]', (_, data) => {
   }
 
   function resetProgress() {
-    unversalStep(setCursor(-1), true)
+    unversalStep(setCursor(-1))
   }
   function skipTillEnd() {
-    unversalStep(setCursor(events.length), true)
+    unversalStep(setCursor(events.length))
   }
   function nextStep() {
-    unversalStep(setCursor(cursor + 1), detectBreakpoint('lg'))
+    unversalStep(setCursor(cursor + 1))
   }
   function prevStep() {
-    unversalStep(setCursor(cursor - 1), detectBreakpoint('lg'))
+    unversalStep(setCursor(cursor - 1))
   }
 
   function prepare() {
@@ -204,7 +205,7 @@ up.compiler('[got]', (_, data) => {
         qa(".content").forEach(el =>
           clsx(el, el.getAttribute("for") != id, "opacity-25"))
 
-        scrollToElement(q(".content-bar"), q("[for=" + id + "]"))
+        scrollToElement(q(".content-bar"), q(`[for="${id}"]`))
       }
 
       el.onmouseleave = () => {
@@ -259,9 +260,10 @@ up.compiler('[got]', (_, data) => {
 })
 
 up.compiler('[got-svg]', el => {
-  // position: fixed;
-  // top: 0;
-  // left: 0;
-  // transform: rotate(90deg) translate(-140px, -115px) scale(0.7);
-  // z-index: 5;
+  // el.style["position"] = "fixed"
+  // el.style["top"] = "0"
+  // el.style["left"] = "0"
+  // el.style["opacity"] = "0.7"
+  // el.style["transform"] = "rotate(90deg) translate(-140px, -115px) scale(0.7)"
+  // el.style["z-index"] = "5"
 }) 
