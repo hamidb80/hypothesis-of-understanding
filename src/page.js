@@ -1,3 +1,18 @@
+function getAttrs(el, attrNames) {
+  return attrNames.map(n => el.getAttribute(n))
+}
+
+function setAttrs(el, attrNames, values) {
+  return attrNames.map((n, i) => el.setAttribute(n, values[i]))
+}
+
+function setStyles(el, stylesObj) {
+  for (const key in stylesObj) {
+    el.style[key] = stylesObj[key]
+  }
+}
+
+
 function nodeClass(id, dot = true) {
   return (dot ? '.' : '') + 'node-' + id
 }
@@ -259,11 +274,29 @@ up.compiler('[got]', (_, data) => {
   return destructor
 })
 
-up.compiler('[got-svg]', el => {
-  // el.style["position"] = "fixed"
-  // el.style["top"] = "0"
-  // el.style["left"] = "0"
-  // el.style["opacity"] = "0.7"
-  // el.style["transform"] = "rotate(90deg) translate(-140px, -115px) scale(0.7)"
-  // el.style["z-index"] = "5"
+up.compiler('[got-svg]', parent => {
+  // let svg = q(`svg`, parent)
+  // let attrs = ["width", "height"]
+  // let v = svg.getAttribute("viewBox").split(" ")
+
+  // svg.style.transform = `rotate(180deg) scale(0.4) translateY(+50%)`
+  // setStyles(parent, {
+  //   "position": "fixed",
+  //   "z-index": "5",
+  //   "top": "0",
+  //   "left": "0",
+  //   "width": "100vw",
+  // })
+
+  // setAttrs(svg, attrs, getAttrs(svg, attrs).reverse())
+  // svg.setAttribute("viewBox", [v[0], v[1], v[3], v[2]].join(' '))
+
+  // qa(`circle`, parent).forEach(el => {
+  //   let attrs = ["cx", "cy"]
+  //   setAttrs(el, attrs, getAttrs(el, attrs).reverse())
+  // })
+  // qa(`line`, parent).forEach(el => {
+  //   let attrs = ["x1", "y1", "x2", "y2"]
+  //   setAttrs(el, attrs, getAttrs(el, attrs).reverse())
+  // })
 }) 
