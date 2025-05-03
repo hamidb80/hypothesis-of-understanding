@@ -128,12 +128,12 @@
     </nav>
 
     
-    <div class="row gx-2 m-3 mt-0" got 
+    <div class="row gx-2 m-2 m-lg-3 mt-0" got 
       data-events='`(to-js (got :events))`'
       data-nodes='`(to-js (got :nodes))`'
       data-anscestors='`(to-js (got :anscestors))`'
     >
-      <aside class="col col-5 pt-2">
+      <aside class="col col-12 col-lg-5 pt-2">
         <div class="fs-6 mb-3">
           <i class="bi bi-share-fill"></i>
           ` (dict :graph-of-thought) `
@@ -166,7 +166,7 @@
 
       </aside>
 
-      <aside class="col col-7 pt-2 overflow-y-scroll content-bar" style="height: calc(100vh - 40px)">
+      <aside class="col col-12 col-lg-7 pt-2 content-bar" style="height: calc(100vh - 40px)">
         <div class="fs-6">
           <i class="bi bi-person-walking"></i>
           ` (dict :steps) `

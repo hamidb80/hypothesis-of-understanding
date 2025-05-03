@@ -25,3 +25,10 @@ pre {
 .opacity-12 {
   opacity: 0.12;
 }
+
+
+@media (min-width: 992px) {
+  .content-bar {
+    overflow-y: scroll;
+  }
+}
