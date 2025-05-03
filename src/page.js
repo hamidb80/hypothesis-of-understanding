@@ -97,6 +97,20 @@ function toggleClass(el, cls, cond) {
   return toggleClassImpl(el, cls, cond === undefined ? el.classList.contains(cls) : cond)
 }
 
+// ----------------------------------------
+
+up.compiler('.latex', (el, data) => {
+  katex.render(el.innerText, el, { displayMode: data.display == "true" })
+})
+
+up.compiler('.toggle-graph-message-btn', el => {
+  el.onclick = () => {
+    let p = el.closest('.card')
+    let target = q(`.card-body`, p)
+    toggleClass(target, 'd-none', !target.classList.contains('d-none'))
+  }
+})
+
 up.compiler('[got]', (_, data) => {
   const cursorName = 'c'
   const { events, nodes, anscestors } = parseShallowJSON(data)
@@ -206,6 +220,7 @@ up.compiler('[got]', (_, data) => {
     q("#skip-till-end-action").onclick = skipTillEnd
     q("#prev-step-action").onclick = prevStep
     q("#next-step-action").onclick = nextStep
+    q("#next-goto-got").onclick = () => scrollToElement(document.body, q(`[got]`))
   }
 
   function keyboardEvent(e) {
@@ -235,14 +250,10 @@ up.compiler('[got]', (_, data) => {
   return destructor
 })
 
-up.compiler('.latex', (el, data) => {
-  katex.render(el.innerText, el, { displayMode: data.display == "true" })
-})
-
-up.compiler('.toggle-graph-message-btn', el => {
-  el.onclick = () => {
-    let p = el.closest('.card')
-    let target = q(`.card-body`, p)
-    toggleClass(target, 'd-none', !target.classList.contains('d-none'))
-  }
-})
+up.compiler('[got-svg]', el => {
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // transform: rotate(90deg) translate(-140px, -115px) scale(0.7);
+  // z-index: 5;
+}) 

@@ -14,8 +14,8 @@
       :radius   16
       :spacex  100
       :spacey   80
-      :padx    100
-      :pady     50
+      :padx     40
+      :pady     40
       :stroke    4
       :node-pad  6
       :background nil

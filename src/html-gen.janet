@@ -104,31 +104,31 @@
     `<div class="container mt-4 mb-2 d-flex justify-content-center">
     `(nav-path router app-config id db) `
     </div>`
-    `<nav class="d-flex justify-content-center">
+    `<nav class="d-lg-flex d-none justify-content-center">
       <ul class="pagination">
         <li class="page-item">
           <span class="page-link active" role="button">
             <i class="bi bi-layout-split"></i>
-            `(dict :both)`
+            <span class="d-lg-inline-block d-none">`(dict :both)`</span>
           </span>
         </li>
         <li class="page-item">
           <span class="page-link" role="button">
             <i class="bi bi-share"></i>
-            `(dict :graph-first)`
+            <span class="d-lg-inline-block d-none">`(dict :graph-first)`</span>
           </span>
         </li>
         <li class="page-item">
           <span class="page-link" role="button">
             <i class="bi bi-card-text"></i>
-            `(dict :notes-first)`
+            <span class="d-lg-inline-block d-none">`(dict :notes-first)`</span>
           </span>
         </li>
       </ul>
     </nav>
 
     
-    <div class="row gx-2 m-2 m-lg-3 mt-0" got 
+    <div class="row gx-4 m-1 m-lg-3 mt-0" got 
       data-events='`(to-js (got :events))`'
       data-nodes='`(to-js (got :nodes))`'
       data-anscestors='`(to-js (got :anscestors))`'
@@ -139,34 +139,36 @@
           ` (dict :graph-of-thought) `
         </div>
 
-        <div class="d-flex justify-content-center">
-          <div class="d-inline-block bg-light border rounded">
+        <div class="d-flex justify-content-center bg-light border rounded" got-svg>
           ` svg `
-          </div>
         </div>
 
-        <div class="my-3 d-flex justify-content-center">
+        <div class="my-3 d-flex justify-content-center got-action-center">
           <button role="button" class="mx-1 btn btn-outline-primary" id="reset-progress-action">
-            ` (dict :reset) `
+            <span class="d-lg-inline-block d-none">`(dict :reset)`</span>
             <i class="bi bi-arrow-clockwise"></i>
           </button>
           <button role="button" class="mx-1 btn btn-outline-primary" id="skip-till-end-action">   
-            ` (dict :skip) `
+            <span class="d-lg-inline-block d-none">`(dict :skip)`</span>
             <i class="bi bi-skip-forward"></i>
           </button>
           <button role="button" class="mx-1 btn btn-outline-primary" id="prev-step-action"> 
-            ` (dict :prev) `
+            <span class="d-lg-inline-block d-none">`(dict :prev)`</span>
             <i class="bi bi-arrow-left"></i>
           </button>
           <button role="button" class="mx-1 btn btn-outline-primary" id="next-step-action"> 
-            ` (dict :next) `
+            <span class="d-lg-inline-block d-none">`(dict :next)`</span>
             <i class="bi bi-arrow-right"></i>
+          </button>
+          <button role="button" class="mx-1 btn btn-outline-primary d-lg-none" id="next-goto-got"> 
+            <span class="d-lg-inline-block d-none">`(dict :next)`</span>
+            <i class="bi bi-arrow-up"></i>
           </button>
         </div>
 
       </aside>
 
-      <aside class="col col-12 col-lg-7 pt-2 content-bar" style="height: calc(100vh - 40px)">
+      <aside class="col col-12 col-lg-7 pt-2 content-bar">
         <div class="fs-6">
           <i class="bi bi-person-walking"></i>
           ` (dict :steps) `
@@ -232,6 +234,8 @@
                   `</div>
                 </div>`])))
         `</article>
+
+        <div class="d-lg-none" style="height: 40px"></div>
       </aside>
     </div>`))
 
