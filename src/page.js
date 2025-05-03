@@ -138,7 +138,6 @@ up.compiler('[got]', (_, data) => {
   const cursorName = 'c'
   const { events, nodes, anscestors } = parseShallowJSON(data)
   let cursor
-  let messageShouldHiddenByDefault
 
   function focusNode(el) {
     let id = el ? el.getAttribute("node-id") : ""
@@ -168,7 +167,7 @@ up.compiler('[got]', (_, data) => {
 
     for (let i = 0; i < events.length; i++) {
       let e = events[i]
-      let sel = "[for='" + e.id + "']"
+      let sel = `[for="${e.id}"]`
       let c = q(sel)
 
       clsx(c, step < i, "d-none")
@@ -183,7 +182,7 @@ up.compiler('[got]', (_, data) => {
         clsx(n, step < i, "d-none")
         if (step == i) focusNode(n)
 
-        let ed = qa("[to-node-id='" + e.id + "']")
+        let ed = qa(`[to-node-id="${e.id}"]`)
         if (ed.length) ed.forEach(el => clsx(el, step < i, "d-none"))
       }
     }
@@ -244,7 +243,10 @@ up.compiler('[got]', (_, data) => {
     q("#skip-till-end-action").onclick = skipTillEnd
     q("#prev-step-action").onclick = prevStep
     q("#next-step-action").onclick = nextStep
-    q("#next-goto-got").onclick = () => scrollToElement(document.body, q(`[got]`))
+    qa("button[node-id]").forEach(el => el.onclick = () => {
+      scrollToElement(document.body, q(`#got-wrapper`))
+      focusNode(el)
+    })
   }
 
   function keyboardEvent(e) {
@@ -275,28 +277,4 @@ up.compiler('[got]', (_, data) => {
 })
 
 up.compiler('[got-svg]', parent => {
-  // let svg = q(`svg`, parent)
-  // let attrs = ["width", "height"]
-  // let v = svg.getAttribute("viewBox").split(" ")
-
-  // svg.style.transform = `rotate(180deg) scale(0.4) translateY(+50%)`
-  // setStyles(parent, {
-  //   "position": "fixed",
-  //   "z-index": "5",
-  //   "top": "0",
-  //   "left": "0",
-  //   "width": "100vw",
-  // })
-
-  // setAttrs(svg, attrs, getAttrs(svg, attrs).reverse())
-  // svg.setAttribute("viewBox", [v[0], v[1], v[3], v[2]].join(' '))
-
-  // qa(`circle`, parent).forEach(el => {
-  //   let attrs = ["cx", "cy"]
-  //   setAttrs(el, attrs, getAttrs(el, attrs).reverse())
-  // })
-  // qa(`line`, parent).forEach(el => {
-  //   let attrs = ["x1", "y1", "x2", "y2"]
-  //   setAttrs(el, attrs, getAttrs(el, attrs).reverse())
-  // })
 }) 

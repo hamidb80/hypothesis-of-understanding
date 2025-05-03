@@ -48,7 +48,6 @@
   
   (exec ["powershell.exe"  "-Command"  "Copy-Item"  "-Path"  src  "-Destination"  dest "-Recurse"]))
 
-
 (defn os/rmdir-rec
   "removes both file and directory"
   (src)

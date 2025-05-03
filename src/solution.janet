@@ -5,6 +5,7 @@ integration of GoT and Notes
 (use 
   ./helper/debug
   ./helper/io
+  ./helper/random
   ./helper/path
   ./helper/tab
   ./helper/str)
@@ -79,9 +80,9 @@ integration of GoT and Notes
                           result)}))))
     acc))
 
-(defn req-files (project-dir output-dir)
+(defn req-files (project-dir output-dir mangle)
   (each f ["page.js" "style.css"]
-    (os/copy (path/join project-dir "src" f) (path/join output-dir f))))
+    (os/copy (path/join project-dir "src" f) (path/join output-dir (string mangle f)))))
 
 (defn solution-paths (project-dir notes-dir assets-dir output-dir base-route)
   {:project-dir (path/dir project-dir)
@@ -120,7 +121,9 @@ integration of GoT and Notes
                                   (match kind
                                     :file ""
                                     :page ""
-                                    :html ".html")))]
+                                    :html ".html")))
+                                  
+         mangle (rand/string 10)]
 
     (eachp [id entity] db
       (unless (entity :private)
@@ -129,18 +132,16 @@ integration of GoT and Notes
           :got 
             (let [ggg       (GoT/init (entity :content))
                   svg-repr  (GoT/to-svg       ggg                         got-style-config)
-                  html-repr (GoT/html-page id ggg (string "GoT") svg-repr got-style-config db router app-config)]
+                  html-repr (GoT/html-page id ggg (string "GoT") svg-repr got-style-config db router app-config mangle)]
               (file/put (locator solution-paths entity) html-repr))
               
           :note
             (let [compiled (mu/to-html (entity :content) router)]
-                (file/put (locator solution-paths entity) (mu/html-page db id |(string "note " $) entity compiled router app-config)))
+                (file/put (locator solution-paths entity) (mu/html-page db id |(string "note " $) entity compiled router app-config mangle)))
                 
           (error "invalid kind"))))
 
-
-      
-    (req-files (solution-paths :project-dir) (solution-paths :output-dir))
+    (req-files (solution-paths :project-dir) (solution-paths :output-dir) mangle)
     
     (if has-assets
       (os/copy (solution-paths :assets-dir) (path/join (solution-paths :output-dir) "assets")))))

@@ -10,7 +10,7 @@
   ./locales)
 
 
-(defn common-head (router) (string `
+(defn common-head (router mangle) (string `
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,8 +27,8 @@
   <script src="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.js"></script>
   <link  href="https://cdn.jsdelivr.net/npm/unpoly@3.8.0/unpoly.min.css" rel="stylesheet">
 
-  <script src="`(router "page.js" :file)`"></script>
-  <link  href="`(router "style.css" :file)`" rel="stylesheet">
+  <script src="`(router (string mangle "page.js") :file)`"></script>
+  <link  href="`(router (string mangle "style.css") :file)`" rel="stylesheet">
 `))
 
 (defn nav-path (router app-config key db)
@@ -75,12 +75,12 @@
     </div>
   </nav>`])
 
-(defn html5 (router title app-config & body)
+(defn html5 (router title app-config mangle & body)
   (flat-string `<!DOCTYPE html>
     <html lang="en">
     <head>
       <title>` title `</title>` 
-      (common-head router)
+      (common-head router mangle)
     `</head>
     <body>
       <div class="breakpoints">
@@ -96,8 +96,8 @@
     </body>
     </html>`))
 
-(defn  mu/html-page (db key title-gen article content router app-config)
-  (html5 router (title-gen ((article :meta) :title)) app-config `
+(defn  mu/html-page (db key title-gen article content router app-config mangle)
+  (html5 router (title-gen ((article :meta) :title)) app-config mangle `
     <div class="container my-4">
       ` (nav-path router app-config key db) `
       <div class="card">
@@ -107,47 +107,24 @@
       </div>
     </div>`))
 
-(defn  GoT/html-page (id got page-title svg svg-theme db router app-config)
-  (html5 router page-title app-config 
+(defn  GoT/html-page (id got page-title svg svg-theme db router app-config mangle)
+  (html5 router page-title app-config mangle
     `<div class="container mt-4 mb-2 d-flex justify-content-center">
     `(nav-path router app-config id db) `
-    </div>`
-    `<nav class="d-lg-flex d-none justify-content-center">
-      <ul class="pagination">
-        <li class="page-item">
-          <span class="page-link active" role="button">
-            <i class="bi bi-layout-split"></i>
-            <span class="d-lg-inline-block d-none">`(dict :both)`</span>
-          </span>
-        </li>
-        <li class="page-item">
-          <span class="page-link" role="button">
-            <i class="bi bi-share"></i>
-            <span class="d-lg-inline-block d-none">`(dict :graph-first)`</span>
-          </span>
-        </li>
-        <li class="page-item">
-          <span class="page-link" role="button">
-            <i class="bi bi-card-text"></i>
-            <span class="d-lg-inline-block d-none">`(dict :notes-first)`</span>
-          </span>
-        </li>
-      </ul>
-    </nav>
-
+    </div>
     
     <div class="row gx-4 m-1 m-lg-3 mt-0" got 
       data-events='`(to-js (got :events))`'
       data-nodes='`(to-js (got :nodes))`'
       data-anscestors='`(to-js (got :anscestors))`'
     >
-      <aside class="col col-12 col-lg-5 pt-2">
+      <aside class="col col-12 col-lg-5 pt-2" id="got-wrapper">
         <div class="fs-6 mb-3">
           <i class="bi bi-share-fill"></i>
           ` (dict :graph-of-thought) `
         </div>
 
-        <div class="d-flex justify-content-center bg-light border rounded" got-svg>
+        <div class="d-flex justify-content-center bg-light border rounded">
           ` svg `
         </div>
 
@@ -167,10 +144,6 @@
           <button role="button" class="mx-1 btn btn-outline-primary" id="next-step-action"> 
             <span class="d-lg-inline-block d-none">`(dict :next)`</span>
             <i class="bi bi-arrow-right"></i>
-          </button>
-          <button role="button" class="mx-1 btn btn-outline-primary d-lg-none" id="next-goto-got"> 
-            <span class="d-lg-inline-block d-none">`(dict :next)`</span>
-            <i class="bi bi-arrow-up"></i>
           </button>
         </div>
 
@@ -236,7 +209,9 @@
                         <small class="text-muted">`
                           ((article :meta) :title)
                        `</small>
-                        <span></span>
+                        <button role="button" class="fold btn btn-sm btn-outline-dark" node-id="` (e :id)`">
+                          <i class="bi bi-pin"></i>
+                        </button>
                     </div>`
 
                   `</div>
