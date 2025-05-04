@@ -176,25 +176,22 @@
                 `<div class="pb-3 content" content="` key `" for="` (e :id)`">
                   <div class="card">
                     <div class="card-header d-flex justify-content-between px-2">
-                        <div>`
-                          (if summ [
-                            `<small class="text-muted d-flex align-items-center">
-                              <span class="d-inline-block rounded-circle" style="width: 14px; height: 14px; background-color: ` color ` ;"></span>`
-
-                              `<i class="mx-1 ` icon `"></i>`
-                              summ 
-                              
-                              (if (e :height) 
-                                [`<i class="bi bi-triangle ms-3 me-1"></i>`
-                                  (e :height)])
-                            `</small>`])
-                        `</div>
-                        <div>`
+                        <div class="text-truncate">`
                           (if has-link [
                             `<a class="text-muted" up-follow href="` (router key :html) `">`
                               `<i class="bi bi-hash"></i>`
                               key
                             `</a>`])
+                        `</div>
+
+                        <div class="d-flex align-items-center">`
+                          (if summ [
+                            `<small class="text-muted d-flex align-items-center">`
+                              (if (e :height) [(e :height) `<i class="bi bi-triangle me-2 ms-1"></i>`])
+                              summ
+                              `<i class="mx-2 ` icon `"></i>`
+                              `<span class="d-inline-block rounded-circle" style="width: 14px; height: 14px; background-color: ` color ` ;"></span>`
+                            `</small>`])
                         `</div>
                       </div>`
 

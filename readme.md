@@ -93,7 +93,8 @@ the last step is too abstract, I felt that all of nodes are not the same, they s
 ## Bluri's theory to indicate complexity of a problem
 the height of GoT reperesents the complexity of the problem. the more the height of the GoT, means that solving it requires *more steps* and hence is more complex.
 
-The more the width of the GoT more ideas involved or more options have to be considered.
+### Weight of a GoT: Heavy-ness / light-ness
+The more the width of the GoT more ideas involved or more options have to be considered, we use the term **heavy** for such GoT.
 
 ## Bluri's opinion about a solution to a problem
 If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is _straight-forward_, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not straight-forward or it is _Explorative_.
