@@ -119,6 +119,9 @@ the easy-ness and hard-ness of a problem is indicated by height of its node. so 
 
 a solution to a problem is hard i.e. it is hard to relate nodes of its GoT
 
+## opinion on people's behaviour on social media
+most people in social media want quick and easy conclusions, i.e. shallow and straight-forward directions. which most of the times appears to be incorrect and destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
+
 ## Bluri's idea about creativity
 > here what I mean by the word "create" is that makeing/producing something that the creator/author has not seen like it before.
 
