@@ -82,7 +82,7 @@ integration of GoT and Notes
 
 (defn req-files (project-dir output-dir mangle)
   (each f ["page.js" "style.css"]
-    (os/copy (path/join project-dir "src" f) (path/join output-dir (string mangle f)))))
+    (os/copy (path/join project-dir "src" "browser" f) (path/join output-dir (string mangle f)))))
 
 (defn solution-paths (project-dir notes-dir assets-dir output-dir base-route)
   {:project-dir (path/dir project-dir)

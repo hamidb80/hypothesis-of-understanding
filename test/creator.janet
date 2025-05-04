@@ -1,6 +1,6 @@
-(use ../src/graph-of-thought)
-(use ../src/markup)
-(use ../src/solution)
+(use ../src/core/graph-of-thought)
+(use ../src/core/markup)
+(use ../src/core/solution)
 
 # -------------------------------
 
