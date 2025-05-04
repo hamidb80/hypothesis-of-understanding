@@ -116,6 +116,8 @@ think of GoT as Valley, and nodes as hills and Mountains. The more unconventiona
 ### easy-ness and hard-ness of a problem
 the easy-ness and hard-ness of a problem is indicated by height of its node. so the hard-ness of a problem has direct relationship with straigh-forward ness.
 
+a solution to a problem is hard i.e. it is hard to relate nodes of its GoT
+
 ## Bluri's idea about creativity
 > here what I mean by the word "create" is that makeing/producing something that the creator/author has not seen like it before.
 
