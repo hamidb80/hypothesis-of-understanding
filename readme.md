@@ -115,9 +115,12 @@ In the above case we say that the person "knows" that word, but he must think mo
 think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
 
 ### easy-ness and hard-ness of a problem
-the easy-ness and hard-ness of a problem is indicated by height of its node. so the hard-ness of a problem has direct relationship with straigh-forward ness.
+the easy-ness and hard-ness of a problem is indicated by height of its node. so the hard-ness of a problem has direct relationship with straigh-forward ness and "height" of it.
 
 a solution to a problem is hard i.e. it is hard to relate nodes of its GoT
+
+### Simple and Complex
+???. if path to the solution has low steps the GoK is simple, otherwise is complex
 
 ## opinion on people's behaviour on social media
 most people in social media want quick and easy conclusions, i.e. shallow and straight-forward directions. which most of the times appears to be incorrect and destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
