@@ -19,9 +19,10 @@
 - [Neurite](https://github.com/satellitecomponent/Neurite) 
 - [Brilliant](https://brilliant.org/) | Learning by doing
 - [makandra cards](https://makandracards.com/)
-- Networks of the Brain by Olaf Sporns
+- [Networks of the Brain 📚 by Olaf Sporns](https://direct.mit.edu/books/monograph/2149/Networks-of-the-Brain)
 - [Proof Wiki](https://proofwiki.org/?ref=cybrhome)
 - [Interactive Theorem Proving: Isabelle/HOL](https://www.youtube.com/watch?v=AhybiY0JHvg)
+- [how to solve it by G. Polya 📚](https://www.amazon.com/How-Solve-Mathematical-Princeton-Science/dp/069111966X)
 
 ### Simple Made Easy
 > an insightful talk by Rich Hickey - [link](https://paulrcook.com/blog/simple-made-easy)
@@ -90,13 +91,18 @@ the last step is too abstract, I felt that all of nodes are not the same, they s
   <img src="./assets/compiled/abstract-color.png" style="width: 240px">
 </div>
 
-## Bluri's theory to indicate complexity of a problem
-the height of GoT reperesents the complexity of the problem. the more the height of the GoT, means that solving it requires *more steps* and hence is more complex.
+## Simple/Complex GoT
+a GoT that has more fusion nodes, is more complex
 
-### Weight of a GoT: Heavy-ness / light-ness
+### Fusion nodes
+nodes that have in-edges more than 1
+
+## Shallow/Deep GoT
+
+## Weight of a GoT: Heavy-ness / light-ness
 The more the width of the GoT more ideas involved or more options have to be considered, we use the term **heavy** for such GoT.
 
-## Bluri's opinion about a solution to a problem
+## solution to a problem
 If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is _straight-forward_, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not straight-forward or it is _Explorative_.
 
 Thus the term straight-forward is subjective according to the learning material and the learner.
@@ -113,14 +119,6 @@ In the above case we say that the person "knows" that word, but he must think mo
 
 ## what is height of a node in GoT
 think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
-
-### easy-ness and hard-ness of a problem
-the easy-ness and hard-ness of a problem is indicated by height of its node. so the hard-ness of a problem has direct relationship with straigh-forward ness and "height" of it.
-
-a solution to a problem is hard i.e. it is hard to relate nodes of its GoT
-
-### Simple and Complex
-???. if path to the solution has low steps the GoK is simple, otherwise is complex
 
 ## opinion on people's behaviour on social media
 most people in social media want quick and easy conclusions, i.e. shallow and straight-forward directions. which most of the times appears to be incorrect and destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
