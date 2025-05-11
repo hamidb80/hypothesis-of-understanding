@@ -53,9 +53,17 @@
   <img src="./assets/compiled/KLU-ven.png" alt="ven diagram of Understanding VS Learning VS Knowing" style="height: 300px">
 </div>
 
-- **Knowing**: remembering
-- **Learning**: pattern matching (i.e. making particular neural connection between or in other words, "shortcuts")
-- **Understanding**: ability to relate what you know and what you learnt
+- **Knowing** (K): remembering
+- **Learning** (L): pattern matching (i.e. making particular neural connection between or in other words, "shortcuts")
+- **Understanding** (U): ability to relate what you know and what you learnt
+
+- K: Parrot
+- KL: basic levels of problem solving
+- KU: can solve problems but requires significant time
+- LU: A person learns patterns (L) intuitively (e.g., native speakers picking up grammar rules without being taught) And develops some level of understanding (U) from those patterns     Even without explicit knowledge (K)
+- U: ablity to reasoning, not useful without K since causes false conclusions.(Misunderstandings due to faulty connections). see [Tesla's quote](https://fixquotes.com/quotes/the-scientists-of-today-think-deeply-instead-of-1057.htm)
+- L: ability to do basic pattern matching i.e. repeating tasks in predicted order. unable to reason new situations (problems)
+- KLU: intuition, highest level of understanding possible. Intuition emerges when knowing, learning, and understanding are fully integrated — allowing rapid, confident decisions based on deep, coherent mental models."
 
 ## Bluri's steps to solve a problem
 
