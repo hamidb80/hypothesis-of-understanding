@@ -125,8 +125,11 @@ In the above case we say that the person "knows" that word, but he must think mo
 
 ***we say that height of the node English "Camera" from Persian "دوربین" is high but not vice versa.***
 
-## what is height of a node in GoT
+## height of a node in GoT
 think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
+
+### hint
+hints are trying to lower the height of the next node. it is the ability of teacher to try to make everything obvious (height of 0) for his students
 
 ## opinion on people's behaviour on social media
 most people in social media want quick and easy conclusions, i.e. shallow and straight-forward directions. which most of the times appears to be incorrect and destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
