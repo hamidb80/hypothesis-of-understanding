@@ -26,7 +26,7 @@ integration of GoT and Notes
   (each e events
     (let [id     (e :content)
           entity (db id)]
-      (assert entity (string "the entity " id " does not exist"))
+      (assert entity (string "the entity '" id "' does not exist"))
       (if (entity :private) 
         (put+ ref-count id)))))
 

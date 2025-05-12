@@ -1,13 +1,13 @@
-(use ../src/helper/io)
-(use ../src/helper/path)
+(use ../src/core/helper/io)
+(use ../src/core/helper/path)
 
-(use ../src/markup)
-(use ../src/graph-of-thought)
-(use ../src/solution)
+(use ../src/core/markup)
+(use ../src/core/graph-of-thought)
+(use ../src/core/solution)
 
 # --------------------------------------------
 
-(use ../src/markup)
+(use ../src/core/markup)
 
 # -------------------------------------
 

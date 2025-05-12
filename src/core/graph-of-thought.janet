@@ -26,16 +26,10 @@
    :parents  parents
    :content  content})
 
-# (defn q [parents] # [q]uite zone
-#   {:kind     :node 
-#    :id       (keyword "random-key-" (rand/int 0 1000000))
-#    :class    :quite
-#    :parents  parents
-#    :content  nil})
-
-(defn m [id content] # [m]essge, question or hint
-  {:kind    :message 
-   :id       id
+(defn q [id nodes content] # [m]essge, question or hint
+  {:kind    :message
+   :id      id
+   :nodes   nodes
    :content content})
 
 # SVG Convertsion ------------------------
@@ -63,8 +57,7 @@
 (defn- chop-into (len slices max)
   (let [m (- max slices -1)
         a (flatten [m (dup [1 m] (- slices 1))])] 
-    (v* (/ len (sum a)) a))
-  )
+    (v* (/ len (sum a)) a)))
 
 (defn  GoT/to-svg [got cfg]
   (def cutx (/ (* (got :canvas-width) (cfg :spacex)) (+ 1 (got :canvas-width))))
@@ -82,8 +75,46 @@
       (each item (GoT/to-svg-impl got)
         (let [pos (GoT/svg-calc-pos item got cfg ctx)]
           (put locs   (item :node) pos)
-          (array/push acc (svg/circle (first pos) (last pos) (cfg :radius) ((cfg :color-map) (((got :nodes) (item :node)) :class)) {:role "button" :node-id (item :node) :class (string/join ["node" (string "node-class-" (((got :nodes) (item :node)) :class)) (got-node-class (item :node))] " ")}))))
+          (array/push acc (svg/circle 
+            ;pos 
+            (cfg :radius) 
+            ((cfg :color-map) (((got :nodes) (item :node)) :class)) 
+            {
+              :role "button" 
+              :node-id (item :node) 
+              :class (string/join [
+                "node" 
+                (string "node-class-" (((got :nodes) (item :node)) :class)) 
+                (got-node-class (item :node))] 
+              " ")}))))
       
+      (each me (got :events)
+
+        (match (me :kind)
+            :message 
+              (let [gr @[
+                "<g 
+                  class='message " (got-node-class (me :id)) "'"
+                  (string "node-id='" (me :id) "'") ">"
+                  ]
+                ]
+                (each n (me :nodes)
+                  (pp (locs n))
+                  (array/push gr (svg/circle 
+                    ;(locs  n) 
+                    (+ (cfg :radius) 8) 
+                    ((cfg :color-map) :thoughts) 
+                    {
+                      :role "button" 
+                      :stroke-width 4 
+                      :stroke "#00000066" 
+                      :stroke-dasharray "10,12"
+                    }))
+                  
+                  (array/push gr "</g>")
+                  (array/insert acc 0 (svg/normalize gr))))))
+      
+
       (each e (got :edges)
         (let [from (first e)
               to   (last  e)

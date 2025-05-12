@@ -25,5 +25,7 @@
                   :goal         "#545454"
                   :recall       "#864AF9"
                   :calculate    "#E85C0D"
-                  :reason       "#5CB338" }}]
+                  :reason       "#5CB338"
+                  :thoughts     "#ffef00"
+                  }}]
   (solution s-conf app-config got-style-config)))
