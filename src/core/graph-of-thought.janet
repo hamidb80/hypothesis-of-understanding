@@ -65,8 +65,6 @@
   (svg/wrap 0 0
     (- (+ (* 2 (cfg :padx)) (* (+  0 (got :canvas-width))  (cfg :spacex))) (* 2 cutx))
     (- (+ (* 2 (cfg :pady)) (* (+ -1 (got :canvas-height)) (cfg :spacey))) 0) 
-
-    (cfg :background)
     
     (let [acc  @[]
           locs @{}
@@ -75,11 +73,11 @@
       (each item (GoT/to-svg-impl got)
         (let [pos (GoT/svg-calc-pos item got cfg ctx)]
           (put locs   (item :node) pos)
-          (array/push acc (svg/circle 
-            ;pos 
-            (cfg :radius) 
-            ((cfg :color-map) (((got :nodes) (item :node)) :class)) 
-            {
+          (array/push acc (svg/inline :circle  {
+              :cx     (first pos)
+              :cy     (last pos)
+              :r      (cfg :radius) 
+              :fill   ((cfg :color-map) (((got :nodes) (item :node)) :class))
               :role "button" 
               :node-id (item :node) 
               :class (string/join [
@@ -99,18 +97,15 @@
                   ]
                 ]
                 (each n (me :nodes)
-                  (pp (locs n))
-                  (array/push gr (svg/circle 
-                    ;(locs  n) 
-                    (+ (cfg :radius) 8) 
-                    ((cfg :color-map) :thoughts) 
-                    {
-                      :role "button" 
-                      :stroke-width 4 
+                  (array/push gr (svg/inline :circle {
+                      :cx   (first (locs  n)) 
+                      :cy   (last (locs  n)) 
+                      :r    (+ (cfg :radius) 8)
+                      :fill ((cfg :color-map) :thoughts) 
+                      :role   "button" 
                       :stroke "#00000066" 
-                      :stroke-dasharray "10,12"
-                    }))
-                  
+                      :stroke-width 4 
+                      :stroke-dasharray "10,12"}))
                   (array/push gr "</g>")
                   (array/insert acc 0 (svg/normalize gr))))))
       
@@ -127,7 +122,18 @@
               t    (v- tail diff)
               len  (v-mag (v- h t))
               lvl  (((got :nodes) to) :height)]
-          (array/push acc (svg/line h t (cfg :stroke) (cfg :stroke-color) (chop-into len lvl max-height) {:from-node-id from :to-node-id to :class (string "edge " (got-node-class to))}))))
+          (array/push acc (svg/inline :line {
+              :x1 (first h) 
+              :y1 (last  h) 
+              :x2 (first t) 
+              :y2 (last  t) 
+              :stroke-width     (cfg :stroke) 
+              :stroke           (cfg :stroke-color) 
+              :stroke-dasharray (string/join (map string (chop-into len lvl max-height)) " ")
+              :from-node-id from 
+              :to-node-id   to 
+              :class        (string "edge " (got-node-class to))
+            }))))
     
       acc)))
 

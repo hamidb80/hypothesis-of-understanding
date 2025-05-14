@@ -18,7 +18,6 @@
       :pady     40
       :stroke    4
       :node-pad  6
-      :background nil
       :stroke-color             "#424242"
       :color-map {:problem      "#545454"
                   :quite        "transparent"
