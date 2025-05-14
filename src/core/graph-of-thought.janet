@@ -87,7 +87,6 @@
               " ")}))))
       
       (each me (got :events)
-
         (match (me :kind)
             :message 
               (let [gr @[
@@ -98,13 +97,13 @@
                 ]
                 (each n (me :nodes)
                   (array/push gr (svg/inline :circle {
-                      :cx   (first (locs  n)) 
-                      :cy   (last (locs  n)) 
-                      :r    (+ (cfg :radius) 8)
-                      :fill ((cfg :color-map) :thoughts) 
-                      :role   "button" 
-                      :stroke "#00000066" 
-                      :stroke-width 4 
+                      :cx           (first (locs  n)) 
+                      :cy           (last (locs  n)) 
+                      :r            (+ (cfg :radius) (* 2 (cfg :stroke)))
+                      :fill         ((cfg :color-map) :thoughts) 
+                      :role         "button" 
+                      :stroke       (cfg :stroke-color)
+                      :stroke-width (cfg :stroke) 
                       :stroke-dasharray "10,12"}))
                   (array/push gr "</g>")
                   (array/insert acc 0 (svg/normalize gr))))))

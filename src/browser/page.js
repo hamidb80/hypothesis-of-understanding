@@ -69,7 +69,7 @@ function scrollToElement(wrapper, target, behavior = 'smooth') {
 }
 
 function highlightNode(el) {
-  el.setAttribute("stroke", "black")
+  el.setAttribute("stroke",       "black")
   el.setAttribute("stroke-width", "4")
 }
 function blurNode(el) {
