@@ -78,8 +78,9 @@
               :cy     (last pos)
               :r      (cfg :radius) 
               :fill   ((cfg :color-map) (((got :nodes) (item :node)) :class))
-              :role "button" 
+              :role    "button" 
               :node-id (item :node) 
+              :type    "node"
               :class (string/join [
                 "node" 
                 (string "node-class-" (((got :nodes) (item :node)) :class)) 
@@ -102,6 +103,7 @@
                       :r            (+ (cfg :radius) (* 2 (cfg :stroke)))
                       :fill         ((cfg :color-map) :thoughts) 
                       :role         "button" 
+                      :type         "thought"
                       :stroke       (cfg :stroke-color)
                       :stroke-width (cfg :stroke) 
                       :stroke-dasharray "10,12"}))

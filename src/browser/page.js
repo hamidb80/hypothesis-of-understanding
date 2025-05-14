@@ -69,7 +69,7 @@ function scrollToElement(wrapper, target, behavior = 'smooth') {
 }
 
 function highlightNode(el) {
-  el.setAttribute("stroke",       "black")
+  el.setAttribute("stroke", "black")
   el.setAttribute("stroke-width", "4")
 }
 function blurNode(el) {
@@ -145,9 +145,13 @@ up.compiler('[got]', (_, data) => {
 
     qa(".node").forEach(e => {
       let pid = e.getAttribute("node-id")
-      if (id == pid) highlightNode(e)
+      let should = id == pid && e.getAttribute("type") === "node"
 
+      console.log(pid, should)
+
+      if (should) highlightNode(e)
       else blurNode(e)
+
       clsx(e, id != pid && !ans.includes(pid), "opacity-25")
     })
     qa(".edge").forEach(e => {
@@ -163,7 +167,7 @@ up.compiler('[got]', (_, data) => {
     qa(".content").forEach(e => clsx(e, false, "opacity-25"))
     qa(".node").forEach(e => { clsx(e, false, "opacity-25"); blurNode(e) })
     qa(".edge").forEach(e => clsx(e, false, "opacity-12"))
-    qa(".message").forEach(e => { clsx(e, data.events[cursor].id != e.getAttribute("node-id"), "d-none") })
+    qa(".message").forEach(e => { clsx(e, cursor >= 0 && data.events[cursor].id != e.getAttribute("node-id"), "d-none") })
   }
 
   function unversalStep(step) {
@@ -191,6 +195,8 @@ up.compiler('[got]', (_, data) => {
         if (ed.length) ed.forEach(el => clsx(el, step < i, "d-none"))
       }
       else if (e.kind == "message") {
+        unfocusAll()
+
         let sel = `[node-id="${e.id}"]`
         let n = q(sel)
         clsx(n, step != i, "d-none")
