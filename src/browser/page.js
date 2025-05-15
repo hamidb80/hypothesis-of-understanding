@@ -181,7 +181,9 @@ up.compiler('[got]', (_, data) => {
       clsx(c, step != i, "opacity-25")
 
       if (step == i) {
-        scrollToElement(q(".content-bar"), c)
+        if (q('#auto-scroll-option').checked) {
+          scrollToElement(q(".content-bar"), c)
+        }
       }
 
       if (e.kind == "node") {

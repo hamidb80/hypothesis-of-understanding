@@ -128,7 +128,7 @@
           ` svg `
         </div>
 
-        <div class="my-3 d-flex justify-content-center got-action-center">
+        <div class="mt-3 d-flex justify-content-center got-action-center">
           <button role="button" class="mx-1 btn btn-outline-primary" id="reset-progress-action">
             <span class="d-lg-inline-block d-none">`(dict :reset)`</span>
             <i class="bi bi-arrow-clockwise"></i>
@@ -146,6 +146,15 @@
             <i class="bi bi-arrow-right"></i>
           </button>
         </div>
+
+        <fieldset class="mt-3">
+          <div class="form-check form-switch d-flex justify-content-center">
+            <input class="form-check-input mx-2" type="checkbox" id="auto-scroll-option" checked value="">
+            <label class="form-check-label" for="auto-scroll-option">
+              auto scroll
+            </label>
+          </div>
+        </fieldset>
 
       </aside>
 
