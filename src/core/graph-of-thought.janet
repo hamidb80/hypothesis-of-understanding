@@ -106,9 +106,10 @@
                       :type         "thought"
                       :stroke       (cfg :stroke-color)
                       :stroke-width (cfg :stroke) 
-                      :stroke-dasharray "10,12"}))
-                  (array/push gr "</g>")
-                  (array/insert acc 0 (svg/normalize gr))))))
+                      :stroke-dasharray "10,12"})))
+
+                (array/push gr "</g>")
+                  (array/insert acc 0 (svg/normalize gr)))))
       
 
       (each e (got :edges)

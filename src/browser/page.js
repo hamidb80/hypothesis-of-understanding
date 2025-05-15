@@ -147,8 +147,6 @@ up.compiler('[got]', (_, data) => {
       let pid = e.getAttribute("node-id")
       let should = id == pid && e.getAttribute("type") === "node"
 
-      console.log(pid, should)
-
       if (should) highlightNode(e)
       else blurNode(e)
 
@@ -187,19 +185,19 @@ up.compiler('[got]', (_, data) => {
       }
 
       if (e.kind == "node") {
-        let n = q(nodeClass(e.id))
-        clsx(n, step < i, "d-none")
-        if (step == i) focusNode(n)
+        let node = q(nodeClass(e.id))
+        if (step == i) focusNode(node)
+        clsx(node, step < i, "d-none")
 
         let ed = qa(`[to-node-id="${e.id}"]`)
         if (ed.length) ed.forEach(el => clsx(el, step < i, "d-none"))
+
       }
       else if (e.kind == "message") {
-        unfocusAll()
-
         let sel = `[node-id="${e.id}"]`
         let n = q(sel)
         clsx(n, step != i, "d-none")
+        if (step == i) focusNode(n)
       }
       else {
         console.assert(false, "invalid item kind: ", e.kind, "from", e)
