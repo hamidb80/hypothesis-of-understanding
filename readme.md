@@ -184,12 +184,7 @@ well in my opinion the only benefit of using GoK or Mind maps is that you kinda 
 I've developed an app to kinda see my theory in aciton.
 
 - [konkur comp](https://hamidb80.github.io/konkur-comp/)
-
-<div>
-<video width="640" height="360" controls autoplay loop muted poster="poster.jpg">
-  <source src="./assets/demo.mp4" type="video/mp4">
-</video>
-</div>
+https://github.com/user-attachments/assets/ca412b50-5000-4be1-b805-8aaaafab3eb7
 
 ## Inspirations
 
