@@ -177,6 +177,20 @@ I've asked DeepSeek AI to give opinion about mind maps if he were Richard Feyman
 
 well in my opinion the only benefit of using GoK or Mind maps is that you kinda see the structure of the content and gives a whole overview; but the benefits stops here...
 
+
+
+## Demo
+
+I've developed an app to kinda see my theory in aciton.
+
+- [konkur comp](https://hamidb80.github.io/konkur-comp/)
+
+<div>
+<video width="640" height="360" controls autoplay loop muted poster="poster.jpg">
+  <source src="./assets/demo.mp4" type="video/mp4">
+</video>
+</div>
+
 ## Inspirations
 
 - *Constructinism* and *Connectionism* [Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
