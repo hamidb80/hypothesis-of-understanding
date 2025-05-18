@@ -6,11 +6,15 @@
 
 > If you find something hard to understand, _BLAME YOUR OWN LACK OF KNOWLEDGE!_ since you were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
 
+## 
+
 ## Chapter 0; Background
 
 ### A Question: What is the measurement for complexity or difficulty of a problem?
 
 the turning point was when in a online class, the teacher classified a question with answer of about 2 pages long as "*very simple*", it got me thinking  that "*what is the real measurement of simplicity?"
+
+### 
 
 ### A Problem: Why are Mind-Maps per se useless
 
@@ -36,11 +40,25 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 > "Understanding isn’t a tree. It’s a wildfire—and you’re supposed to be the arsonist."
 
+### 
+
 ### A Journey
 
 - [Simple Made Easy]([8 Things I Learned from Rich Hickey That Helped Me Write Better Software (Simple Made Easy)](https://paulrcook.com/blog/simple-made-easy)) by Rich Hickey
 
-## Chapter 1; Venn Diagram of KLU
+
+
+## Chapter 1; The Basics
+
+it is recommended to read [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295) before reading this chapter.
+
+Typical mind-maps are just GoT based on "contents list" of the book. GoK is a lot more dense than you might think.
+
+GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but no unique) to question. GoK on the other hand is more general and it is intended to be able to answer various questions.
+
+
+
+## Chapter 2; Venn Diagram of KLU
 
 <img title="" src="./assets/compiled/KLU-ven.jpg" alt="" data-align="center" width="310">
 
@@ -62,7 +80,9 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 - [ ] explain more, give examples and try to be poetic
 
-## Chapter 2; How we [should] solve a problem
+
+
+## Chapter 3; How we [should] solve a problem
 
 here's the steps that are being taken by almost everyone
 
@@ -82,28 +102,14 @@ here's the steps that are being taken by almost everyone
 the step (5) is too abstract, I felt that all of nodes are not the same, they seem different in nature and their purpose. so I categortized them as:
 
 - ⚫ black: **problem** or **sub-problem** or **goal**
-- 🟣 purple: **recall**
+- 🟣 purple: **recall** ( please read [What Good Is Learning If You Don’t Remember It? 📃](https://files.eric.ed.gov/fulltext/EJ1055665.pdf) )
 - 🟢 green: **reason**
-- 🟠 orange: **calculate** or **compute
+- 🟠 orange: **calculate** or compute
 - **Edges** : Show connections (i.e., "*Relates to*" or "*Builds on*")
 
- 
-
-## Chapter 3; extension based on GoT
-
-### Basics
-
-it is recommended to read [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295) before reading this chapter.
 
 
-
-Typical mind-maps are just GoT based on "contents list" of the book. GoK is a lot more dense than you might think. 
-
-
-
-GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but no unique) to question. GoK on the other hand is more general and it is intended to be able to answer various questions.
-
-
+## Chapter 4; extension based on GoT
 
 ### Straight-forwardness and Explorative connections
 
@@ -113,31 +119,37 @@ Thus the term straight-forward is subjective according to the learning material 
 
 Note that just connecting 2 nodes are not important, the *direction* of the edge also matters. for example a language learner first looks at the word e.g. "camera", then translates it to his mother tongue e.g. Persian ("دوربین") and then translating, he imagines the real camera in his mind. but he may have trouble to do it vice verse i.e. seeing a camera and then finding its English word. it is true that the person probably can find the word *after some time* but it is not **obvious** i.e. it's not present *directly* in his GoK.
 
+<img title="" src="./assets/compiled/translate.png" alt="" width="475" data-align="center">
+
 In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
 
-***we say that height of the node English "Camera" from Persian "دوربین" is high but not vice versa.***
+
+
+### Height of a node
+
+we say that height of the node English "Camera" from Persian "دوربین" is high but not vice versa.
+
+think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
+
+
+
+#### Hint
+
+hints are trying to lower the height of the next node. it is the ability of teacher to try to make everything obvious (height of 0) for his students
 
 
 
 *Thinking* means *sinking* ideas into the brain, where they grow unseen ...
 
-
-
 Simple/Complex GoT
 
 a GoT that has more fusion nodes, is more complex
-
-
 
 Fusion nodes
 
 nodes that have in-edges more than 1
 
-
-
 Shallow/Deep GoT
-
-
 
 Weight of a GoT: Heavy-ness / light-ness
 
@@ -145,13 +157,7 @@ The more the width of the GoT more ideas involved or more options have to be con
 
 
 
-#### height of a node in GoT
-
-think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
-
-#### hint
-
-hints are trying to lower the height of the next node. it is the ability of teacher to try to make everything obvious (height of 0) for his students
+-------------
 
 ## Show case
 
@@ -202,8 +208,6 @@ Reference:
 - [Proof Wiki 🌐](https://proofwiki.org/?ref=cybrhome)
 
 - [Interactive Theorem Proving: Isabelle/HOL](https://www.youtube.com/watch?v=AhybiY0JHvg)
-
-- [What Good Is Learning If You Don’t Remember It? 📃](https://files.eric.ed.gov/fulltext/EJ1055665.pdf)
 
 - [how to solve it by G. Polya 📚](https://www.amazon.com/How-Solve-Mathematical-Princeton-Science/dp/069111966X)
 
