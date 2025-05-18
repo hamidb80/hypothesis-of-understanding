@@ -138,6 +138,22 @@ think of GoT as Valley, and nodes as hills and Mountains. The more unconventiona
 
 hints are trying to lower the height of the next node. it is the ability of teacher to try to make everything obvious (height of 0) for his students
 
+## Show case
+
+### Demo
+
+I've developed an app to kinda see my theory in aciton.
+
+- [konkur comp](https://hamidb80.github.io/konkur-comp/)
+
+https://github.com/user-attachments/assets/ca412b50-5000-4be1-b805-8aaaafab3eb7
+
+### Manual
+
+TODO
+
+## Appendix
+
 #### opinion on people's behaviour on social media
 
 most people in social media want quick and easy conclusions, i.e. shallow and straight-forward directions. which most of the times appears to be incorrect and destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
@@ -155,20 +171,6 @@ by the definition, you might've guessed that creative work is not straight-forwa
 Reference:
 
 - [A Surprising Link Between Creativity and False Memories](https://www.psychologytoday.com/us/blog/ulterior-motives/202110/surprising-link-between-creativity-and-false-memories)
-
-## Show case
-
-### Demo
-
-I've developed an app to kinda see my theory in aciton.
-
-- [konkur comp](https://hamidb80.github.io/konkur-comp/)
-
-https://github.com/user-attachments/assets/ca412b50-5000-4be1-b805-8aaaafab3eb7
-
-### Manual
-
-TODO
 
 ## Inspirations
 
