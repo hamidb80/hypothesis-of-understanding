@@ -1,4 +1,4 @@
-## Theory of Understanding
+# Theory of Understanding
 
 <div align="center"><a href="https://github.com/Safouene1/support-palestine-banner/blob/master/Markdown-pages/Support.md"><img src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg" alt="Support Palestine" style="width: 100%;"></a></div>
 
@@ -12,31 +12,17 @@
 
 the turning point was when in a online class, the teacher classified a question with answer of about 2 pages long as "*very simple*", it got me thinking  that "*what is the real measurement of simplicity?"
 
-### A Problem: Why GoK per se is not enough
+### A Problem: Why are Mind-Maps per se useless
 
-according to definition of straight-forward solution, one can implement a question that the GoK be completly useless (i.e. the connection between concepts not be present).
+I did some Mind Map and it really could not help me to solve end of chapter problems. I've noticed that every problem has unique GoT and relates different ideas, hence there is no sparse GoK (i.e. mind-map) that can help us.
 
-In order to mitigate the above problem, one might suggest that adding a lots of edges between nodes (cross referencing) and this surely solves the problem but it will arise a worse problem; nobody can understand a super dense GoK, by looking at it!
+In order to mitigate the above problem, one might suggest adding lots of edges between nodes (cross referencing), but nobody can understand a super dense GoK, by looking at it! Another solution would be to create different versions of GoK based on different aspects e.g. centeric nodes be people, centrric nodes be time periods, etc
 
-In my experience a lot of problems have their own GoK.
+That is why tools like GoK of Obisidian software would not help much and they are rather a fancy feature to make people say *WOW!*. I've tried implmenting a GoK app similar to [Kumu](https://kumu.io/) and not only it was time-consuming, it would not help me understant better. sure the remembering got easier but it was mostly becuase of documenting stuff; and I even want to say that, it was *very shallow* kind of remembering.
 
-Another solution would be to create different versions of GoK based on different aspects e.g. most important nodes be people, most important nodes be time-line, most important be based on specific features and so on ...
 
-That is why tools like GoK of Obisidian software would not help much and they are rather a fancy feature to make people say *WOW!*
 
-The real problem is that the GoK **must be placed in the person's brain**, not in the computer. computers are already good at storing and retriving data efficiently. we as the users of these apps were supposed to make our learning journey easier but now it is completly oppsoite.
-
-I've tried implmenting a GoK app similar to [Kumu](https://kumu.io/) named [ReMS](https://github.com/hamidb80/rems) (Remembering Management System) and not only it was time-consuming, it would not help me understant better. sure the remembering got easier but it was mostly becuase of documenting stuff; and I even want to say that, it was *very shallow* kind of remembering.
-
-### A Journey
-
-[Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295)
-
-### On Mind Maps
-
-the above assertion hold true for mind-mapping since GoK is a lot more powerful than mind-map.
-
-I've asked DeepSeek AI to give opinion about mind maps if he were Richard Feyman. the result is actually impressive (some of them are rather funny):
+I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyman*. the result is actually impressive (some of them are rather funny):
 
 > "Nature doesn’t organize itself into pretty radial diagrams. If your understanding can’t handle a little chaos, it’s not understanding—it’s interior decorating."
 
@@ -52,9 +38,11 @@ I've asked DeepSeek AI to give opinion about mind maps if he were Richard Feyman
 
 > "Understanding isn’t a tree. It’s a wildfire—and you’re supposed to be the arsonist."
 
-### Benefits
+### A Journey
 
-well in my opinion the only benefit of using GoK or Mind maps is that you kinda see the structure of the content and gives a whole overview; but the benefits stops here...*
+- [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295) 
+
+- [Simple Made Easy]([8 Things I Learned from Rich Hickey That Helped Me Write Better Software (Simple Made Easy)](https://paulrcook.com/blog/simple-made-easy)) by Rich Hickey
 
 ## Chapter 1; Venn Diagram of KLU
 
@@ -73,6 +61,10 @@ well in my opinion the only benefit of using GoK or Mind maps is that you kinda 
 > Learning (L) refine Knowledge (K) through practice, Understanding (U)  feed back into improving Learning (L) (e.g., learning strategies  
 
 > A student studying physics might start by memorizing formulas (K), practice solving problems (L), then grasp *why* those formulas work (U). KLU would let them invent a novel experiment or critique flawed theories.
+
+
+
+- [ ] explain more, give examples and try to be poetic
 
 ## Chapter 2; How we [should] solve a problem
 
@@ -100,13 +92,14 @@ the step (5) is too abstract, I felt that all of nodes are not the same, they se
 
 **Edges** : Show connections (i.e., "Relates to" or "Builds on")
 
-### Chapter 3; extension based on GoT
-
-### Terms
+## Chapter 3; extension based on GoT
 
 - GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
+
 - GoK (Graph of Knowledge) is a Directed Graph (may have cycles too)
+
 - SF: Straight-Forward
+
 - *Thinking* means *sinking* ideas into the brain, where they grow unseen...
 
 #### Simple/Complex GoT
@@ -165,7 +158,7 @@ Reference:
 
 ## Show case
 
-## Demo
+### Demo
 
 I've developed an app to kinda see my theory in aciton.
 
@@ -173,44 +166,23 @@ I've developed an app to kinda see my theory in aciton.
 
 https://github.com/user-attachments/assets/ca412b50-5000-4be1-b805-8aaaafab3eb7
 
+### Manual
+
+TODO
+
 ## Inspirations
 
-- *Constructinism* and *Connectionism* [Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
-- The art of [note-"making"](https://mischavandenburg.substack.com/p/the-art-of-note-making).
-- [What Good Is Learning If You Don’t Remember It?](https://files.eric.ed.gov/fulltext/EJ1055665.pdf)
-- [Hypermedia Systems Book](https://hypermedia.systems/) + [HTMX essays](https://htmx.org/essays/)
-- [Neurite](https://github.com/satellitecomponent/Neurite)
-- [Brilliant](https://brilliant.org/) | Learning by doing
-- [makandra cards](https://makandracards.com/)
+- [*Constructinism* and *Connectionism* Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
+- [The art of note-"making" 📃](https://mischavandenburg.substack.com/p/the-art-of-note-making). 
+- [What Good Is Learning If You Don’t Remember It? 📃](https://files.eric.ed.gov/fulltext/EJ1055665.pdf)
+- [Neurite 🌐](https://github.com/satellitecomponent/Neurite)
+- [Brilliant 🌐](https://brilliant.org/) | Learning by doing
+- [makandra cards 🌐](https://makandracards.com/)
 - [Networks of the Brain 📚 by Olaf Sporns](https://direct.mit.edu/books/monograph/2149/Networks-of-the-Brain)
-- [Proof Wiki](https://proofwiki.org/?ref=cybrhome)
+- [Proof Wiki 🌐](https://proofwiki.org/?ref=cybrhome)
 - [Interactive Theorem Proving: Isabelle/HOL](https://www.youtube.com/watch?v=AhybiY0JHvg)
 - [how to solve it by G. Polya 📚](https://www.amazon.com/How-Solve-Mathematical-Princeton-Science/dp/069111966X)
 
-#### Simple Made Easy
+## Notes for myself
 
-> an insightful talk by Rich Hickey - [link](https://paulrcook.com/blog/simple-made-easy)
-
-- simple and easy:
-  
-  - drinking water
-
-- simple but hard:
-  
-  - converting date system in all images in a folder
-  - lifting heavy weight
-  - coding a graphical game in assembly
-
-- complex but easy:
-  
-  - solving a quadradic equation ( has considarble amount of steps but once you get it, it's easy )
-  - coding in Python (sorry), you actually shoot your foot when coding python, happy debugging
-
-- complex and hard:
-  
-  - building a 3D printer
-
-## notes for myself
-
-- add citations if possible
 - chain of thought: رشته افکار
