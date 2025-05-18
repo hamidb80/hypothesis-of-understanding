@@ -20,8 +20,6 @@ In order to mitigate the above problem, one might suggest adding lots of edges b
 
 That is why tools like GoK of Obisidian software would not help much and they are rather a fancy feature to make people say *WOW!*. I've tried implmenting a GoK app similar to [Kumu](https://kumu.io/) and not only it was time-consuming, it would not help me understant better. sure the remembering got easier but it was mostly becuase of documenting stuff; and I even want to say that, it was *very shallow* kind of remembering.
 
-
-
 I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyman*. the result is actually impressive (some of them are rather funny):
 
 > "Nature doesn’t organize itself into pretty radial diagrams. If your understanding can’t handle a little chaos, it’s not understanding—it’s interior decorating."
@@ -40,11 +38,11 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 ### A Journey
 
-- [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295) 
-
 - [Simple Made Easy]([8 Things I Learned from Rich Hickey That Helped Me Write Better Software (Simple Made Easy)](https://paulrcook.com/blog/simple-made-easy)) by Rich Hickey
 
 ## Chapter 1; Venn Diagram of KLU
+
+<img title="" src="./assets/compiled/KLU-ven.jpg" alt="" data-align="center" width="310">
 
 - **Learning** (L): pattern matching (i.e. making particular neural connection between or in other words, "shortcuts"), ability to do basic pattern matching i.e. repeating tasks in predicted order. unable to reason new situations (problems)
 
@@ -61,8 +59,6 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 > Learning (L) refine Knowledge (K) through practice, Understanding (U)  feed back into improving Learning (L) (e.g., learning strategies  
 
 > A student studying physics might start by memorizing formulas (K), practice solving problems (L), then grasp *why* those formulas work (U). KLU would let them invent a novel experiment or critique flawed theories.
-
-
 
 - [ ] explain more, give examples and try to be poetic
 
@@ -89,46 +85,65 @@ the step (5) is too abstract, I felt that all of nodes are not the same, they se
 - 🟣 purple: **recall**
 - 🟢 green: **reason**
 - 🟠 orange: **calculate** or **compute
+- **Edges** : Show connections (i.e., "*Relates to*" or "*Builds on*")
 
-**Edges** : Show connections (i.e., "Relates to" or "Builds on")
+ 
 
 ## Chapter 3; extension based on GoT
 
-- GoT (Graph of Thought) is a DAG (Directed Acyclic Graph)
+### Basics
 
-- GoK (Graph of Knowledge) is a Directed Graph (may have cycles too)
+it is recommended to read [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295) before reading this chapter.
 
-- SF: Straight-Forward
 
-- *Thinking* means *sinking* ideas into the brain, where they grow unseen...
 
-#### Simple/Complex GoT
+Typical mind-maps are just GoT based on "contents list" of the book. GoK is a lot more dense than you might think. 
 
-a GoT that has more fusion nodes, is more complex
 
-#### Fusion nodes
 
-nodes that have in-edges more than 1
+GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but no unique) to question. GoK on the other hand is more general and it is intended to be able to answer various questions.
 
-#### Shallow/Deep GoT
 
-#### Weight of a GoT: Heavy-ness / light-ness
 
-The more the width of the GoT more ideas involved or more options have to be considered, we use the term **heavy** for such GoT.
+### Straight-forwardness and Explorative connections
 
-#### solution to a problem
-
-If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is _straight-forward_, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not straight-forward or it is _Explorative_.
+If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is *straight-forward*, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not *straight-forward* (SF) or it is *Explorative* (Ex).
 
 Thus the term straight-forward is subjective according to the learning material and the learner.
 
-Note that just connecting 2 nodes are not important, the direction of the edge also matters. for example a language learner first looks at the word e.g. "camera", then translates it to his mother tongue e.g. Persian ("دوربین") and then translating, he imagines the real camera in his mind. but he may have trouble to do it vice verse i.e. seeing a camera and then finding its English word. it is true that the person probably can find the word _after some time_ but it is not **obvious** i.e. it's not present _directly_ in his GoK.
+Note that just connecting 2 nodes are not important, the *direction* of the edge also matters. for example a language learner first looks at the word e.g. "camera", then translates it to his mother tongue e.g. Persian ("دوربین") and then translating, he imagines the real camera in his mind. but he may have trouble to do it vice verse i.e. seeing a camera and then finding its English word. it is true that the person probably can find the word *after some time* but it is not **obvious** i.e. it's not present *directly* in his GoK.
 
 In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
 
-<img title="" src="./assets/compiled/translate.png" alt="" data-align="center" width="513">
-
 ***we say that height of the node English "Camera" from Persian "دوربین" is high but not vice versa.***
+
+
+
+*Thinking* means *sinking* ideas into the brain, where they grow unseen ...
+
+
+
+Simple/Complex GoT
+
+a GoT that has more fusion nodes, is more complex
+
+
+
+Fusion nodes
+
+nodes that have in-edges more than 1
+
+
+
+Shallow/Deep GoT
+
+
+
+Weight of a GoT: Heavy-ness / light-ness
+
+The more the width of the GoT more ideas involved or more options have to be considered, we use the term **heavy** for such GoT.
+
+
 
 #### height of a node in GoT
 
@@ -152,7 +167,7 @@ https://github.com/user-attachments/assets/ca412b50-5000-4be1-b805-8aaaafab3eb7
 
 TODO
 
-## Appendix
+## Appendix [FIXME spread it somewhere else]
 
 #### opinion on people's behaviour on social media
 
@@ -174,16 +189,35 @@ Reference:
 
 ## Inspirations
 
-- [*Constructinism* and *Connectionism* Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
 - [The art of note-"making" 📃](https://mischavandenburg.substack.com/p/the-art-of-note-making). 
-- [What Good Is Learning If You Don’t Remember It? 📃](https://files.eric.ed.gov/fulltext/EJ1055665.pdf)
+
 - [Neurite 🌐](https://github.com/satellitecomponent/Neurite)
+
 - [Brilliant 🌐](https://brilliant.org/) | Learning by doing
+
 - [makandra cards 🌐](https://makandracards.com/)
+
 - [Networks of the Brain 📚 by Olaf Sporns](https://direct.mit.edu/books/monograph/2149/Networks-of-the-Brain)
+
 - [Proof Wiki 🌐](https://proofwiki.org/?ref=cybrhome)
+
 - [Interactive Theorem Proving: Isabelle/HOL](https://www.youtube.com/watch?v=AhybiY0JHvg)
+
+- [What Good Is Learning If You Don’t Remember It? 📃](https://files.eric.ed.gov/fulltext/EJ1055665.pdf)
+
 - [how to solve it by G. Polya 📚](https://www.amazon.com/How-Solve-Mathematical-Princeton-Science/dp/069111966X)
+
+- theory of syntax: chomsky
+
+- [7 FAST Chinese and Japanese SECRETS for students to EASILY become TOPPERS](https://youtube.com/watch?v=BszXLBKWscA&listen=false)
+
+- https://www.youtube.com/watch?v=iW7Fp9Mtq1Y&t=32
+
+- [*Constructinism* and *Connectionism* Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
+
+- https://www.youtube.com/watch?v=EY6bVsHPh0Y
+
+- [Becoming good at math is easy, actually](https://www.youtube.com/watch?v=brvugRQVDLM&t=166) 
 
 ## Notes for myself
 
