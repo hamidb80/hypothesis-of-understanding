@@ -46,8 +46,6 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 - [Simple Made Easy]([8 Things I Learned from Rich Hickey That Helped Me Write Better Software (Simple Made Easy)](https://paulrcook.com/blog/simple-made-easy)) by Rich Hickey
 
-
-
 ## Chapter 1; The Basics
 
 it is recommended to read [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295) before reading this chapter.
@@ -56,7 +54,7 @@ Typical mind-maps are just GoT based on "contents list" of the book. GoK is a lo
 
 GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but no unique) to question. GoK on the other hand is more general and it is intended to be able to answer various questions.
 
-
+## 
 
 ## Chapter 2; Venn Diagram of KLU
 
@@ -80,9 +78,9 @@ GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but 
 
 - [ ] explain more, give examples and try to be poetic
 
+## 
 
-
-## Chapter 3; How we [should] solve a problem
+## Chapter 3; How we [should?] solve a problem
 
 here's the steps that are being taken by almost everyone
 
@@ -107,11 +105,17 @@ the step (5) is too abstract, I felt that all of nodes are not the same, they se
 - 🟠 orange: **calculate** or compute
 - **Edges** : Show connections (i.e., "*Relates to*" or "*Builds on*")
 
-
+ 
 
 ## Chapter 4; extension based on GoT
 
-### Straight-forwardness and Explorative connections
+the image below is the summary of terms that I've introduced. each of these terms will be explained:
+
+<img src="./assets/compiled/goemetry-of-terms.jpg" title="" alt="" data-align="center">
+
+to know why I places terms in a circle like this, please watch [Arthur M. Young: Geomtery of Meaning](https://www.youtube.com/watch?v=AIEFFMuN8oQ). 
+
+### Straight-forwardness / Explorative
 
 If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is *straight-forward*, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not *straight-forward* (SF) or it is *Explorative* (Ex).
 
@@ -123,21 +127,15 @@ Note that just connecting 2 nodes are not important, the *direction* of the edge
 
 In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
 
-
-
-### Height of a node
+### Height
 
 we say that height of the node English "Camera" from Persian "دوربین" is high but not vice versa.
 
 think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
 
-
-
 #### Hint
 
 hints are trying to lower the height of the next node. it is the ability of teacher to try to make everything obvious (height of 0) for his students
-
-
 
 *Thinking* means *sinking* ideas into the brain, where they grow unseen ...
 
@@ -154,6 +152,14 @@ Shallow/Deep GoT
 Weight of a GoT: Heavy-ness / light-ness
 
 The more the width of the GoT more ideas involved or more options have to be considered, we use the term **heavy** for such GoT.
+
+
+
+### Collector Node
+
+### Distributor Node
+
+
 
 
 
