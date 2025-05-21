@@ -6,7 +6,7 @@
 
 > If you find something hard to understand, _BLAME YOUR OWN LACK OF KNOWLEDGE!_ since you were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
 
-
+****
 
 ## Chapter 0; Background
 
@@ -160,6 +160,7 @@ the step (5) is too abstract, I felt that all of nodes are not the same, they se
 - 🟣 purple: **recall** ( please read [What Good Is Learning If You Don’t Remember It? 📃](https://files.eric.ed.gov/fulltext/EJ1055665.pdf) )
 - 🟢 green: **reason**
 - 🟠 orange: **calculate** or compute
+- 🟡 yellow: Think-aloud protocols? [overlay]
 - **Edges** : Show connections (i.e., "*Relates to*" or "*Builds on*")
 
 ## Chapter 4; extension of GoT
