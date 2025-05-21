@@ -276,3 +276,8 @@ TODO
 ## Notes for myself
 
 - chain of thought: رشته افکار
+
+## still
+- Eureka effect
+- Cowan’s 4±1 Chunks
+- Cognitive Load Theory and Germane load 
