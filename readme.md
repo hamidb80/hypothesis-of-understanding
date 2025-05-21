@@ -44,7 +44,9 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 ### A Journey
 
-- [Simple Made Easy]([8 Things I Learned from Rich Hickey That Helped Me Write Better Software (Simple Made Easy)](https://paulrcook.com/blog/simple-made-easy)) by Rich Hickey
+The talk "simple made easy" by Rich Hickey made me thinking that there are for sure better and more deterministic ways to find out how much a problem is comlplex.
+
+
 
 ## Chapter 1; The Basics
 
@@ -267,7 +269,7 @@ TODO
 
 - [Becoming good at math is easy, actually](https://www.youtube.com/watch?v=brvugRQVDLM&t=166) 
 
-# 
+
 
 ## Notes for myself
 
