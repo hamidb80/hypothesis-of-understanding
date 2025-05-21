@@ -82,16 +82,7 @@ GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but 
 
 ## Chapter 3; How we [should?] solve a problem
 
-here's the steps that are being taken by almost everyone
-
-0. **Focus**: figure out important parts and *what is wanted*.
-1. **Recall**: remember related information 🌟
-2. **Relate**: make connection
-3. **Reason/Calculate**: conclude or process
-4. **Repeat**: repeat the process until you're done.
-5. **Doubt**: explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
-
-> Thanks to Eric Demaine for his SRTBOT method for formulating dynamic programming solution. see "introduction to algorithms" in MIT open course ware. 
+here's the steps that are being taken by almost everyone:
 
 <img title="" src="./assets/compiled/steps.jpg" alt="" width="684" data-align="center">
 
@@ -119,7 +110,11 @@ there are concepts that are obviously related to each other, you know how to sol
 
 ### 2. Relate
 
-#### idea about creativity
+make connection
+
+
+
+#### Creativity
 
 > here what I mean by the word "create" is that makeing/producing something that the creator/author has not seen like it before.
 
@@ -135,17 +130,19 @@ by the definition, you might've guessed that creative work is not straight-forwa
 
 ### 3. Reason/Calculate
 
-
+conclude or process
 
 
 
 ### 4. Repeat
 
-
+repeat the process until you're done.
 
 
 
 ### 5. Doubt
+
+explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
 
 
 
@@ -171,7 +168,7 @@ to know why I places terms in a circle like this, please watch [Arthur M. Young:
 
 
 
-### Straight-forwardness / Explorative
+### Straight-forward / Explorative
 
 If a solution to a problem resembels the direction of edges between nodes similar to what the learner's mind, we say that the solution is *straight-forward*, on the other hand if the direction of edges between nodes for an solution to a does not exist between nodes or does not exists **directly** between the nodes in the learner's mind, then we say that the solution is not *straight-forward* (SF) or it is *Explorative* (Ex).
 
@@ -207,17 +204,7 @@ nodes that have more more than 1 out-edges. these nodes usually are in direct re
 
 ### Simple / Complex GoT
 
-the cimplexity of a GoT is determined by number of its collector nodes and number of their in-edges. the more in-edges, the more you have to consider ideas and reason based-on them.
-
-### Shallow / Deep GoT
-
-> The scientists of today think deeply instead of clearly.One must be sane to think clearly, but one can think deeply and be quite insane -- [Tesla]([The scientists of today think deeply instead of clearly. One must be san...](https://fixquotes.com/quotes/the-scientists-of-today-think-deeply-instead-of-1057.htm))
-
- 
-
-#### people and social media
-
-most people in social media want *quick* and *easy* conclusions, i.e. shallow GoT and straight-forward edges. which most of the times appears to be incorrect and has imetimes destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
+the complexity of a GoT is determined by number of its collector nodes and number of their in-edges. the more in-edges, the more you have to consider ideas and reason based-on them.
 
  
 
@@ -234,6 +221,16 @@ The *energy* takes to build the GoT is the measurement of difficulty of a proble
 $$
 E_{total} = E_{Reason} + E_{Recall} + ...
 $$
+
+
+
+### Shallow / Deep GoT
+
+> The scientists of today think deeply instead of clearly.One must be sane to think clearly, but one can think deeply and be quite insane -- [Tesla](https://fixquotes.com/quotes/the-scientists-of-today-think-deeply-instead-of-1057.htm)
+
+#### people and social media
+
+most people in social media want *quick* and *easy* conclusions, i.e. shallow GoT and straight-forward edges *which takes them least amount of energy* and most of the times appears to be incorrect. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
 
 -------------
 
@@ -280,6 +277,8 @@ TODO
 - https://www.youtube.com/watch?v=EY6bVsHPh0Y
 
 - [Becoming good at math is easy, actually](https://www.youtube.com/watch?v=brvugRQVDLM&t=166) 
+
+- > Thanks to Eric Demaine for his SRTBOT method for formulating dynamic programming solution. see "introduction to algorithms" in MIT open course ware.
 
 ## Notes for myself
 
