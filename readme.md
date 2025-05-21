@@ -6,15 +6,13 @@
 
 > If you find something hard to understand, _BLAME YOUR OWN LACK OF KNOWLEDGE!_ since you were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
 
- 
+
 
 ## Chapter 0; Background
 
 ### A Question: What is the measurement for complexity or difficulty of a problem?
 
 the turning point was when in a online class, the teacher classified a question with answer of about 2 pages long as "*very simple*", it got me thinking  that "*what is the real measurement of simplicity*?"
-
- 
 
 ### A Problem: Why are Mind-Maps per se useless
 
@@ -40,13 +38,11 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 > "Understanding isn’t a tree. It’s a wildfire—and you’re supposed to be the arsonist."
 
-
-
 ### A Journey
 
 The talk "simple made easy" by Rich Hickey made me thinking that there are for sure better and more deterministic ways to find out how much a problem is comlplex.
 
- 
+
 
 ## Chapter 1; The Basics
 
@@ -56,29 +52,57 @@ Typical mind-maps are just GoT based on "contents list" of the book. GoK is a lo
 
 GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but no unique) to question. GoK on the other hand is more general and it is intended to be able to answer various questions.
 
- 
+
 
 ## Chapter 2; Venn Diagram of KLU
 
 <img title="" src="./assets/compiled/KLU-ven.jpg" alt="" data-align="center" width="310">
 
-- **Learning** (L): pattern matching (i.e. making particular neural connection between or in other words, "shortcuts"), ability to do basic pattern matching i.e. repeating tasks in predicted order. unable to reason new situations (problems)
+### Knowing (K)
 
-- **Understanding** (U): ability to relate what you know and what you learnt, not useful without K since causes false conclusions.(Misunderstandings due to faulty connections).
 
-- KL: Mastery, i.e. skill
 
-- KU: Synthesis, can solve problems and from new thoughts but requires time
+### Learning (L)
 
-- LU: A person learns patterns (L) intuitively (e.g., native speakers picking up grammar rules without being taught) And develops some level of understanding (U) from those patterns, Even without explicit knowledge (K)
+pattern matching (i.e. making particular neural connection between or in other words, "shortcuts"), ability to do basic pattern matching i.e. repeating tasks in predicted order. unable to reason new situations (problems)
 
-- KLU: Alchemy, highest level of understanding. enabling combining and creation.
 
-> Learning (L) refine Knowledge (K) through practice, Understanding (U)  feed back into improving Learning (L) (e.g., learning strategies  
 
-> A student studying physics might start by memorizing formulas (K), practice solving problems (L), then grasp *why* those formulas work (U). KLU would let them invent a novel experiment or critique flawed theories.
+### Understanding (U)
 
- 
+ability to relate what you know and what you learnt, not useful without K since causes false conclusions.(Misunderstandings due to faulty connections).
+
+
+
+### KL: Mastery i.e. skill
+
+
+
+### KU: Synthesis
+
+ can solve problems and from new thoughts but requires time
+
+
+
+### LU
+
+A person learns patterns (L) intuitively (e.g., native speakers picking up grammar rules without being taught) And develops some level of understanding (U) from those patterns, Even without explicit knowledge (K)
+
+
+
+### KLU: Alchemy
+
+highest level of understanding. enabling combining and creation.
+
+
+
+Learning (L) refine Knowledge (K) through practice, Understanding (U)  feed back into improving Learning (L) (e.g., learning strategies  
+
+
+
+A student studying physics might start by memorizing formulas (K), practice solving problems (L), then grasp *why* those formulas work (U). KLU would let them invent a novel experiment or critique flawed theories.
+
+
 
 ## Chapter 3; How we [should?] solve a problem
 
@@ -90,29 +114,19 @@ here's the steps that are being taken by almost everyone:
 
 the first step to every thing in life is to focus and pay attention period. 
 
-
-
 ### 1. Recall
 
 the first important step to solve a problem is to recall. it seems like a simple step by lots of books and articles have been written for it, it is not shallow at all.
-
-
 
 #### Thinking
 
 > *Thinking* is *sinking* and growing ideas in the brain ...
 
-
-
 there are concepts that are obviously related to each other, you know how to solve it when you see it. but some of them are meant to consider and dig deeper to find (or mine) related ones. thinking is exactly that.
-
-
 
 ### 2. Relate
 
 make connection
-
-
 
 #### Creativity
 
@@ -126,25 +140,17 @@ by the definition, you might've guessed that creative work is not straight-forwa
 
 >  [A Surprising Link Between Creativity and False Memories](https://www.psychologytoday.com/us/blog/ulterior-motives/202110/surprising-link-between-creativity-and-false-memories)
 
-
-
 ### 3. Reason/Calculate
 
 conclude or process
-
-
 
 ### 4. Repeat
 
 repeat the process until you're done.
 
-
-
 ### 5. Doubt
 
 explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
-
-
 
 --------
 
@@ -156,8 +162,6 @@ the step (5) is too abstract, I felt that all of nodes are not the same, they se
 - 🟠 orange: **calculate** or compute
 - **Edges** : Show connections (i.e., "*Relates to*" or "*Builds on*")
 
-
-
 ## Chapter 4; extension of GoT
 
 the image below is the summary of terms that I've introduced. each of these terms will be explained:
@@ -165,8 +169,6 @@ the image below is the summary of terms that I've introduced. each of these term
 <img src="./assets/compiled/goemetry-of-terms.jpg" title="" alt="" data-align="center">
 
 to know why I places terms in a circle like this, please watch [Arthur M. Young: Geomtery of Meaning](https://www.youtube.com/watch?v=AIEFFMuN8oQ). 
-
-
 
 ### Straight-forward / Explorative
 
@@ -190,8 +192,6 @@ think of GoT as Valley, and nodes as hills and Mountains. The more unconventiona
 
 hints are trying to lower the height of the next node; it is the ability of a teacher to make everything obvious for his/her students
 
-
-
 ### Collector Node
 
 nodes that have more more than 1 in-edges. these nodes are mostly conclusion nodes which are created by combining different ideas.
@@ -200,19 +200,13 @@ nodes that have more more than 1 in-edges. these nodes are mostly conclusion nod
 
 nodes that have more more than 1 out-edges. these nodes usually are in direct relation with other concepts.
 
-
-
 ### Simple / Complex GoT
 
 the complexity of a GoT is determined by number of its collector nodes and number of their in-edges. the more in-edges, the more you have to consider ideas and reason based-on them.
 
- 
-
 ### Heavy / Light
 
 The more the width of the GoT more ideas involved or more options have to be considered, we use the term **heavy** for such GoT.
-
-
 
 ### Diffculty of a problem: Easy / Hard
 
@@ -221,8 +215,6 @@ The *energy* takes to build the GoT is the measurement of difficulty of a proble
 $$
 E_{total} = E_{Reason} + E_{Recall} + ...
 $$
-
-
 
 ### Shallow / Deep GoT
 
