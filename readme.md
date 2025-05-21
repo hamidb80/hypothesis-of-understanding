@@ -6,15 +6,15 @@
 
 > If you find something hard to understand, _BLAME YOUR OWN LACK OF KNOWLEDGE!_ since you were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
 
-## 
+ 
 
 ## Chapter 0; Background
 
 ### A Question: What is the measurement for complexity or difficulty of a problem?
 
-the turning point was when in a online class, the teacher classified a question with answer of about 2 pages long as "*very simple*", it got me thinking  that "*what is the real measurement of simplicity?"
+the turning point was when in a online class, the teacher classified a question with answer of about 2 pages long as "*very simple*", it got me thinking  that "*what is the real measurement of simplicity*?"
 
-### 
+ 
 
 ### A Problem: Why are Mind-Maps per se useless
 
@@ -40,13 +40,13 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 > "Understanding isn’t a tree. It’s a wildfire—and you’re supposed to be the arsonist."
 
-### 
+
 
 ### A Journey
 
 The talk "simple made easy" by Rich Hickey made me thinking that there are for sure better and more deterministic ways to find out how much a problem is comlplex.
 
-
+ 
 
 ## Chapter 1; The Basics
 
@@ -56,7 +56,7 @@ Typical mind-maps are just GoT based on "contents list" of the book. GoK is a lo
 
 GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but no unique) to question. GoK on the other hand is more general and it is intended to be able to answer various questions.
 
-## 
+ 
 
 ## Chapter 2; Venn Diagram of KLU
 
@@ -78,13 +78,13 @@ GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but 
 
 > A student studying physics might start by memorizing formulas (K), practice solving problems (L), then grasp *why* those formulas work (U). KLU would let them invent a novel experiment or critique flawed theories.
 
-## 
+ 
 
 ## Chapter 3; How we [should?] solve a problem
 
 here's the steps that are being taken by almost everyone
 
-0. **Focus**: highlight important parts and figure out *what is wanted*.
+0. **Focus**: figure out important parts and *what is wanted*.
 1. **Recall**: remember related information 🌟
 2. **Relate**: make connection
 3. **Reason/Calculate**: conclude or process
@@ -97,9 +97,23 @@ here's the steps that are being taken by almost everyone
 
 ### 0. Focus
 
+the first step to every thing in life is to focus and pay attention period. 
+
 
 
 ### 1. Recall
+
+the first important step to solve a problem is to recall. it seems like a simple step by lots of books and articles have been written for it, it is not shallow at all.
+
+
+
+#### Thinking
+
+> *Thinking* is *sinking* and growing ideas in the brain ...
+
+
+
+there are concepts that are obviously related to each other, you know how to solve it when you see it. but some of them are meant to consider and dig deeper to find (or mine) related ones. thinking is exactly that.
 
 
 
@@ -123,15 +137,17 @@ by the definition, you might've guessed that creative work is not straight-forwa
 
 
 
+
+
 ### 4. Repeat
+
+
 
 
 
 ### 5. Doubt
 
 
-
-*Thinking* means *sinking* ideas into the brain, where they grow unseen ...
 
 --------
 
@@ -143,15 +159,17 @@ the step (5) is too abstract, I felt that all of nodes are not the same, they se
 - 🟠 orange: **calculate** or compute
 - **Edges** : Show connections (i.e., "*Relates to*" or "*Builds on*")
 
- 
 
-## Chapter 4; extension based on GoT
+
+## Chapter 4; extension of GoT
 
 the image below is the summary of terms that I've introduced. each of these terms will be explained:
 
 <img src="./assets/compiled/goemetry-of-terms.jpg" title="" alt="" data-align="center">
 
 to know why I places terms in a circle like this, please watch [Arthur M. Young: Geomtery of Meaning](https://www.youtube.com/watch?v=AIEFFMuN8oQ). 
+
+
 
 ### Straight-forwardness / Explorative
 
@@ -173,37 +191,35 @@ think of GoT as Valley, and nodes as hills and Mountains. The more unconventiona
 
 #### Hint
 
-hints are trying to lower the height of the next node; it is the ability of a teacher to make everything obvious (height of 0) for his students
+hints are trying to lower the height of the next node; it is the ability of a teacher to make everything obvious for his/her students
 
 
 
 ### Collector Node
 
-nodes that have more more than 1 in-edges.
-
-
+nodes that have more more than 1 in-edges. these nodes are mostly conclusion nodes which are created by combining different ideas.
 
 ### Distributor Node
 
-nodes that have more more than 1 out-edges.
+nodes that have more more than 1 out-edges. these nodes usually are in direct relation with other concepts.
 
 
 
 ### Simple / Complex GoT
 
-
+the cimplexity of a GoT is determined by number of its collector nodes and number of their in-edges. the more in-edges, the more you have to consider ideas and reason based-on them.
 
 ### Shallow / Deep GoT
 
 > The scientists of today think deeply instead of clearly.One must be sane to think clearly, but one can think deeply and be quite insane -- [Tesla]([The scientists of today think deeply instead of clearly. One must be san...](https://fixquotes.com/quotes/the-scientists-of-today-think-deeply-instead-of-1057.htm))
 
+ 
 
+#### people and social media
 
-#### opinion on people's behaviour on social media
+most people in social media want *quick* and *easy* conclusions, i.e. shallow GoT and straight-forward edges. which most of the times appears to be incorrect and has imetimes destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
 
-most people in social media want quick and easy conclusions, i.e. shallow and straight-forward directions. which most of the times appears to be incorrect and destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
-
-### 
+ 
 
 ### Heavy / Light
 
@@ -218,8 +234,6 @@ The *energy* takes to build the GoT is the measurement of difficulty of a proble
 $$
 E_{total} = E_{Reason} + E_{Recall} + ...
 $$
-
-
 
 -------------
 
@@ -236,8 +250,6 @@ https://github.com/user-attachments/assets/ca412b50-5000-4be1-b805-8aaaafab3eb7
 ### Manual
 
 TODO
-
-
 
 ## Inspirations
 
@@ -268,8 +280,6 @@ TODO
 - https://www.youtube.com/watch?v=EY6bVsHPh0Y
 
 - [Becoming good at math is easy, actually](https://www.youtube.com/watch?v=brvugRQVDLM&t=166) 
-
-
 
 ## Notes for myself
 
