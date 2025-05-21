@@ -62,7 +62,7 @@ GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but 
 
 - **Learning** (L): pattern matching (i.e. making particular neural connection between or in other words, "shortcuts"), ability to do basic pattern matching i.e. repeating tasks in predicted order. unable to reason new situations (problems)
 
-- **Understanding** (U): ability to relate what you know and what you learnt, not useful without K since causes false conclusions.(Misunderstandings due to faulty connections). see [Tesla's quote](https://fixquotes.com/quotes/the-scientists-of-today-think-deeply-instead-of-1057.htm)
+- **Understanding** (U): ability to relate what you know and what you learnt, not useful without K since causes false conclusions.(Misunderstandings due to faulty connections).
 
 - KL: Mastery, i.e. skill
 
@@ -75,8 +75,6 @@ GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but 
 > Learning (L) refine Knowledge (K) through practice, Understanding (U)  feed back into improving Learning (L) (e.g., learning strategies  
 
 > A student studying physics might start by memorizing formulas (K), practice solving problems (L), then grasp *why* those formulas work (U). KLU would let them invent a novel experiment or critique flawed theories.
-
-- [ ] explain more, give examples and try to be poetic
 
 ## 
 
@@ -94,6 +92,44 @@ here's the steps that are being taken by almost everyone
 > Thanks to Eric Demaine for his SRTBOT method for formulating dynamic programming solution. see "introduction to algorithms" in MIT open course ware. 
 
 <img title="" src="./assets/compiled/steps.jpg" alt="" width="684" data-align="center">
+
+### 0. Focus
+
+
+
+### 1. Recall
+
+
+
+### 2. Relate
+
+#### idea about creativity
+
+> here what I mean by the word "create" is that makeing/producing something that the creator/author has not seen like it before.
+
+to create something new, the person need to connect sometimes even unrelated nodes in his GoK in a way that makes sense. the feature of connecting no so obvious unrelated nodes in brain requires some level of forgetting since he or she must not consider all of the details about it and sometimes has to misremember or misinterpret the details about it. I didn't know that forgetting can be blessing.
+
+I've read somewhere that creative people tend to forgot more, as their brain gets good at losing connection between nodes in KoG and even creating false connections between them.
+
+by the definition, you might've guessed that creative work is not straight-forward.
+
+>  [A Surprising Link Between Creativity and False Memories](https://www.psychologytoday.com/us/blog/ulterior-motives/202110/surprising-link-between-creativity-and-false-memories)
+
+
+
+### 3. Reason/Calculate
+
+
+
+### 4. Repeat
+
+
+
+### 5. Doubt
+
+
+
+*Thinking* means *sinking* ideas into the brain, where they grow unseen ...
 
 --------
 
@@ -129,37 +165,57 @@ In the above case we say that the person "knows" that word, but he must think mo
 
 ### Height
 
-we say that height of the node English "Camera" from Persian "دوربین" is high but not vice versa.
+in above example, the height of the node English "Camera" from Persian "دوربین" is high but not vice versa.
 
 think of GoT as Valley, and nodes as hills and Mountains. The more unconventional to get from a neighbours of a node to it, the more the height of it.
 
 #### Hint
 
-hints are trying to lower the height of the next node. it is the ability of teacher to try to make everything obvious (height of 0) for his students
-
-*Thinking* means *sinking* ideas into the brain, where they grow unseen ...
-
-Simple/Complex GoT
-
-a GoT that has more fusion nodes, is more complex
-
-Fusion nodes
-
-nodes that have in-edges more than 1
-
-Shallow/Deep GoT
-
-Weight of a GoT: Heavy-ness / light-ness
-
-The more the width of the GoT more ideas involved or more options have to be considered, we use the term **heavy** for such GoT.
+hints are trying to lower the height of the next node; it is the ability of a teacher to make everything obvious (height of 0) for his students
 
 
 
 ### Collector Node
 
+nodes that have more more than 1 in-edges.
+
+
+
 ### Distributor Node
 
+nodes that have more more than 1 out-edges.
 
+
+
+### Simple / Complex GoT
+
+
+
+### Shallow / Deep GoT
+
+> The scientists of today think deeply instead of clearly.One must be sane to think clearly, but one can think deeply and be quite insane -- [Tesla]([The scientists of today think deeply instead of clearly. One must be san...](https://fixquotes.com/quotes/the-scientists-of-today-think-deeply-instead-of-1057.htm))
+
+
+
+#### opinion on people's behaviour on social media
+
+most people in social media want quick and easy conclusions, i.e. shallow and straight-forward directions. which most of the times appears to be incorrect and destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
+
+### 
+
+### Heavy / Light
+
+The more the width of the GoT more ideas involved or more options have to be considered, we use the term **heavy** for such GoT.
+
+
+
+### Diffculty of a problem: Easy / Hard
+
+The *energy* takes to build the GoT is the measurement of difficulty of a problem. the coefficients may vary for each person. the formula is as following:
+
+$$
+E_{total} = E_{Reason} + E_{Recall} + ...
+$$
 
 
 
@@ -169,7 +225,7 @@ The more the width of the GoT more ideas involved or more options have to be con
 
 ### Demo
 
-I've developed an app to kinda see my theory in aciton.
+I've developed an app to evaluate my theory.
 
 - [konkur comp](https://hamidb80.github.io/konkur-comp/)
 
@@ -179,25 +235,7 @@ https://github.com/user-attachments/assets/ca412b50-5000-4be1-b805-8aaaafab3eb7
 
 TODO
 
-## Appendix [FIXME spread it somewhere else]
 
-#### opinion on people's behaviour on social media
-
-most people in social media want quick and easy conclusions, i.e. shallow and straight-forward directions. which most of the times appears to be incorrect and destructive. this behaviour is exactly opposite of what Quran want from us: `افلا تعقلون` i.e. `why don't you think [more]?`
-
-#### idea about creativity
-
-> here what I mean by the word "create" is that makeing/producing something that the creator/author has not seen like it before.
-
-to create something new, the person need to connect sometimes even unrelated nodes in his GoK in a way that makes sense. the feature of connecting no so obvious unrelated nodes in brain requires some level of forgetting since he or she must not consider all of the details about it and sometimes has to misremember or misinterpret the details about it. I didn't know that forgetting can be blessing.
-
-I've read somewhere that creative people tend to forgot more, as their brain gets good at losing connection between nodes in KoG and even creating false connections between them.
-
-by the definition, you might've guessed that creative work is not straight-forward.
-
-Reference:
-
-- [A Surprising Link Between Creativity and False Memories](https://www.psychologytoday.com/us/blog/ulterior-motives/202110/surprising-link-between-creativity-and-false-memories)
 
 ## Inspirations
 
@@ -228,6 +266,8 @@ Reference:
 - https://www.youtube.com/watch?v=EY6bVsHPh0Y
 
 - [Becoming good at math is easy, actually](https://www.youtube.com/watch?v=brvugRQVDLM&t=166) 
+
+# 
 
 ## Notes for myself
 
