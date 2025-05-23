@@ -280,4 +280,15 @@ TODO
 ## still
 - Eureka effect
 - Cowan’s 4±1 Chunks
-- Cognitive Load Theory and Germane load 
+- Cognitive Load Theory and Germane load
+
+## Cititing
+```
+@software{browser_use2024,
+  author = {H.Bluri},
+  title = {Theory of Understanding},
+  year = {2025},
+  publisher = {GitHub},
+  url = {https://github.com/hamidb80/theory-of-understanding/}
+}
+```
