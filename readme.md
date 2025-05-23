@@ -284,7 +284,7 @@ TODO
 
 ## Cititing
 ```
-@software{browser_use2024,
+@software{tou2025,
   author = {H.Bluri},
   title = {Theory of Understanding},
   year = {2025},
