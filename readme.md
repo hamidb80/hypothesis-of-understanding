@@ -42,8 +42,6 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 The talk "simple made easy" by Rich Hickey made me thinking that there are for sure better and more deterministic ways to find out how much a problem is comlplex.
 
-
-
 ## Chapter 1; The Basics
 
 it is recommended to read [Demystifying Chains, Trees, and Graphs of Thoughts](https://arxiv.org/abs/2401.14295) before reading this chapter.
@@ -51,8 +49,6 @@ it is recommended to read [Demystifying Chains, Trees, and Graphs of Thoughts](h
 Typical mind-maps are just GoT based on "contents list" of the book. GoK is a lot more dense than you might think.
 
 GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but no unique) to question. GoK on the other hand is more general and it is intended to be able to answer various questions.
-
-
 
 ## Chapter 2; Venn Diagram of KLU
 
@@ -66,43 +62,27 @@ GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but 
 
 pattern matching (i.e. making particular neural connection between or in other words, "shortcuts"), ability to do basic pattern matching i.e. repeating tasks in predicted order. unable to reason new situations (problems)
 
-
-
 ### Understanding (U)
 
 ability to relate what you know and what you learnt, not useful without K since causes false conclusions.(Misunderstandings due to faulty connections).
 
-
-
 ### KL: Mastery i.e. skill
-
-
 
 ### KU: Synthesis
 
  can solve problems and from new thoughts but requires time
 
-
-
 ### LU
 
 A person learns patterns (L) intuitively (e.g., native speakers picking up grammar rules without being taught) And develops some level of understanding (U) from those patterns, Even without explicit knowledge (K)
-
-
 
 ### KLU: Alchemy
 
 highest level of understanding. enabling combining and creation.
 
-
-
 Learning (L) refine Knowledge (K) through practice, Understanding (U)  feed back into improving Learning (L) (e.g., learning strategies  
 
-
-
 A student studying physics might start by memorizing formulas (K), practice solving problems (L), then grasp *why* those formulas work (U). KLU would let them invent a novel experiment or critique flawed theories.
-
-
 
 ## Chapter 3; How we [should?] solve a problem
 
@@ -183,6 +163,8 @@ Note that just connecting 2 nodes are not important, the *direction* of the edge
 
 In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
 
+https://thecontextwindow.ai/p/rich-hickeys-glossary-and-decision-matrix
+
 ### Height
 
 in above example, the height of the node English "Camera" from Persian "دوربین" is high but not vice versa.
@@ -204,6 +186,12 @@ nodes that have more more than 1 out-edges. these nodes usually are in direct re
 ### Simple / Complex GoT
 
 the complexity of a GoT is determined by number of its collector nodes and number of their in-edges. the more in-edges, the more you have to consider ideas and reason based-on them.
+
+In simple terms, a more complex GoT means more ideas are involved.
+
+https://www.sfu.ca/complex-systems-frameworks/frameworks/complex-vs-complicated.html
+
+https://www.sfu.ca/complex-systems-frameworks.html
 
 ### Heavy / Light
 
@@ -278,6 +266,7 @@ TODO
 - chain of thought: رشته افکار
 
 ## still
+
 - Eureka effect
 - Cowan’s 4±1 Chunks
 - Cognitive Load Theory and Germane load 
