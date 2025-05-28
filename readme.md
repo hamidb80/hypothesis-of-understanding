@@ -183,6 +183,8 @@ nodes that have more more than 1 in-edges. these nodes are mostly conclusion nod
 
 nodes that have more more than 1 out-edges. these nodes usually are in direct relation with other concepts.
 
+Graph of Thoughts: Solving Elaborate Problems with Large Language Models: https://hub.baai.ac.cn/view/29222
+
 ### Simple / Complex GoT
 
 the complexity of a GoT is determined by number of its collector nodes and number of their in-edges. the more in-edges, the more you have to consider ideas and reason based-on them.
@@ -270,6 +272,7 @@ TODO
 - Eureka effect
 - Cowan’s 4±1 Chunks
 - Cognitive Load Theory and Germane load
+- think aloud protocol: https://www.slideserve.com/JasminFlorian/reading-comprehension-strategies-for-english-language-learners
 
 ## Cititing
 ```
