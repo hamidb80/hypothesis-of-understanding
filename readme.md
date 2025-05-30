@@ -1,4 +1,4 @@
-# Theory of Understanding
+# hypothesis of Understanding
 
 <div align="center"><a href="https://github.com/Safouene1/support-palestine-banner/blob/master/Markdown-pages/Support.md"><img src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg" alt="Support Palestine" style="width: 100%;"></a></div>
 
@@ -13,6 +13,8 @@
 ### A Question: What is the measurement for complexity or difficulty of a problem?
 
 the turning point was when in a online class, the teacher classified a question with answer of about 2 pages long as "*very simple*", it got me thinking  that "*what is the real measurement of simplicity*?"
+
+
 
 ### A Problem: Why are Mind-Maps per se useless
 
@@ -40,7 +42,9 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 ### A Journey
 
-The talk "simple made easy" by Rich Hickey made me thinking that there are for sure better and more deterministic ways to find out how much a problem is comlplex.
+The talk "[simple made easy](https://www.youtube.com/watch?v=SxdOUGdseq4)" by Rich Hickey made me thinking that, there are for sure better and more deterministic ways to find out difficulty of a problem .****..
+
+<img src="file:///C:/Users/HamidB80/AppData/Roaming/marktext/images/2025-05-30-06-16-44-complect.png" title="" alt="" data-align="center">
 
 ## Chapter 1; The Basics
 
@@ -55,8 +59,6 @@ GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but 
 <img title="" src="./assets/compiled/KLU-ven.jpg" alt="" data-align="center" width="310">
 
 ### Knowing (K)
-
-
 
 ### Learning (L)
 
@@ -94,7 +96,7 @@ here's the steps that are being taken by almost everyone:
 
 the first step to every thing in life is to focus and pay attention period. 
 
-### 1. Recall
+### 1. Recall / Sink
 
 the first important step to solve a problem is to recall. it seems like a simple step by lots of books and articles have been written for it, it is not shallow at all.
 
@@ -162,8 +164,6 @@ Note that just connecting 2 nodes are not important, the *direction* of the edge
 <img title="" src="./assets/compiled/translate.png" alt="" width="475" data-align="center">
 
 In the above case we say that the person "knows" that word, but he must think more and accordingly takes more time for him compared to another learner that the image of every word is associated along with the word in his mind.
-
-https://thecontextwindow.ai/p/rich-hickeys-glossary-and-decision-matrix
 
 ### Height
 
@@ -237,8 +237,6 @@ TODO
 
 - [Neurite 🌐](https://github.com/satellitecomponent/Neurite)
 
-- [Brilliant 🌐](https://brilliant.org/) | Learning by doing
-
 - [makandra cards 🌐](https://makandracards.com/)
 
 - [Networks of the Brain 📚 by Olaf Sporns](https://direct.mit.edu/books/monograph/2149/Networks-of-the-Brain)
@@ -251,13 +249,15 @@ TODO
 
 - theory of syntax: chomsky
 
+- [Helping Engineers Learn Mathematics Workbooks (HELM) | Mathematics Learning Support Centre | Loughborough University](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/)
+
 - [7 FAST Chinese and Japanese SECRETS for students to EASILY become TOPPERS](https://youtube.com/watch?v=BszXLBKWscA&listen=false)
 
-- https://www.youtube.com/watch?v=iW7Fp9Mtq1Y&t=32
+- [What Study Gurus Get Wrong About Learning](https://www.youtube.com/watch?v=iW7Fp9Mtq1Y)
 
 - [*Constructinism* and *Connectionism* Learning theories](https://www.youtube.com/watch?v=SH15sqpqy_Q)
 
-- https://www.youtube.com/watch?v=EY6bVsHPh0Y
+- [When Thinking Aloud Fails](https://www.youtube.com/watch?v=73nlIuBD6to&t=15)
 
 - [Becoming good at math is easy, actually](https://www.youtube.com/watch?v=brvugRQVDLM&t=166) 
 
@@ -271,16 +271,20 @@ TODO
 
 - Eureka effect
 - Cowan’s 4±1 Chunks
-- Cognitive Load Theory and Germane load
+- Cognitive Load Theory:: 
+- https://www.youtube.com/watch?v=h-dkuiKLlUA
 - think aloud protocol: https://www.slideserve.com/JasminFlorian/reading-comprehension-strategies-for-english-language-learners
+- [tests are magic](https://www.youtube.com/watch?v=g0rg2xdnRPc)
+- Learning Beyond Facts | Conceptual Knowledge, Procedural Knowledge, and More  https://www.youtube.com/watch?v=7YtC24QnikY
 
 ## Cititing
+
 ```
-@software{tou2025,
+@software{hou2025,
   author = {H.Bluri},
-  title = {Theory of Understanding},
+  title = {Hypothesis of Understanding},
   year = {2025},
   publisher = {GitHub},
-  url = {https://github.com/hamidb80/theory-of-understanding/}
+  url = {https://github.com/hamidb80/hypothesis-of-understanding/}
 }
 ```
