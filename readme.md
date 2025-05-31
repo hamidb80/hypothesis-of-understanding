@@ -14,8 +14,6 @@
 
 the turning point was when in a online class, the teacher classified a question with answer of about 2 pages long as "*very simple*", it got me thinking  that "*what is the real measurement of simplicity*?"
 
-
-
 ### A Problem: Why are Mind-Maps per se useless
 
 I did some Mind Map and it really could not help me to solve end of chapter problems. I've noticed that every problem has unique GoT and relates different ideas, hence there is no sparse GoK (i.e. mind-map) that can help us.
@@ -96,9 +94,9 @@ here's the steps that are being taken by almost everyone:
 
 the first step to every thing in life is to focus and pay attention period. 
 
-### 1. Recall / Sink
 
-the first important step to solve a problem is to recall. it seems like a simple step by lots of books and articles have been written for it, it is not shallow at all.
+
+### 1. Ask / Sink
 
 #### Thinking
 
@@ -106,7 +104,19 @@ the first important step to solve a problem is to recall. it seems like a simple
 
 there are concepts that are obviously related to each other, you know how to solve it when you see it. but some of them are meant to consider and dig deeper to find (or mine) related ones. thinking is exactly that.
 
-### 2. Relate
+#### Asking
+
+asking is like shouting in a cave which you don't know the end yet hope to find the echo's of the answer ...
+
+
+
+### 2. Recall
+
+...
+
+
+
+### 3. Relate
 
 make connection
 
@@ -122,15 +132,15 @@ by the definition, you might've guessed that creative work is not straight-forwa
 
 >  [A Surprising Link Between Creativity and False Memories](https://www.psychologytoday.com/us/blog/ulterior-motives/202110/surprising-link-between-creativity-and-false-memories)
 
-### 3. Reason/Calculate
+### 4. Reason/Calculate
 
 conclude or process
 
-### 4. Repeat
+### 5. Repeat
 
 repeat the process until you're done.
 
-### 5. Doubt
+### 6. Doubt
 
 explore the possibilities of other answers by assuming you're answer is wrong or you've missed something
 
@@ -271,11 +281,12 @@ TODO
 
 - Eureka effect
 - Cowan’s 4±1 Chunks
-- Cognitive Load Theory:: 
-- https://www.youtube.com/watch?v=h-dkuiKLlUA
+- Cognitive Load Theory
+- [De-cluttering science doesn't dumb it down | Advanced cognitive load theory](https://www.youtube.com/watch?v=Pmr_DeM815w)
+- [When Thinking Aloud Fails](https://www.youtube.com/watch?v=73nlIuBD6to)
 - think aloud protocol: https://www.slideserve.com/JasminFlorian/reading-comprehension-strategies-for-english-language-learners
 - [tests are magic](https://www.youtube.com/watch?v=g0rg2xdnRPc)
-- Learning Beyond Facts | Conceptual Knowledge, Procedural Knowledge, and More  https://www.youtube.com/watch?v=7YtC24QnikY
+- [Learning Beyond Facts | Conceptual Knowledge, Procedural Knowledge, and More](https://www.youtube.com/watch?v=7YtC24QnikY) 
 
 ## Cititing
 
