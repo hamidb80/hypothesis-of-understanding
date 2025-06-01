@@ -12,7 +12,7 @@
 
 ### A Question: What is the measurement for complexity or difficulty of a problem?
 
-the turning point was when in a online class, the teacher classified a question with answer of about 2 pages long as "*very simple*", it got me thinking  that "*what is the real measurement of simplicity*?"
+the turning point was when in a class, the teacher classified a question with answer of about 2 pages long as "*very simple*", it got me thinking  that "*what is the real measurement of simplicity*?"
 
 ### A Problem: Why are Mind-Maps per se useless
 
@@ -40,7 +40,7 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 ### A Journey
 
-The talk "[simple made easy](https://www.youtube.com/watch?v=SxdOUGdseq4)" by Rich Hickey made me thinking that, there are for sure better and more deterministic ways to find out difficulty of a problem .****..
+The talk "[simple made easy](https://www.youtube.com/watch?v=SxdOUGdseq4)" by Rich Hickey made me thinking that, there are for sure better and more deterministic ways to find out difficulty of a problem ...
 
 <img src="file:///C:/Users/HamidB80/AppData/Roaming/marktext/images/2025-05-30-06-16-44-complect.png" title="" alt="" data-align="center">
 
@@ -57,6 +57,8 @@ GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but 
 <img title="" src="./assets/compiled/KLU-ven.jpg" alt="" data-align="center" width="310">
 
 ### Knowing (K)
+
+
 
 ### Learning (L)
 
@@ -94,8 +96,6 @@ here's the steps that are being taken by almost everyone:
 
 the first step to every thing in life is to focus and pay attention period. 
 
-
-
 ### 1. Ask / Sink
 
 #### Thinking
@@ -106,15 +106,11 @@ there are concepts that are obviously related to each other, you know how to sol
 
 #### Asking
 
-asking is like shouting in a cave which you don't know the end yet hope to find the echo's of the answer ...
-
-
+> Asking a question is shouting into cave of mind. you get an echo of your own words, bent by the shape of the cave ...
 
 ### 2. Recall
 
 ...
-
-
 
 ### 3. Relate
 
