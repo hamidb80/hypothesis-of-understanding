@@ -58,8 +58,6 @@ GoT (Graph of Thought) is a DAG (Directed Acyclic Graph), that is specific (but 
 
 ### Knowing (K)
 
-
-
 ### Learning (L)
 
 pattern matching (i.e. making particular neural connection between or in other words, "shortcuts"), ability to do basic pattern matching i.e. repeating tasks in predicted order. unable to reason new situations (problems)
@@ -82,7 +80,7 @@ A person learns patterns (L) intuitively (e.g., native speakers picking up gramm
 
 highest level of understanding. enabling combining and creation.
 
-Learning (L) refine Knowledge (K) through practice, Understanding (U)  feed back into improving Learning (L) (e.g., learning strategies  
+Learning (L) refine Knowledge (K) through practice, Understanding (U)  feed back into improving Learning (L) e.g. learning strategies
 
 A student studying physics might start by memorizing formulas (K), practice solving problems (L), then grasp *why* those formulas work (U). KLU would let them invent a novel experiment or critique flawed theories.
 
@@ -106,7 +104,7 @@ there are concepts that are obviously related to each other, you know how to sol
 
 #### Asking
 
-> Asking a question is shouting into cave of mind. you get an echo of your own words, bent by the shape of the cave ...
+> Asking a question is shouting into cave of mind. you get an echo of your own words, bent by the shape of the cave ... what you get might not be the answer, but fragmented clues and ideas needs to be processed
 
 ### 2. Recall
 
