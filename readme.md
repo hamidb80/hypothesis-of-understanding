@@ -262,10 +262,6 @@ TODO
 
 - > Thanks to Eric Demaine for his SRTBOT method for formulating dynamic programming solution. see "introduction to algorithms" in MIT open course ware.
 
-## Notes for myself
-
-- chain of thought: رشته افکار
-
 ## still
 
 - Eureka effect
