@@ -1,7 +1,5 @@
 # hypothesis of Understanding
 
-<div align="center"><a href="https://github.com/Safouene1/support-palestine-banner/blob/master/Markdown-pages/Support.md"><img src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg" alt="Support Palestine" style="width: 100%;"></a></div>
-
 ## Preface
 
 > If you find something hard to understand, _BLAME YOUR OWN LACK OF KNOWLEDGE!_ since you were first born knowing nothing, then you've learned. There’s so much you still don’t know. things that confuse you now, but later, you may see them clearly and understand. — Nahj al-Balagha, (Letters 31-35), by Imam Ali
@@ -42,7 +40,7 @@ I've asked DeepSeek AI to give opinion about mind maps if he were *Richard Feyma
 
 The talk "[simple made easy](https://www.youtube.com/watch?v=SxdOUGdseq4)" by Rich Hickey made me thinking that, there are for sure better and more deterministic ways to find out difficulty of a problem ...
 
-<img src="file:///C:/Users/HamidB80/AppData/Roaming/marktext/images/2025-05-30-06-16-44-complect.png" title="" alt="" data-align="center">
+<img src="./assets/compiled/how-to-tie.png" title="" alt="" data-align="center">
 
 ## Chapter 1; The Basics
 
@@ -227,9 +225,6 @@ most people in social media want *quick* and *easy* conclusions, i.e. shallow Go
 
 I've developed an app to evaluate my theory.
 
-- [konkur comp](https://hamidb80.github.io/konkur-comp/)
-
-https://github.com/user-attachments/assets/ca412b50-5000-4be1-b805-8aaaafab3eb7
 
 ### Manual
 
@@ -281,15 +276,3 @@ TODO
 - think aloud protocol: https://www.slideserve.com/JasminFlorian/reading-comprehension-strategies-for-english-language-learners
 - [tests are magic](https://www.youtube.com/watch?v=g0rg2xdnRPc)
 - [Learning Beyond Facts | Conceptual Knowledge, Procedural Knowledge, and More](https://www.youtube.com/watch?v=7YtC24QnikY) 
-
-## Cititing
-
-```
-@software{hou2025,
-  author = {H.Bluri},
-  title = {Hypothesis of Understanding},
-  year = {2025},
-  publisher = {GitHub},
-  url = {https://github.com/hamidb80/hypothesis-of-understanding/}
-}
-```
